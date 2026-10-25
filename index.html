@@ -1,0 +1,2214 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Biswajit_Pattanaik | Portfolio</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <link rel="stylesheet" href="responsive.css">
+    <link rel="stylesheet" href="colorful.css">
+<link rel="prefetch" href="ai-robotics-preloader.html">
+<script>
+  if (sessionStorage.getItem('loaderDone')) {
+    sessionStorage.removeItem('loaderDone');      // use up the pass
+  } else {
+    location.replace('ai-robotics-preloader.html');
+  }
+</script>
+    <script>
+        
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        darkBg: '#0a0a0a',
+                        cardBg: '#121212',
+                        cardBorder: '#1f1f1f',
+                        accentGreen: '#10b981',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            background-color: #0a0a0a;
+            color: #f3f4f6;
+            overflow-x: hidden;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+        /* Custom scrollbar to match dark theme */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0a0a0a;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #262626;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #404040;
+        }
+        
+        /* Pre-animation states */
+        .reveal-element, .bento-stat, .project-card, .timeline-item, .edu-card, .exp-card {
+            opacity: 0;
+        }
+
+        /* ================================================================
+           CERTIFICATE MARQUEE — infinite auto-scrolling row, pauses on hover
+        ================================================================ */
+        .cert-marquee-wrap {
+            position: relative;
+            overflow: hidden;
+            -webkit-mask-image: linear-gradient(to right, transparent, black 6%, black 94%, transparent);
+            mask-image: linear-gradient(to right, transparent, black 6%, black 94%, transparent);
+        }
+
+        .cert-marquee-track {
+            display: flex;
+            align-items: stretch;
+            gap: 18px;
+            width: max-content;
+            animation: certMarqueeScroll 42s linear infinite;
+        }
+
+        .cert-marquee-wrap:hover .cert-marquee-track,
+        .cert-marquee-wrap:focus-within .cert-marquee-track {
+            animation-play-state: paused;
+        }
+
+        @keyframes certMarqueeScroll {
+            from { transform: translateX(0); }
+            to { transform: translateX(-50%); }
+        }
+
+        .cert-card {
+            flex: 0 0 auto;
+            width: 210px;
+            border-radius: 1rem;
+            overflow: hidden;
+            display: block;
+        }
+
+        .cert-card .cert-frame {
+            background: #121212;
+            border: 1px solid #1f1f1f;
+            border-radius: 1rem;
+            padding: 8px;
+            transition: transform 0.35s ease, border-color 0.35s ease, box-shadow 0.35s ease;
+        }
+
+        .cert-card:hover .cert-frame {
+            transform: translateY(-6px) scale(1.03);
+            border-color: rgba(16, 185, 129, 0.5);
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(16, 185, 129, 0.15);
+        }
+
+        .cert-card img {
+            width: 100%;
+            height: 140px;
+            object-fit: cover;
+            border-radius: 0.6rem;
+            display: block;
+            background: #0a0a0a;
+        }
+
+        .cert-card .cert-label {
+            font-family: monospace;
+            font-size: 10px;
+            letter-spacing: 0.5px;
+            color: #6b7280;
+            padding: 8px 2px 2px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        @media (max-width: 640px) {
+            .cert-card { width: 160px; }
+            .cert-card img { height: 105px; }
+            .cert-marquee-track { animation-duration: 26s; gap: 12px; }
+        }
+
+        /* ================================================================
+           PROJECT MARQUEE — infinite auto-scrolling row of project cards,
+           pauses on hover/focus so visitors can still click Code/Demo links.
+        ================================================================ */
+        .project-marquee-wrap {
+            position: relative;
+            overflow: hidden;
+            -webkit-mask-image: linear-gradient(to right, transparent, black 4%, black 96%, transparent);
+            mask-image: linear-gradient(to right, transparent, black 4%, black 96%, transparent);
+        }
+
+        .project-marquee-track {
+            display: flex;
+            align-items: stretch;
+            gap: 24px;
+            width: max-content;
+            animation: projectMarqueeScroll 55s linear infinite;
+        }
+
+        .project-marquee-wrap:hover .project-marquee-track,
+        .project-marquee-wrap:focus-within .project-marquee-track {
+            animation-play-state: paused;
+        }
+
+        @keyframes projectMarqueeScroll {
+            from { transform: translateX(0); }
+            to { transform: translateX(-50%); }
+        }
+
+        .project-marquee-track .project-card {
+            flex: 0 0 auto;
+            width: 320px;
+        }
+
+        @media (max-width: 640px) {
+            .project-marquee-track .project-card { width: 260px; }
+            .project-marquee-track { gap: 16px; animation-duration: 38s; }
+        }
+
+        /* ================================================================
+           INTERACTIVE "COMPILE ME IN" PRELOADER
+           A terminal-flavoured boot sequence the visitor can tap to speed up.
+        ================================================================ */
+        #preloader {
+            background: #0a0a0a;
+            overflow: hidden;
+        }
+
+        /* Faint falling code-rain backdrop, canvas-driven */
+        #loaderRain {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0.35;
+        }
+
+        .loader-stage {
+            position: relative;
+            z-index: 2;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            row-gap: 22px;
+            padding: 0 24px;
+            text-align: center;
+        }
+
+        .loader-eyebrow {
+            font-family: monospace;
+            font-size: 11px;
+            letter-spacing: 3px;
+            color: #6b7280;
+            text-transform: uppercase;
+        }
+
+        /* Circular progress ring, tappable */
+        .loader-ring-wrap {
+            position: relative;
+            width: 168px;
+            height: 168px;
+            cursor: pointer;
+            -webkit-tap-highlight-color: transparent;
+            user-select: none;
+        }
+
+        .loader-ring-wrap svg { transform: rotate(-90deg); }
+
+        .loader-ring-track {
+            fill: none;
+            stroke: #1f1f1f;
+            stroke-width: 5;
+        }
+
+        .loader-ring-fill {
+            fill: none;
+            stroke: url(#loaderGradient);
+            stroke-width: 5;
+            stroke-linecap: round;
+            stroke-dasharray: 465;
+            stroke-dashoffset: 465;
+            transition: stroke-dashoffset 0.25s ease-out;
+            filter: drop-shadow(0 0 6px rgba(16, 185, 129, 0.55));
+        }
+
+        .loader-ring-center {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            row-gap: 2px;
+        }
+
+        .loader-percentage {
+            font-family: monospace;
+            font-weight: 800;
+            font-size: 2.1rem;
+            color: #fff;
+            letter-spacing: -1px;
+            font-variant-numeric: tabular-nums;
+        }
+
+        .loader-ring-hint {
+            font-family: monospace;
+            font-size: 9px;
+            letter-spacing: 1.5px;
+            color: #10b981;
+            text-transform: uppercase;
+            opacity: 0.85;
+            transition: opacity 0.2s ease;
+        }
+
+        .loader-ring-wrap:active .loader-ring-hint,
+        .loader-ring-wrap.pressed .loader-ring-hint {
+            opacity: 1;
+        }
+
+        .loader-ring-wrap:active {
+            transform: scale(0.97);
+        }
+        .loader-ring-wrap { transition: transform 0.15s ease; }
+
+        /* Console line status text */
+        .loader-console {
+            font-family: monospace;
+            font-size: 12px;
+            color: #9ca3af;
+            min-height: 18px;
+            letter-spacing: 0.5px;
+        }
+        .loader-console .ok { color: #10b981; }
+        .ui-dot-anim { animation: loaderDotBlink 1s infinite steps(1); }
+        @keyframes loaderDotBlink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.2; }
+        }
+
+        .loader-skip {
+            font-family: monospace;
+            font-size: 10px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: #4b5563;
+            border: 1px solid #262626;
+            padding: 8px 16px;
+            border-radius: 999px;
+            opacity: 0;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            background: transparent;
+        }
+        .loader-skip.visible {
+            opacity: 1;
+        }
+        .loader-skip:hover {
+            color: #fff;
+            border-color: #10b981;
+        }
+
+        /* Burst particle used on each tap */
+        .loader-burst {
+            position: absolute;
+            width: 5px;
+            height: 5px;
+            border-radius: 50%;
+            background: #10b981;
+            pointer-events: none;
+            top: 50%;
+            left: 50%;
+            box-shadow: 0 0 8px #10b981;
+        }
+
+        @keyframes loaderBurstFly {
+            to { transform: translate(var(--bx), var(--by)) scale(0); opacity: 0; }
+        }
+
+        /* PREMIUM LIGHT THEME VARIABLE OVERRIDES */
+        body.light-theme {
+            background-color: #f9fafb;
+            color: #1f2937;
+        }
+        body.light-theme #preloader {
+            background-color: #f9fafb !important;
+        }
+        body.light-theme .loader-ring-track {
+            stroke: #e5e7eb;
+        }
+        body.light-theme .loader-percentage {
+            color: #111827;
+        }
+        body.light-theme .loader-eyebrow,
+        body.light-theme .loader-console {
+            color: #6b7280;
+        }
+        body.light-theme .loader-skip {
+            color: #9ca3af;
+            border-color: #e5e7eb;
+        }
+        body.light-theme .loader-skip:hover {
+            color: #111827;
+        }
+        body.light-theme .bg-cardBg {
+            background-color: #ffffff !important;
+            border-color: #e5e7eb !important;
+        }
+        body.light-theme .border-cardBorder {
+            border-color: #e5e7eb !important;
+        }
+        body.light-theme .bg-neutral-900,
+        body.light-theme .bg-neutral-900\/60,
+        body.light-theme .bg-neutral-900\/80,
+        body.light-theme .bg-neutral-950 {
+            background-color: #f3f4f6 !important;
+            border-color: #e5e7eb !important;
+            color: #4b5563 !important;
+        }
+        body.light-theme .text-white,
+        body.light-theme h1,
+        body.light-theme h2,
+        body.light-theme h3,
+        body.light-theme h4 {
+            color: #111827 !important;
+        }
+        body.light-theme .text-neutral-300,
+        body.light-theme .text-neutral-400 {
+            color: #4b5563 !important;
+        }
+        body.light-theme .text-neutral-500 {
+            color: #9ca3af !important;
+        }
+        body.light-theme a[href="#contact"].bg-white {
+            background-color: #111827 !important;
+            color: #ffffff !important;
+        }
+        body.light-theme a[href="#contact"].bg-white:hover {
+            background-color: #1f2937 !important;
+        }
+    </style>
+</head>
+
+
+    <script>
+        (function () {
+            const preloaderView = document.getElementById("preloader");
+            const ringWrap = document.getElementById("loaderRingWrap");
+            const ringFill = document.getElementById("loaderRingFill");
+            const percentageNode = document.getElementById("loaderPercentage");
+            const consoleNode = document.getElementById("loaderConsole");
+            const skipBtn = document.getElementById("loaderSkip");
+            const rainCanvas = document.getElementById("loaderRain");
+
+            const CIRCUMFERENCE = 465; // matches stroke-dasharray in CSS
+            const messages = [
+                "booting kernel", "linking modules", "waking up the GPU",
+                "brewing coffee for the CPU", "compiling components",
+                "shaking hands with the server", "polishing pixels", "almost there"
+            ];
+
+            let progress = 0;
+            let finished = false;
+
+            function setProgress(p) {
+                progress = Math.min(100, Math.max(0, p));
+                const offset = CIRCUMFERENCE - (progress / 100) * CIRCUMFERENCE;
+                ringFill.style.strokeDashoffset = offset;
+                percentageNode.textContent = Math.floor(progress) + "%";
+                const msgIndex = Math.min(messages.length - 1, Math.floor((progress / 100) * messages.length));
+                consoleNode.innerHTML = messages[msgIndex] + (progress >= 100 ? ' <span class="ok">✓ ready</span>' : '<span class="ui-dot-anim">...</span>');
+                if (progress >= 100 && !finished) finishLoading();
+            }
+
+            function spawnBurst(count) {
+                for (let i = 0; i < count; i++) {
+                    const p = document.createElement("span");
+                    p.className = "loader-burst";
+                    const angle = Math.random() * Math.PI * 2;
+                    const dist = 40 + Math.random() * 40;
+                    p.style.setProperty("--bx", Math.cos(angle) * dist + "px");
+                    p.style.setProperty("--by", Math.sin(angle) * dist + "px");
+                    p.style.animation = "loaderBurstFly 0.6s ease-out forwards";
+                    ringWrap.appendChild(p);
+                    setTimeout(() => p.remove(), 650);
+                }
+            }
+
+            // Auto-progress: slow trickle so the page never feels stuck,
+            // but the visitor can tap/click/press space to speed it way up.
+            const autoTimer = setInterval(() => {
+                if (finished) return;
+                setProgress(progress + (0.6 + Math.random() * 0.8));
+            }, 60);
+
+            function boost(e) {
+                if (finished) return;
+                setProgress(progress + 9 + Math.random() * 6);
+                ringWrap.classList.add("pressed");
+                spawnBurst(6);
+                if (window.navigator.vibrate) window.navigator.vibrate(8);
+                setTimeout(() => ringWrap.classList.remove("pressed"), 200);
+                if (e) e.preventDefault();
+            }
+
+            ringWrap.addEventListener("pointerdown", boost);
+            window.addEventListener("keydown", (e) => {
+                if (e.code === "Space") boost();
+            });
+
+            skipBtn.addEventListener("click", () => setProgress(100));
+            setTimeout(() => skipBtn.classList.add("visible"), 1800);
+
+            function finishLoading() {
+                finished = true;
+                clearInterval(autoTimer);
+                if (window.confetti) {
+                    confetti({
+                        particleCount: 60,
+                        spread: 70,
+                        origin: { y: 0.55 },
+                        colors: ["#10b981", "#0575e6", "#ffffff"],
+                        scalar: 0.7
+                    });
+                }
+                setTimeout(() => {
+                    if (window.gsap) {
+                        gsap.to(preloaderView, {
+                            yPercent: -100,
+                            duration: 0.8,
+                            ease: "power4.inOut",
+                            onComplete: () => {
+                                preloaderView.remove();
+                                if (typeof initPortfolioAnimations === "function") initPortfolioAnimations();
+                            }
+                        });
+                    } else {
+                        preloaderView.style.opacity = "0";
+                        preloaderView.style.pointerEvents = "none";
+                        setTimeout(() => {
+                            preloaderView.remove();
+                            if (typeof initPortfolioAnimations === "function") initPortfolioAnimations();
+                        }, 500);
+                    }
+                }, 350);
+            }
+
+            // Subtle matrix-style code rain in the background of the loader
+            const ctx = rainCanvas.getContext("2d");
+            let w, h, columns, drops;
+            const glyphs = "01</>{}[]#*BISWAJIT";
+
+            function resizeRain() {
+                w = rainCanvas.width = window.innerWidth;
+                h = rainCanvas.height = window.innerHeight;
+                columns = Math.floor(w / 18);
+                drops = new Array(columns).fill(0);
+            }
+            resizeRain();
+            window.addEventListener("resize", resizeRain);
+
+            function drawRain() {
+                if (!document.getElementById("preloader")) return;
+                ctx.fillStyle = "rgba(10,10,10,0.15)";
+                ctx.fillRect(0, 0, w, h);
+                ctx.fillStyle = "#10b981";
+                ctx.font = "14px monospace";
+                for (let i = 0; i < drops.length; i++) {
+                    const text = glyphs[Math.floor(Math.random() * glyphs.length)];
+                    ctx.fillText(text, i * 18, drops[i] * 18);
+                    if (drops[i] * 18 > h && Math.random() > 0.975) drops[i] = 0;
+                    drops[i]++;
+                }
+                requestAnimationFrame(drawRain);
+            }
+            requestAnimationFrame(drawRain);
+
+            // Absolute failsafe: never trap a visitor on the loader
+            setTimeout(() => { if (!finished) setProgress(100); }, 9000);
+        })();
+    </script>
+
+    <header class="sticky top-0 z-50 backdrop-blur-md bg-darkBg/70 border-b border-cardBorder transition-all duration-300 overflow-visible">
+    <!-- Top accent neon gradient line -->
+    <div class="absolute top-0 left-0 w-full h-[2px] bg-gradient-to-r from-emerald-500 via-cyan-500 to-blue-500 opacity-80"></div>
+    
+    <div class="max-w-6xl mx-auto px-4 h-16 flex items-center justify-between relative">
+        
+        <!-- Premium Logo with Animated Gradient Wave & Left Glow Icon -->
+        <div class="flex items-center gap-2">
+            <a href="#home" class="group relative text-lg font-bold tracking-tight text-white overflow-hidden block">
+                <span class="inline-block transition-transform duration-500 group-hover:-translate-y-full">[BISWAJIT.site]</span>
+                <span class="absolute top-0 left-0 inline-block text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 via-cyan-400 to-blue-400 translate-y-full transition-transform duration-500 group-hover:translate-y-0">[BISWAJIT.site]</span>
+            </a>
+        </div>
+        
+        <!-- Desktop Navigation with Magnetic Glass Pills & Dynamic Underline Slider -->
+        <nav class="hidden md:flex items-center space-x-1 bg-neutral-900/40 border border-neutral-800/60 backdrop-blur-sm rounded-full p-1 relative group/nav">
+            <a href="#home" class="nav-link relative px-4 py-1.5 text-sm font-medium text-neutral-400 hover:text-white transition-all duration-300 rounded-full hover:bg-neutral-800/40 hover:scale-105 active:scale-95 after:content-[''] after:absolute after:bottom-1 after:left-1/2 after:-translate-x-1/2 after:w-0 after:h-[2px] after:bg-emerald-400 after:rounded-full after:transition-all after:duration-300 hover:after:w-1/2">Home</a>
+            <a href="#about" class="nav-link relative px-4 py-1.5 text-sm font-medium text-neutral-400 hover:text-white transition-all duration-300 rounded-full hover:bg-neutral-800/40 hover:scale-105 active:scale-95 after:content-[''] after:absolute after:bottom-1 after:left-1/2 after:-translate-x-1/2 after:w-0 after:h-[2px] after:bg-cyan-400 after:rounded-full after:transition-all after:duration-300 hover:after:w-1/2">About</a>
+            <a href="#projects" class="nav-link relative px-4 py-1.5 text-sm font-medium text-neutral-400 hover:text-white transition-all duration-300 rounded-full hover:bg-neutral-800/40 hover:scale-105 active:scale-95 after:content-[''] after:absolute after:bottom-1 after:left-1/2 after:-translate-x-1/2 after:w-0 after:h-[2px] after:bg-blue-400 after:rounded-full after:transition-all after:duration-300 hover:after:w-1/2">Projects</a>
+            <a href="#contact" class="nav-link relative px-4 py-1.5 text-sm font-medium text-neutral-400 hover:text-white transition-all duration-300 rounded-full hover:bg-neutral-800/40 hover:scale-105 active:scale-95 after:content-[''] after:absolute after:bottom-1 after:left-1/2 after:-translate-x-1/2 after:w-0 after:h-[2px] after:bg-purple-400 after:rounded-full after:transition-all after:duration-300 hover:after:w-1/2">Contact</a>
+        </nav>
+
+        <!-- Right Side Controls -->
+        <div class="flex items-center space-x-3">
+            <!-- Theme Toggle with Color Shift & 3D Flip Rotation -->
+            <button id="theme-toggle" class="group/toggle text-neutral-400 hover:text-cyan-400 hover:bg-neutral-900/80 border border-transparent hover:border-cyan-500/20 shadow-md hover:shadow-cyan-500/10 transition-all duration-300 p-2 rounded-xl" title="Toggle Theme">
+                <i id="theme-icon" class="fa-regular fa-moon text-lg transition-transform duration-500 group-hover/toggle:rotate-[360deg] group-hover/toggle:scale-110"></i>
+            </button>
+            
+            <!-- Luxury Dynamic Gradient "Hire Me" Button -->
+            <a href="#contact" class="group/btn relative overflow-hidden bg-white text-black font-semibold text-xs uppercase tracking-wider px-5 py-2.5 rounded-full transition-all duration-300 flex items-center gap-1.5 shadow-lg shadow-white/5 hover:shadow-emerald-500/20 active:scale-95 border border-transparent hover:border-emerald-400/30">
+                <!-- Background sliding shine effect -->
+                <span class="absolute inset-0 w-full h-full bg-gradient-to-r from-transparent via-neutral-200/60 to-transparent -translate-x-full group-hover/btn:animate-shine"></span>
+                
+                <span class="relative z-10 transition-colors duration-300 group-hover/btn:text-emerald-600">Hire Me</span> 
+                <i class="fa-solid fa-arrow-right text-[10px] relative z-10 text-black transition-transform duration-300 group-hover/btn:text-emerald-500 group-hover/btn:-rotate-45 group-hover/btn:translate-x-0.5 group-hover/btn:-translate-y-0.5"></i>
+            </a>
+
+            <!-- Mobile Menu Toggle Button with Pulsing Border Accent -->
+            <button id="mobile-menu-toggle" class="group/menu flex md:hidden text-neutral-400 hover:text-cyan-400 p-2 rounded-xl border border-transparent hover:border-neutral-800 hover:bg-neutral-900/60 transition-all active:scale-90 relative">
+                <i id="menu-icon" class="fa-solid fa-bars-staggered text-lg transition-transform duration-300 group-hover/menu:scale-110"></i>
+            </button>
+        </div>
+    </div>
+
+    <!-- Mobile Dropdown Menu Container (With Premium Neon Staggered Link Glows) -->
+    <div id="mobile-menu" class="hidden absolute top-16 left-0 w-full bg-darkBg/95 backdrop-blur-xl border-b border-cardBorder px-6 py-6 flex flex-col space-y-2 md:hidden transition-all duration-300 opacity-0 transform -translate-y-4">
+        <a href="#home" class="mobile-link text-base font-medium text-neutral-400 hover:text-white hover:pl-6 py-2.5 px-4 rounded-xl hover:bg-gradient-to-r hover:from-emerald-500/10 hover:to-transparent border-l-2 border-transparent hover:border-emerald-400 transition-all duration-300 transform translate-x-4 opacity-0">Home</a>
+        <a href="#about" class="mobile-link text-base font-medium text-neutral-400 hover:text-white hover:pl-6 py-2.5 px-4 rounded-xl hover:bg-gradient-to-r hover:from-cyan-500/10 hover:to-transparent border-l-2 border-transparent hover:border-cyan-400 transition-all duration-300 transform translate-x-4 opacity-0">About</a>
+        <a href="#projects" class="mobile-link text-base font-medium text-neutral-400 hover:text-white hover:pl-6 py-2.5 px-4 rounded-xl hover:bg-gradient-to-r hover:from-blue-500/10 hover:to-transparent border-l-2 border-transparent hover:border-blue-400 transition-all duration-300 transform translate-x-4 opacity-0">Projects</a>
+        <a href="#contact" class="mobile-link text-base font-medium text-neutral-400 hover:text-white hover:pl-6 py-2.5 px-4 rounded-xl hover:bg-gradient-to-r hover:from-purple-500/10 hover:to-transparent border-l-2 border-transparent hover:border-purple-400 transition-all duration-300 transform translate-x-4 opacity-0">Contact</a>
+    </div>
+</header>
+
+<!-- Required Custom Animation Utilities -->
+<style>
+    @keyframes shine {
+        100% { transform: translateX(100%); }
+    }
+    .animate-shine {
+        animation: shine 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+</style>
+
+<!-- Enhanced JavaScript for Fluid Interactions & Cascading Mobile Animations -->
+<script>
+    const menuToggle = document.getElementById('mobile-menu-toggle');
+    const menuIcon = document.getElementById('menu-icon');
+    const mobileMenu = document.getElementById('mobile-menu');
+    const mobileLinks = document.querySelectorAll('.mobile-link');
+
+    function toggleMenu() {
+        const isHidden = mobileMenu.classList.contains('hidden');
+        
+        if (isHidden) {
+            // Open Menu Actions with elegant rotation morph
+            mobileMenu.classList.remove('hidden');
+            menuIcon.className = "fa-solid fa-xmark text-lg transition-transform duration-300 rotate-90 text-cyan-400";
+            
+            setTimeout(() => {
+                mobileMenu.classList.remove('opacity-0', '-translate-y-4');
+                
+                // Staggered appearance for inner links
+                mobileLinks.forEach((link, index) => {
+                    setTimeout(() => {
+                        link.classList.remove('translate-x-4', 'opacity-0');
+                    }, index * 65); // Fluid stagger interval
+                });
+            }, 10);
+        } else {
+            // Close Menu Actions
+            menuIcon.className = "fa-solid fa-bars-staggered text-lg transition-transform duration-300";
+            
+            mobileLinks.forEach((link) => {
+                link.classList.add('translate-x-4', 'opacity-0');
+            });
+
+            setTimeout(() => {
+                mobileMenu.classList.add('opacity-0', '-translate-y-4');
+            }, 50);
+
+            setTimeout(() => {
+                mobileMenu.classList.add('hidden');
+            }, 300);
+        }
+    }
+
+    menuToggle.addEventListener('click', toggleMenu);
+    mobileLinks.forEach(link => link.addEventListener('click', toggleMenu));
+</script>
+
+    <main class="max-w-5xl mx-auto px-4 py-12 space-y-32">
+
+        <section id="home" class="grid grid-cols-1 md:grid-cols-12 gap-8 items-center pt-8">
+            <div id="hero-text" class="md:col-span-7 space-y-6 reveal-element relative z-10">
+                <div class="inline-flex items-center gap-2 bg-neutral-900 border border-cardBorder px-3 py-1 rounded-full text-xs text-neutral-400">
+                    <span class="w-2 h-2 rounded-full bg-accentGreen animate-pulse"></span>
+                    Available for Freelance / Internships / Job Opportunities
+                </div>
+                <h1 class="text-5xl md:text-7xl font-extrabold tracking-tight text-white leading-[1.1]">
+                    HEY, I'M <br><span class="text-neutral-100">Biswajit pattanaik</span>
+                </h1>
+                <p class="text-neutral-400 text-lg max-w-md">
+                    Full-Stack & Embedded Engineer bridging hardware and cloud — with expertise in MERN applications, AI/ML models, data science, and automated DevOps infrastructure.
+                </p>
+                <div class="flex flex-wrap gap-4 pt-2">
+                    <a href="#projects" class="bg-neutral-900 border border-cardBorder text-white text-sm font-medium px-5 py-3 rounded-full hover:bg-neutral-800 transition-all flex items-center gap-2">
+                        View Projects <i class="fa-solid fa-arrow-right text-xs"></i>
+                    </a>
+                    <a href="./assets/Biswajit Pattanaik.pdf" download="Biswajit_Pattanaik_Resume.pdf" target="_blank" class="bg-white text-black text-sm font-bold px-5 py-3 rounded-full hover:bg-neutral-200 transition-all flex items-center gap-2 shadow-lg">
+                        Download Resume <i class="fa-solid fa-download text-xs"></i>
+                    </a>
+                </div>
+                
+                <div class="flex items-center gap-4 pt-4 text-neutral-400">
+                    <button onclick="navigator.clipboard.writeText('pattanaikbiswajit07@gmail.com'); alert('Email copied!');" 
+                            title="Copy Email"
+                            class="w-10 h-10 rounded-xl bg-neutral-900 border border-cardBorder flex items-center justify-center hover:text-white hover:border-neutral-700 transition-all">
+                        <i class="fa-regular fa-envelope text-lg"></i>
+                    </button>
+                    <a href="https://github.com/Biswajitpa" target="_blank" rel="noopener noreferrer" 
+                       title="Visit GitHub"
+                       class="w-10 h-10 rounded-xl bg-neutral-900 border border-cardBorder flex items-center justify-center hover:text-white hover:border-neutral-700 transition-all">
+                        <i class="fa-brands fa-github text-lg"></i>
+                    </a>
+                    <a href="https://www.linkedin.com/in/biswajit-pattanaik-3586b82b3" target="_blank" rel="noopener noreferrer" 
+                       title="Visit LinkedIn"
+                       class="w-10 h-10 rounded-xl bg-neutral-900 border border-cardBorder flex items-center justify-center hover:text-white hover:border-neutral-700 transition-all">
+                        <i class="fa-brands fa-linkedin-in text-lg"></i>
+                    </a>
+                    <a href="https://leetcode.com/u/ueiwy9Px19/" target="_blank" rel="noopener noreferrer" 
+                       title="Visit LeetCode"
+                       class="w-10 h-10 rounded-xl bg-neutral-900 border border-cardBorder flex items-center justify-center hover:text-white hover:border-neutral-700 transition-all">
+                        <i class="fa-solid fa-code text-lg"></i>
+                    </a>
+                </div>
+            </div>
+            
+            <div id="hero-img" class="md:col-span-5 flex justify-center md:justify-end reveal-element">
+    <div class="w-80 h-96 bg-neutral-900 border border-cardBorder rounded-2xl overflow-hidden grayscale hover:grayscale-0 transition-all duration-500 shadow-2xl">
+        <!-- FIXED: Changed path syntax from backslash to web-standard forward slash with a dot root pointer -->
+        <img src="./assets/WhatsApp Image 2026-05-02 at 12.36.52 PM.jpeg" alt="Biswajit Pattanaik" class="w-full h-full object-cover">
+    </div>
+</div>
+            </div>
+        </section>
+
+        <section id="about" class="space-y-12">
+            <div class="grid grid-cols-1 md:grid-cols-12 gap-8">
+                
+                <div class="md:col-span-7 space-y-6 reveal-element">
+                    <h2 class="text-3xl md:text-4xl font-bold text-white">The Developer Behind The Screen.</h2>
+                    <div class="space-y-4 text-neutral-400 text-base leading-relaxed">
+                        <p>I am Biswajit Pattanaik, a final-year Electronics and Communication Engineering student at Centurion University of Technology and Management, Bhubaneswar, focused on building full-stack AI products that feel fast, useful, and reliable.</p>
+                        <p>My work spans full-stack web development with Next.js, React, Node.js, Express.js, Python, PostgreSQL, and MongoDB, along with AI/ML integrations and DevOps automation — turning rough product ideas into real, shipped interfaces and APIs.</p>
+                        <p></p>
+                    </div>
+                    <div class="pt-4">
+                        <div class="inline-flex items-center gap-2 bg-neutral-900/80 border border-cardBorder px-4 py-2 rounded-full text-sm text-neutral-300">
+                            <span class="w-2.5 h-2.5 rounded-full bg-accentGreen"></span>
+                            <span class="text-neutral-500 mr-1">Currently Building:</span> Cortex-ai
+                        </div>
+                    </div>
+                </div>
+
+                <div class="md:col-span-5 grid grid-cols-2 gap-4">
+                    <div class="bg-cardBg border border-cardBorder p-6 rounded-2xl flex flex-col justify-between bento-stat">
+                        <div class="text-3xl md:text-4xl font-extrabold text-white">200+ CP</div>
+                        <div class="text-xs text-neutral-500 uppercase tracking-wider mt-2">Problems Solved</div>
+                    </div>
+                    <div class="bg-cardBg border border-cardBorder p-6 rounded-2xl flex flex-col justify-between bento-stat">
+                        <div class="text-3xl md:text-4xl font-extrabold text-white">8.5</div>
+                        <div class="text-xs text-neutral-500 uppercase tracking-wider mt-2">CGPA</div>
+                    </div>
+                    <div class="bg-cardBg border border-cardBorder p-6 rounded-2xl flex flex-col justify-between bento-stat">
+                        <div class="text-2xl md:text-3xl font-extrabold text-white"> 3rd Prize </div>
+                        <div class="text-xs text-neutral-500 uppercase tracking-wider mt-2">In College Tech Spark 2.0</div>
+                    </div>
+                    <div class="bg-cardBg border border-cardBorder p-6 rounded-2xl flex flex-col justify-between bento-stat border-emerald-950/40 relative group overflow-hidden">
+                        <div class="text-3xl md:text-4xl font-extrabold text-accentGreen flex items-center gap-1">10+ <span class="text-xs font-mono text-neutral-400">Verified</span></div>
+                        <div class="text-xs text-neutral-300 font-medium mt-2 flex items-center justify-between group-hover:text-white transition-colors">
+                            Internship Certifiaction <i class="fa-solid fa-arrow-up-right text-[10px] opacity-60 group-hover:opacity-100 transition-opacity"></i>
+                        </div>
+                        <a href="#experience" class="absolute inset-0 z-10" title="View Certificate Details"></a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pt-8 space-y-4 reveal-element">
+                <h3 class="text-lg font-semibold text-white">What I Do</h3>
+                <div class="space-y-3">
+                    <div class="bg-cardBg border border-cardBorder p-5 rounded-xl flex items-start gap-4 hover:border-neutral-800 transition-colors">
+                        <div class="w-10 h-10 rounded-lg bg-neutral-900 border border-cardBorder flex items-center justify-center text-neutral-400 shrink-0">
+                            <i class="fa-solid fa-code text-sm"></i>
+                        </div>
+                        <div>
+                            <h4 class="text-sm font-semibold text-white">Full-Stack AI Developer</h4>
+                            <p class="text-xs text-neutral-400 mt-1">Next.js, React, Express.js, MongoDB, and PostgreSQL systems.</p>
+                        </div>
+                    </div>
+
+                    <div class="bg-cardBg border border-cardBorder p-5 rounded-xl flex items-start gap-4 hover:border-neutral-800 transition-colors">
+                        <div class="w-10 h-10 rounded-lg bg-neutral-900 border border-cardBorder flex items-center justify-center text-neutral-400 shrink-0">
+                            <i class="fa-solid fa-robot text-sm"></i>
+                        </div>
+                        <div>
+                            <h4 class="text-sm font-semibold text-white">AI/ML Integration</h4>
+                            <p class="text-xs text-neutral-400 mt-1">RAG, LangChain, vector DBs, and product workflows.</p>
+                        </div>
+                    </div>
+
+                    <div class="bg-cardBg border border-cardBorder p-5 rounded-xl flex items-start gap-4 hover:border-neutral-800 transition-colors">
+                        <div class="w-10 h-10 rounded-lg bg-neutral-900 border border-cardBorder flex items-center justify-center text-neutral-400 shrink-0">
+                            <i class="fa-solid fa-network-wired text-sm"></i>
+                        </div>
+                        <div>
+                            <h4 class="text-sm font-semibold text-white">System Architecture & Design</h4>
+                            <p class="text-xs text-neutral-400 mt-1">Scalable microservices, API design, high-availability, and distributed systems.</p>
+                        </div>
+                    </div>
+
+                    <div class="bg-cardBg border border-cardBorder p-5 rounded-xl flex items-start gap-4 hover:border-neutral-800 transition-colors">
+                        <div class="w-10 h-10 rounded-lg bg-neutral-900 border border-cardBorder flex items-center justify-center text-neutral-400 shrink-0">
+                            <i class="fa-solid fa-microchip text-sm"></i>
+                        </div>
+                        <div>
+                            <h4 class="text-sm font-semibold text-white">Embedded Systems & IoT</h4>
+                            <p class="text-xs text-neutral-400 mt-1">Firmware design, microcontrollers, sensor integration, and real-time processing.</p>
+                        </div>
+                    </div>
+
+                    <div class="bg-cardBg border border-cardBorder p-5 rounded-xl flex items-start gap-4 hover:border-neutral-800 transition-colors">
+                        <div class="w-10 h-10 rounded-lg bg-neutral-900 border border-cardBorder flex items-center justify-center text-neutral-400 shrink-0">
+                            <i class="fa-solid fa-server text-sm"></i>
+                        </div>
+                        <div>
+                            <h4 class="text-sm font-semibold text-white">DevOps & Cloud Infrastructure</h4>
+                            <p class="text-xs text-neutral-400 mt-1">CI/CD pipelines, Docker, Kubernetes, and cloud management (AWS/GCP).</p>
+                        </div>
+                    </div>
+
+                    <div class="bg-cardBg border border-cardBorder p-5 rounded-xl flex items-start gap-4 hover:border-neutral-800 transition-colors">
+                        <div class="w-10 h-10 rounded-lg bg-neutral-900 border border-cardBorder flex items-center justify-center text-neutral-400 shrink-0">
+                            <i class="fa-solid fa-trophy text-sm"></i>
+                        </div>
+                        <div>
+                            <h4 class="text-sm font-semibold text-white">Competitive Programming</h4>
+                            <p class="text-xs text-neutral-400 mt-1">C++, Knight at LeetCode, and contest-grade problem solving.</p>
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
+
+            <section class="space-y-8">
+                <div class="reveal-element">
+                    <h2 class="text-3xl font-bold text-white text-center">My Tech Stack</h2>
+                </div>
+                
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-3 reveal-element">
+                    <div class="bg-cardBg border border-cardBorder py-3 px-4 rounded-xl flex items-center gap-3 text-xs uppercase tracking-wider font-semibold text-neutral-300"><i class="fa-solid fa-cubes text-neutral-500"></i> Build</div>
+                    <div class="bg-cardBg border border-cardBorder py-3 px-4 rounded-xl flex items-center gap-3 text-xs uppercase tracking-wider font-semibold text-neutral-300"><i class="fa-solid fa-arrow-up-right-dots text-neutral-500"></i> Scale</div>
+                    <div class="bg-cardBg border border-cardBorder py-3 px-4 rounded-xl flex items-center gap-3 text-xs uppercase tracking-wider font-semibold text-neutral-300"><i class="fa-solid fa-paper-plane text-neutral-500"></i> Ship</div>
+                    <div class="bg-cardBg border border-cardBorder py-3 px-4 rounded-xl flex items-center gap-3 text-xs uppercase tracking-wider font-semibold text-neutral-300"><i class="fa-solid fa-wand-magic-sparkles text-neutral-500"></i> Polish</div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <div class="bg-cardBg border border-cardBorder p-5 rounded-2xl space-y-4 bento-stat">
+                        <div class="text-xs text-neutral-500 font-mono flex items-center gap-2"><i class="fa-solid fa-terminal"></i> Languages</div>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="bg-neutral-900 border border-cardBorder text-xs px-3 py-1.5 rounded-lg text-neutral-300 flex items-center gap-1.5">
+                                <i class="fa-solid fa-c text-[#A8B9CC]"></i> C
+                            </span>
+                            <span class="bg-neutral-900 border border-cardBorder text-xs px-3 py-1.5 rounded-lg text-neutral-300 flex items-center gap-1.5">
+                                <i class="fa-solid fa-c text-[#00599C]"></i> C++
+                            </span>
+                            <span class="bg-neutral-900 border border-cardBorder text-xs px-3 py-1.5 rounded-lg text-neutral-300 flex items-center gap-1.5">
+                                <i class="fa-brands fa-python text-[#3776AB]"></i> Python
+                            </span>
+                            <span class="bg-neutral-900 border border-cardBorder text-xs px-3 py-1.5 rounded-lg text-neutral-300 flex items-center gap-1.5">
+                                <i class="fa-brands fa-js text-[#F7DF1E]"></i> JavaScript
+                            </span>
+                            <span class="bg-neutral-900 border border-cardBorder text-xs px-3 py-1.5 rounded-lg text-neutral-300 flex items-center gap-1.5">
+                                <i class="fa-brands fa-js text-[#3178C6]"></i> TypeScript
+                            </span>
+                            <span class="bg-neutral-900 border border-cardBorder text-xs px-3 py-1.5 rounded-lg text-neutral-300 flex items-center gap-1.5">
+                                <i class="fa-brands fa-java text-[#ED8B00]"></i> Java
+                            </span>
+                            
+                        </div>
+                    </div>
+
+                    <div class="bg-cardBg border border-cardBorder p-5 rounded-2xl space-y-4 bento-stat">
+                        <div class="text-xs text-neutral-500 font-mono flex items-center gap-2"><i class="fa-solid fa-layer-group"></i> Frontend</div>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="bg-neutral-900 border border-cardBorder text-xs px-3 py-1.5 rounded-lg text-neutral-300 flex items-center gap-1.5">
+                                <i class="fa-brands fa-react text-[#61DAFB]"></i> React.js
+                            </span>
+                            <span class="bg-neutral-900 border border-cardBorder text-xs px-3 py-1.5 rounded-lg text-neutral-300 flex items-center gap-1.5">
+                                <i class="fa-solid fa-code text-[#FFFFFF]"></i> Next.js
+                            </span>
+                            <span class="bg-neutral-900 border border-cardBorder text-xs px-3 py-1.5 rounded-lg text-neutral-300 flex items-center gap-1.5">
+                                <i class="fa-solid fa-cubes text-[#764ABC]"></i> Redux Toolkit
+                            </span>
+                            <span class="bg-neutral-900 border border-cardBorder text-xs px-3 py-1.5 rounded-lg text-neutral-300 flex items-center gap-1.5">
+                                <i class="fa-solid fa-wind text-[#06B6D4]"></i> Tailwind CSS
+                            </span>
+                            <span class="bg-neutral-900 border border-cardBorder text-xs px-3 py-1.5 rounded-lg text-neutral-300 flex items-center gap-1.5">
+                                <i class="fa-solid fa-plug-zap text-[#010101]"></i> Socket.IO
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="bg-cardBg border border-cardBorder p-5 rounded-2xl space-y-4 bento-stat">
+                        <div class="text-xs text-neutral-500 font-mono flex items-center gap-2"><i class="fa-solid fa-server"></i> Backend</div>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="bg-neutral-900 border border-cardBorder text-xs px-3 py-1.5 rounded-lg text-neutral-300 flex items-center gap-1.5">
+                                <i class="fa-brands fa-node-js text-[#339933]"></i> Node.js
+                            </span>
+                            <span class="bg-neutral-900 border border-cardBorder text-xs px-3 py-1.5 rounded-lg text-neutral-300 flex items-center gap-1.5">
+                                <i class="fa-solid fa-gears text-[#000000]"></i> Express.js
+                            </span>
+                            <span class="bg-neutral-900 border border-cardBorder text-xs px-3 py-1.5 rounded-lg text-neutral-300 flex items-center gap-1.5">
+                                <i class="fa-solid fa-cloud-arrow-down text-[#009688]"></i> REST APIs
+                            </span>
+                            <span class="bg-neutral-900 border border-cardBorder text-xs px-3 py-1.5 rounded-lg text-neutral-300 flex items-center gap-1.5">
+                                <i class="fa-solid fa-network-wired text-[#20B2AA]"></i> WebSocket
+                            </span>
+                            <span class="bg-neutral-900 border border-cardBorder text-xs px-3 py-1.5 rounded-lg text-neutral-300 flex items-center gap-1.5">
+                                <i class="fa-solid fa-key text-[#000000]"></i> JWT
+                            </span>
+                            <span class="bg-neutral-900 border border-cardBorder text-xs px-3 py-1.5 rounded-lg text-neutral-300 flex items-center gap-1.5">
+                                <i class="fa-brands fa-google text-[#4285F4]"></i> Google OAuth 2.0
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="bg-cardBg border border-cardBorder p-5 rounded-2xl space-y-4 bento-stat">
+                        <div class="text-xs text-neutral-500 font-mono flex items-center gap-2"><i class="fa-solid fa-database"></i> Databases & ORM</div>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="bg-neutral-900 border border-cardBorder text-xs px-3 py-1.5 rounded-lg text-neutral-300 flex items-center gap-1.5">
+                                <i class="fa-solid fa-database text-[#4169E1]"></i> PostgreSQL
+                            </span>
+                            <span class="bg-neutral-900 border border-cardBorder text-xs px-3 py-1.5 rounded-lg text-neutral-300 flex items-center gap-1.5">
+                                <i class="fa-solid fa-envira text-[#47A248]"></i> MongoDB
+                            </span>
+                            <span class="bg-neutral-900 border border-cardBorder text-xs px-3 py-1.5 rounded-lg text-neutral-300 flex items-center gap-1.5">
+                                <i class="fa-solid fa-database text-[#00758F]"></i> MySQL
+                            </span>
+                            <span class="bg-neutral-900 border border-cardBorder text-xs px-3 py-1.5 rounded-lg text-neutral-300 flex items-center gap-1.5">
+                                <i class="fa-solid fa-cloud text-[#3448C5]"></i> Cloudinary
+                            </span>
+                            <span class="bg-neutral-900 border border-cardBorder text-xs px-3 py-1.5 rounded-lg text-neutral-300 flex items-center gap-1.5">
+                                <i class="fa-solid fa-layer-group text-[#DC382D]"></i> Redis
+                            </span>
+                            <span class="bg-neutral-900 border border-cardBorder text-xs px-3 py-1.5 rounded-lg text-neutral-300 flex items-center gap-1.5">
+                                <i class="fa-solid fa-table text-[#00758F]"></i> SQL
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="bg-cardBg border border-cardBorder p-5 rounded-2xl space-y-4 bento-stat">
+                        <div class="text-xs text-neutral-500 font-mono flex items-center gap-2"><i class="fa-solid fa-brain"></i> AI / GenAI</div>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="bg-neutral-900 border border-cardBorder text-xs px-3 py-1.5 rounded-lg text-neutral-300 flex items-center gap-1.5">
+                                <i class="fa-solid fa-magnifying-glass-chart text-[#FF6B6B]"></i> RAG Pipelines
+                            </span>
+                            <span class="bg-neutral-900 border border-cardBorder text-xs px-3 py-1.5 rounded-lg text-neutral-300 flex items-center gap-1.5">
+                                <i class="fa-solid fa-route text-[#7C3AED]"></i> OpenRouter
+                            </span>
+                            <span class="bg-neutral-900 border border-cardBorder text-xs px-3 py-1.5 rounded-lg text-neutral-300 flex items-center gap-1.5">
+                                <i class="fa-solid fa-sparkles text-[#1A73E8]"></i> Gemini
+                            </span>
+                            <span class="bg-neutral-900 border border-cardBorder text-xs px-3 py-1.5 rounded-lg text-neutral-300 flex items-center gap-1.5">
+                                <i class="fa-solid fa-bolt text-[#10A37F]"></i> OpenAI
+                            </span>
+                            <span class="bg-neutral-900 border border-cardBorder text-xs px-3 py-1.5 rounded-lg text-neutral-300 flex items-center gap-1.5">
+                                <i class="fa-solid fa-link text-[#13997C]"></i> LangChain
+                            </span>
+                            <span class="bg-neutral-900 border border-cardBorder text-xs px-3 py-1.5 rounded-lg text-neutral-300 flex items-center gap-1.5">
+                                <i class="fa-solid fa-circle-notch text-[#D2691E]"></i> Ollama
+                            </span>
+                            <span class="bg-neutral-900 border border-cardBorder text-xs px-3 py-1.5 rounded-lg text-neutral-300 flex items-center gap-1.5">
+                                <i class="fa-solid fa-diagram-project text-[#FF9F43]"></i> ML Pipelines
+                            </span>
+                            <span class="bg-neutral-900 border border-cardBorder text-xs px-3 py-1.5 rounded-lg text-neutral-300 flex items-center gap-1.5">
+                                <i class="fa-solid fa-pen-nib text-[#00D2D3]"></i> Prompt Engineering
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="bg-cardBg border border-cardBorder p-5 rounded-2xl space-y-4 bento-stat">
+                        <div class="text-xs text-neutral-500 font-mono flex items-center gap-2"><i class="fa-solid fa-sliders"></i> Tools & DevOps</div>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="bg-neutral-900 border border-cardBorder text-xs px-3 py-1.5 rounded-lg text-neutral-300 flex items-center gap-1.5">
+                                <i class="fa-brands fa-git-alt text-[#F05032]"></i> Git
+                            </span>
+                            <span class="bg-neutral-900 border border-cardBorder text-xs px-3 py-1.5 rounded-lg text-neutral-300 flex items-center gap-1.5">
+                                <i class="fa-brands fa-github text-[#FFFFFF]"></i> GitHub
+                            </span>
+                            <span class="bg-neutral-900 border border-cardBorder text-xs px-3 py-1.5 rounded-lg text-neutral-300 flex items-center gap-1.5">
+                                <i class="fa-brands fa-docker text-[#2496ED]"></i> Docker
+                            </span>
+                            <span class="bg-neutral-900 border border-cardBorder text-xs px-3 py-1.5 rounded-lg text-neutral-300 flex items-center gap-1.5">
+                                <i class="fa-solid fa-triangle text-[#FFFFFF]"></i> Vercel
+                            </span>
+                            <span class="bg-neutral-900 border border-cardBorder text-xs px-3 py-1.5 rounded-lg text-neutral-300 flex items-center gap-1.5">
+                                <i class="fa-solid fa-rocket text-[#FF6C37]"></i> Postman
+                            </span>
+                            <span class="bg-neutral-900 border border-cardBorder text-xs px-3 py-1.5 rounded-lg text-neutral-300 flex items-center gap-1.5">
+                                <i class="fa-solid fa-infinity text-[#4682B4]"></i> CI/CD
+                            </span>
+                            <span class="bg-neutral-900 border border-cardBorder text-xs px-3 py-1.5 rounded-lg text-neutral-300 flex items-center gap-1.5">
+                                <i class="fa-solid fa-dharmachakra text-[#326CE5]"></i> Kubernetes
+                            </span>
+                            <span class="bg-neutral-900 border border-cardBorder text-xs px-3 py-1.5 rounded-lg text-neutral-300 flex items-center gap-1.5">
+                                <i class="fa-solid fa-infinity text-[#0078D7]"></i> Azure DevOps
+                            </span>
+                            <span class="bg-neutral-900 border border-cardBorder text-xs px-3 py-1.5 rounded-lg text-neutral-300 flex items-center gap-1.5">
+                                <i class="fa-brands fa-npm text-[#CB3837]"></i> npm
+                            </span>
+                        </div>
+                    </div>
+                    <div class="bg-cardBg border border-cardBorder p-5 rounded-2xl space-y-4 bento-stat">
+    <div class="text-xs text-neutral-500 font-mono flex items-center gap-2">
+        <i class="fa-solid fa-microchip"></i> Hardware, IoT & DevOps
+    </div>
+    <div class="flex flex-wrap gap-2">
+        <span class="bg-neutral-900 border border-cardBorder text-xs px-3 py-1.5 rounded-lg text-neutral-300 flex items-center gap-1.5">
+            <i class="fa-solid fa-microchip text-[#4DB6AC]"></i> Embedded Systems
+        </span>
+        <span class="bg-neutral-900 border border-cardBorder text-xs px-3 py-1.5 rounded-lg text-neutral-300 flex items-center gap-1.5">
+            <i class="fa-solid fa-network-wired text-[#00A86B]"></i> IoT
+        </span>
+        <span class="bg-neutral-900 border border-cardBorder text-xs px-3 py-1.5 rounded-lg text-neutral-300 flex items-center gap-1.5">
+            <i class="fa-solid fa-industry text-[#FFB300]"></i> IIoT
+        </span>
+        <span class="bg-neutral-900 border border-cardBorder text-xs px-3 py-1.5 rounded-lg text-neutral-300 flex items-center gap-1.5">
+            <i class="fa-solid fa-robot text-[#E0E0E0]"></i> Robotics
+        </span>
+        <span class="bg-neutral-900 border border-cardBorder text-xs px-3 py-1.5 rounded-lg text-neutral-300 flex items-center gap-1.5">
+            <i class="fa-solid fa-circuit-board text-[#2ECC71]"></i> PCB Design
+        </span>
+        <span class="bg-neutral-900 border border-cardBorder text-xs px-3 py-1.5 rounded-lg text-neutral-300 flex items-center gap-1.5">
+            <i class="fa-solid fa-hardware text-[#FF7400]"></i> ESP32
+        </span>
+        <span class="bg-neutral-900 border border-cardBorder text-xs px-3 py-1.5 rounded-lg text-neutral-300 flex items-center gap-1.5">
+            <i class="fa-brands fa-raspberry-pi text-[#C51A4A]"></i> Raspberry Pi
+        </span>
+        <span class="bg-neutral-900 border border-cardBorder text-xs px-3 py-1.5 rounded-lg text-neutral-300 flex items-center gap-1.5">
+            <i class="fa-solid fa-cpu text-[#00979D]"></i> Microcontrollers
+        </span>
+        <span class="bg-neutral-900 border border-cardBorder text-xs px-3 py-1.5 rounded-lg text-neutral-300 flex items-center gap-1.5">
+            <i class="fa-solid fa-gauge-high text-[#29B6F6]"></i> Sensors
+        </span>
+    </div>
+</div>
+
+<div class="bg-cardBg border border-cardBorder p-5 rounded-2xl space-y-4 bento-stat">
+    <div class="text-xs text-neutral-500 font-mono flex items-center gap-2">
+        <i class="fa-solid fa-sitemap"></i> System Design & Architecture
+    </div>
+    <div class="flex flex-wrap gap-2">
+        <span class="bg-neutral-900 border border-cardBorder text-xs px-3 py-1.5 rounded-lg text-neutral-300 flex items-center gap-1.5">
+            <i class="fa-solid fa-diagram-project text-[#3A86FF]"></i> Distributed Systems
+        </span>
+        <span class="bg-neutral-900 border border-cardBorder text-xs px-3 py-1.5 rounded-lg text-neutral-300 flex items-center gap-1.5">
+            <i class="fa-solid fa-server text-[#8338EC]"></i> Microservices
+        </span>
+        <span class="bg-neutral-900 border border-cardBorder text-xs px-3 py-1.5 rounded-lg text-neutral-300 flex items-center gap-1.5">
+            <i class="fa-solid fa-database text-[#06D6A0]"></i> Database Sharding
+        </span>
+        <span class="bg-neutral-900 border border-cardBorder text-xs px-3 py-1.5 rounded-lg text-neutral-300 flex items-center gap-1.5">
+            <i class="fa-solid fa-bolt text-[#FFD166]"></i> Caching (Redis)
+        </span>
+        <span class="bg-neutral-900 border border-cardBorder text-xs px-3 py-1.5 rounded-lg text-neutral-300 flex items-center gap-1.5">
+            <i class="fa-solid fa-infinity text-[#FF006E]"></i> Scalability
+        </span>
+        <span class="bg-neutral-900 border border-cardBorder text-xs px-3 py-1.5 rounded-lg text-neutral-300 flex items-center gap-1.5">
+            <i class="fa-solid fa-network-wired text-[#00F5D4]"></i> Load Balancing
+        </span>
+        <span class="bg-neutral-900 border border-cardBorder text-xs px-3 py-1.5 rounded-lg text-neutral-300 flex items-center gap-1.5">
+            <i class="fa-solid fa-comments text-[#9B5DE5]"></i> Message Queues
+        </span>
+        <span class="bg-neutral-900 border border-cardBorder text-xs px-3 py-1.5 rounded-lg text-neutral-300 flex items-center gap-1.5">
+            <i class="fa-solid fa-shield-halved text-[#E63946]"></i> API Gateways
+        </span>
+    </div>
+</div>
+
+<div class="bg-cardBg border border-cardBorder p-5 rounded-2xl space-y-4 bento-stat">
+    <div class="text-xs text-neutral-500 font-mono flex items-center gap-2">
+        <i class="fa-solid fa-chart-column"></i> Data Analytics & BI
+    </div>
+    <div class="flex flex-wrap gap-2">
+        <span class="bg-neutral-900 border border-cardBorder text-xs px-3 py-1.5 rounded-lg text-neutral-300 flex items-center gap-1.5">
+            <i class="fa-solid fa-chart-magnifying-glass text-[#00F5D4]"></i> Exploratory Data Analysis (EDA)
+        </span>
+        <span class="bg-neutral-900 border border-cardBorder text-xs px-3 py-1.5 rounded-lg text-neutral-300 flex items-center gap-1.5">
+            <i class="fa-solid fa-table text-[#3A86FF]"></i> Data Wrangling
+        </span>
+        <span class="bg-neutral-900 border border-cardBorder text-xs px-3 py-1.5 rounded-lg text-neutral-300 flex items-center gap-1.5">
+            <i class="fa-solid fa-wand-magic-sparkles text-[#FF006E]"></i> Data Cleaning & Preprocessing
+        </span>
+        <span class="bg-neutral-900 border border-cardBorder text-xs px-3 py-1.5 rounded-lg text-neutral-300 flex items-center gap-1.5">
+            <i class="fa-solid fa-chart-area text-[#8338EC]"></i> Dashboarding & Reporting
+        </span>
+        <span class="bg-neutral-900 border border-cardBorder text-xs px-3 py-1.5 rounded-lg text-neutral-300 flex items-center gap-1.5">
+            <i class="fa-solid fa-warehouse text-[#FFB703]"></i> Data Warehousing
+        </span>
+        <span class="bg-neutral-900 border border-cardBorder text-xs px-3 py-1.5 rounded-lg text-neutral-300 flex items-center gap-1.5">
+            <i class="fa-solid fa-database text-[#FB5607]"></i> SQL & Relational Queries
+        </span>
+    </div>
+</div>
+         </div>
+         </section>
+        </section>
+<!-- ============ PROJECTS SECTION (paste this where your old section was) ============ -->
+
+<style>
+  /* Marquee */
+  .project-marquee-wrap {
+    overflow: hidden;
+    -webkit-mask-image: linear-gradient(to right, transparent, #000 6%, #000 94%, transparent);
+            mask-image: linear-gradient(to right, transparent, #000 6%, #000 94%, transparent);
+  }
+  .project-marquee-track {
+    display: flex;
+    width: max-content;
+    animation: project-marquee 40s linear infinite;
+  }
+  .project-marquee-wrap:hover .project-marquee-track { animation-play-state: paused; }
+
+  /* Use margin (NOT gap) so translateX(-50%) loops with no jump */
+  .project-card {
+    width: 20rem;
+    flex-shrink: 0;
+    margin-right: 1.5rem;
+  }
+
+  @keyframes project-marquee {
+    from { transform: translateX(0); }
+    to   { transform: translateX(-50%); }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .project-marquee-track { animation: none; }
+    .project-marquee-wrap  { overflow-x: auto; }
+  }
+</style>
+
+<section id="projects" class="space-y-12">
+  <div class="reveal-element text-center space-y-2">
+    <h2 class="text-3xl font-bold text-white">Projects Built To Ship</h2>
+    <p class="text-sm text-neutral-400 max-w-md mx-auto">Hover to pause · click the links on any card</p>
+  </div>
+
+  <div class="project-marquee-wrap reveal-element">
+    <!-- Cards are generated by the script below -->
+    <div class="project-marquee-track" id="projectTrack"></div>
+  </div>
+
+  <div class="flex justify-center pt-4 reveal-element">
+    <a href="projects.html"
+       class="bg-white text-black font-semibold text-xs uppercase tracking-wider px-6 py-3 rounded-full hover:bg-neutral-200 transition-all">
+      View All Projects
+    </a>
+  </div>
+</section>
+
+<script>
+(() => {
+ 
+  const projects = [
+    {
+      title: "AI Powered Vehicle Black Box System",
+      description: "Edge AI vehicle black box for driver behavior analysis, GPS tracking, and accident detection.",
+      tags: ["IEEE WINNER", "Embedded C", "IoT Protocols", "Edge AI", "Deep Learning", "OpenCV", "Linux","Computer Vision","MQTT"],
+      images: [
+        "assets/vechicle-1.png",
+        "assets/vechicle-2.png",
+        
+      ],
+      code: "",
+      demo: "https://sunny-kulfi-ab29e9.netlify.app/",
+      medal: { src: "./assets/ee7f1b6c-117c-11ee-b0b9-4f03a89104e5.svg", alt: "Tech Spark 2.0 Winner Medal" }
+    },
+    {
+      title: "RYDEX",
+      description: "AI ride-hailing platform with real-time booking, driver matching, and secure login.",
+      tags: ["Next.js", "Express", "MongoDB", "Authentication","Redics","socket.io","Microservices","Zego-cloud","Payment-gateway","Cache","Load-balncing"
+      ],
+      images: [
+        "./assets/rydex-1.png",
+        "./assets/rydex-2.jpeg",
+        "./assets/rydex-3.png",
+        "./assets/rydex-4.png",
+        "./assets/rydex-5.png",
+        "./assets/rydex-6.png"
+      ],
+      code: "",
+      demo: "https://rydex-smart-al-powered-ride-hailing-rho.vercel.app"
+    },
+    {
+      title: "LMS",
+      description: "Built an AI-powered LMS with MERN stack, smart course search, and secure payments.",
+      tags: ["React", "Vite", "Tailwind","Next Js","Mongo DB","payment-gateway","Authentication","socket.io"],
+      images: [
+        "assets/lms1.png",
+        "assets/lms2.png",
+        "assets/lms3.png",
+        "assets/LMS4.png"
+      ],
+      code: "",
+      demo: "https://lms-one-lyart.vercel.app/" // add the real URL when ready
+    },
+     {
+      title: "Cartsphere",
+      description: "Built CartSphere, a scalable multi-vendor e-commerce SaaS platform with secure dashboards.",
+      tags: ["Next.js", "Express", "MongoDB", "Authentication","System Design","Redics","socket.Io","Microservices","Payment-gateway","Cache",],
+      images: [
+        "assets/cart-1.png",
+        "assets/cart-2.png",
+        "assets/cart-3.png",
+        "assets/cart-4.png",
+        "assets/cart-5.png",
+        "assets/cart-6.png",
+        "assets/cart-7.png"
+      ],
+      code: "",
+      demo: "https://cart-sphere-multi-vendor-e-commerce.vercel.app/"
+    },
+    {
+      title: "Resume Genie – AI-Powered Resume & Career Assistant",
+      description: "AI-powered resume analyzer, ATS matcher, cover letter generator, and career coach.",
+      tags: ["Python","Streamlit","LangChain","Groq","Llama 3.3 70B","LLM","Generative AI","AI Chatbot","ATS Resume Matching","Carrer coach"],
+      images: [
+        "assets/Resume1.png",
+        "assets/Resume2.png",
+        "assets/Resume3.png"
+        
+      ],
+      code: "",
+      demo: "https://resumegenie-ai-main-d8ujy5mzzbhv7r9pqsgzqt.streamlit.app/" // add the real URL when ready
+    },
+     {
+      title: "Agrivision-Ai",
+      description: "AI-powered smart farming for crop disease detection and yield prediction.",
+      tags: ["Python","Streamlit","LangChain","Groq","Machine Learning","Deep Learning","Generative AI","AI Chatbot","Precision Agriculture","Precision Agriculture"],
+      images: [
+        "assets/agri-1.png",
+        "assets/agri-2.png",
+        "assets/agri-3.png",
+        "assets/agri-4.png",
+        "assets/agri-5.png"
+        
+      ],
+      code: "",
+      demo: "https://agrivison-ai.onrender.com/" // add the real URL when ready
+    },
+    {
+      title: "Pneumonia-Ai",
+      description: "Explainable AI for pneumonia detection using chest X-rays and Grad-CAM.",
+      tags: ["Python","Streamlit","LangChain","Groq","Machine Learning","TensorFlow","ResNet50","Deep Learning","Generative AI","AI Chatbot"],
+      images: [
+        "assets/pnemonia-1.png",
+        "assets/pnemonia-2.png"
+      ],
+      code: "",
+      demo: "https://huggingface.co/spaces/Biswajit-pattan-123/pneumonia-ai" // add the real URL when ready
+    },
+     {
+      title: "Dentalcare-Ai-2.0",
+      description: "AI-powered dental appointment booking system using LangGraph and multi-agent AI.",
+      tags: ["Python","Streamlit","LangChain","Grok-4","Machine Learning","Agentic AI","Multi-Agent AI","Natural Language Processing","Generative AI","AI Chatbot"],
+      images: [
+        "assets/dentalcare-1.png",
+        "assets/dentalcare-2.png", 
+        "assets/dentalcare-3.png",
+        "assets/dentalcare-4.png",
+        "assets/dentalcare-5.png",
+        "assets/dentalcare-6.png"    
+      ],
+      code: "",
+      demo: "https://dentalcare-ai-20-mvbn7kfuqpxtu9dxfzspgf.streamlit.app/" 
+    },
+   {
+  title: "Bharatiya-Rail-Track-Fault-Detection-AI",
+  description: "AI-powered railway track defect detection with explainable results.",
+  tags: ["Python","Streamlit", "Computer Vision","Deep Learning","TensorFlow","EfficientNetB3","TensorFlow Lite","Image Classification","Explainable AI" ],
+  images: [
+    "assets/rail-1.png",
+    "assets/rail-2.png",
+    "assets/rail-3.png"
+  ],
+  code: "",
+  demo: "https://bharatiya-rail-track-fault-detection-ai-1.onrender.com/"
+},
+    {
+      title: "Snapcart",
+      description: "Scalable multi-vendor e-commerce with secure payments and live delivery tracking.",
+      tags: ["E-Commerce","Next.js","React","TypeScript","Node.js","MongoDB","Full-Stack Development","TypeScript","Redux Toolkit","Microservices","Leaflet","Payment Gateway"],
+      images: [
+        "assets/snap-1.png",
+        "assets/snap-2.png", 
+        "assets/snap-3.png",
+        "assets/snap-4.png"  
+      ],
+      code: "",
+      demo: "https://snap-cart-wine.vercel.app/" 
+    },
+    {
+      title: "Smart paraking system",
+      description: "Smart parking with heap-based slot allocation and real-time tracking.",
+      tags: ["Next.js","React","TypeScript","Node.js","MongoDB","Full-Stack Development","TypeScript","Redux Toolkit","Microservices","Leaflet","Payment Gateway"],
+      images: [
+        "assets/park-1.png",
+        "assets/park-2.png", 
+        "assets/park-3.png",
+         
+      ],
+      code: "",
+      demo: "" 
+    },
+    {
+      title: "Vingo",
+      description: "Real-time food delivery platform with live tracking and secure payments.",
+      tags: ["E-Commerce","Real-Time Tracking","Next.js","React","TypeScript","Node.js","MongoDB","Full-Stack Development","TypeScript","Redux Toolkit","Microservices","Leaflet","Payment Gateway"],
+      images: [
+        "assets/ving-1.png",
+        "assets/ving-2.png", 
+        "assets/ving-3.png",
+        "assets/ving-4.png"  
+      ],
+      code: "",
+      demo: "https://vingo-sage.vercel.app/" 
+    },
+    {
+      title: "12v-5v buck converter",
+      description: "High-efficiency 12V-to-5V buck converter with a custom KiCad PCB.",
+      tags: ["KiCad","Power Electronics","PCB Design","LM2596 DC-DC Converter","Hardware Design"],
+      images: [
+        "assets/buck-1.png",
+        "assets/buck-2.png", 
+        "assets/buck-3.png",
+        "assets/buck-4.png"  
+      ],
+      code: "https://github.com/Biswajitpattanaik07/12v-to-5v-buck-covter.git",
+      demo: "" 
+    },
+     {
+      title: "6-axis robot arm controller ",
+      description: "Open-source 6-axis robot arm controller with custom STM32-based PCB.",
+      tags: ["KiCad","Power Electronics","PCB Design","Embedded Systems","Robotics","LM2596 DC-DC Converter","Hardware Design"],
+      images: [
+        "assets/axis-1.png",
+        "assets/axis-2.png", 
+        "assets/axis-3.png",
+        "assets/axis-4.png"  
+      ],
+      code: "",
+      demo: "" 
+    }
+    
+  ];
+
+  const SLIDE_MS = 3000;
+  const track = document.getElementById("projectTrack");
+  if (!track) return;
+
+  const el = (html) => {
+    const t = document.createElement("template");
+    t.innerHTML = html.trim();
+    return t.content.firstChild;
+  };
+
+  const buildCard = (p) => {
+    const slides = p.images.map((src, i) => `
+      <div class="slide-item absolute inset-0 ${i === 0 ? "opacity-100" : "opacity-0"} transition-opacity duration-1000 ease-in-out">
+        <img src="${encodeURI(src.trim())}" loading="lazy" class="w-full h-full object-cover" alt="${p.title} screenshot ${i + 1}">
+      </div>`).join("");
+
+    const medal = p.medal ? `
+      <div class="absolute top-2 left-2 z-20 w-20 drop-shadow-md group-hover:scale-105 transition-transform duration-300">
+        <img src="${p.medal.src}" alt="${p.medal.alt}" class="w-full h-auto">
+      </div>` : "";
+
+    const tags = p.tags.map(t =>
+      `<span class="text-[10px] bg-neutral-950 border border-cardBorder px-2 py-0.5 rounded text-neutral-400">${t}</span>`
+    ).join("");
+
+    const codeLink = p.code ? `
+      <a href="${p.code}" target="_blank" rel="noopener noreferrer"
+         class="text-xs font-semibold text-neutral-400 hover:text-white transition-colors flex items-center gap-1.5">
+        <i class="fa-brands fa-github text-sm"></i> Code
+      </a>` : "<span></span>";
+
+    const demoLink = p.demo ? `
+      <a href="${p.demo}" target="_blank" rel="noopener noreferrer"
+         class="text-xs font-semibold text-accentGreen hover:text-emerald-400 transition-colors flex items-center gap-1.5">
+        Live Demo <i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i>
+      </a>` : `<span class="text-xs text-neutral-600">Coming soon</span>`;
+
+    return el(`
+      <div class="bg-cardBg border border-cardBorder rounded-2xl overflow-hidden hover:border-neutral-800 transition-all group project-card flex flex-col justify-between relative">
+        <div>
+          <div class="h-48 bg-neutral-900 relative overflow-hidden project-slider">
+            ${medal}
+            <div class="absolute inset-0 z-10 bg-gradient-to-t from-black/70 via-black/20 to-transparent pointer-events-none"></div>
+            ${slides}
+          </div>
+          <div class="p-5 space-y-3">
+            <h3 class="text-lg font-bold text-white">${p.title}</h3>
+            <p class="text-xs text-neutral-400 line-clamp-2">${p.description}</p>
+            <div class="flex flex-wrap gap-1.5 pt-1">${tags}</div>
+          </div>
+        </div>
+        <div class="p-5 pt-0 flex items-center justify-between border-t border-cardBorder/40 mt-2">
+          ${codeLink}
+          ${demoLink}
+        </div>
+      </div>`);
+  };
+
+  // 1) Build the originals
+  projects.forEach(p => track.appendChild(buildCard(p)));
+
+  // 2) Clone the whole set once (exact copy => seamless -50% loop)
+  //    Need enough width to fill wide screens: repeat originals until set >= 1.5x viewport
+  const originals = [...track.children];
+  const setWidth = () => originals.reduce((w, c) => w + c.offsetWidth + 24, 0);
+  let sets = [originals];
+  while (setWidth() * sets.length < window.innerWidth * 1.5 && sets.length < 6) {
+    sets.push(originals.map(c => c.cloneNode(true)));
+    sets[sets.length - 1].forEach(c => track.appendChild(c));
+  }
+  // Final duplicate group so the track is exactly 2 identical halves
+  const half = [...track.children];
+  half.forEach(card => {
+    const clone = card.cloneNode(true);
+    clone.setAttribute("aria-hidden", "true");
+    clone.querySelectorAll("a").forEach(a => (a.tabIndex = -1));
+    track.appendChild(clone);
+  });
+
+  // 3) Slideshow on every card (originals AND clones)
+  track.querySelectorAll(".project-slider").forEach(slider => {
+    const slides = slider.querySelectorAll(".slide-item");
+    if (slides.length < 2) return;
+    let i = 0;
+    setInterval(() => {
+      slides[i].classList.replace("opacity-100", "opacity-0");
+      i = (i + 1) % slides.length;
+      slides[i].classList.replace("opacity-0", "opacity-100");
+    }, SLIDE_MS);
+  });
+})();
+</script>
+        <section id="certifications" class="space-y-8">
+            <div class="reveal-element text-center space-y-2">
+                <div class="text-xs uppercase tracking-widest font-mono text-neutral-500"></div>
+                <h2 class="text-3xl font-bold text-white">16 Verified Internship Certificates</h2>
+                <p class="text-sm text-neutral-400 max-w-md mx-auto">Hover to pause · click any certificate to view it full size</p>
+            </div>
+
+            <div class="cert-marquee-wrap reveal-element">
+                <div class="cert-marquee-track">
+                    <a href="./assets/certificates/cert-01.jpg" target="_blank" rel="noopener noreferrer" class="cert-card" title="Internship Certificate 01">
+                        <div class="cert-frame">
+                            <img src="./assets/certificates/cert-01.jpg" alt="Internship Certificate 01" loading="lazy">
+                            <div class="cert-label"><span>CERT_01</span><i class="fa-solid fa-arrow-up-right-from-square"></i></div>
+                        </div>
+                    </a>
+                    <a href="./assets/certificates/cert-02.jpg" target="_blank" rel="noopener noreferrer" class="cert-card" title="Internship Certificate 02">
+                        <div class="cert-frame">
+                            <img src="./assets/certificates/cert-02.jpg" alt="Internship Certificate 02" loading="lazy">
+                            <div class="cert-label"><span>CERT_02</span><i class="fa-solid fa-arrow-up-right-from-square"></i></div>
+                        </div>
+                    </a>
+                    <a href="./assets/certificates/cert-03.jpg" target="_blank" rel="noopener noreferrer" class="cert-card" title="Internship Certificate 03">
+                        <div class="cert-frame">
+                            <img src="./assets/certificates/cert-03.jpg" alt="Internship Certificate 03" loading="lazy">
+                            <div class="cert-label"><span>CERT_03</span><i class="fa-solid fa-arrow-up-right-from-square"></i></div>
+                        </div>
+                    </a>
+                    <a href="./assets/certificates/cert-04.jpg" target="_blank" rel="noopener noreferrer" class="cert-card" title="Internship Certificate 04">
+                        <div class="cert-frame">
+                            <img src="./assets/certificates/cert-04.jpg" alt="Internship Certificate 04" loading="lazy">
+                            <div class="cert-label"><span>CERT_04</span><i class="fa-solid fa-arrow-up-right-from-square"></i></div>
+                        </div>
+                    </a>
+                    <a href="./assets/certificates/cert-05.jpg" target="_blank" rel="noopener noreferrer" class="cert-card" title="Internship Certificate 05">
+                        <div class="cert-frame">
+                            <img src="./assets/certificates/cert-05.jpg" alt="Internship Certificate 05" loading="lazy">
+                            <div class="cert-label"><span>CERT_05</span><i class="fa-solid fa-arrow-up-right-from-square"></i></div>
+                        </div>
+                    </a>
+                    <a href="./assets/certificates/cert-06.jpg" target="_blank" rel="noopener noreferrer" class="cert-card" title="Internship Certificate 06">
+                        <div class="cert-frame">
+                            <img src="./assets/certificates/cert-06.jpg" alt="Internship Certificate 06" loading="lazy">
+                            <div class="cert-label"><span>CERT_06</span><i class="fa-solid fa-arrow-up-right-from-square"></i></div>
+                        </div>
+                    </a>
+                    <a href="./assets/certificates/cert-07.jpg" target="_blank" rel="noopener noreferrer" class="cert-card" title="Internship Certificate 07">
+                        <div class="cert-frame">
+                            <img src="./assets/certificates/cert-07.jpg" alt="Internship Certificate 07" loading="lazy">
+                            <div class="cert-label"><span>CERT_07</span><i class="fa-solid fa-arrow-up-right-from-square"></i></div>
+                        </div>
+                    </a>
+                    <a href="./assets/certificates/cert-08.jpg" target="_blank" rel="noopener noreferrer" class="cert-card" title="Internship Certificate 08">
+                        <div class="cert-frame">
+                            <img src="./assets/certificates/cert-08.jpg" alt="Internship Certificate 08" loading="lazy">
+                            <div class="cert-label"><span>CERT_08</span><i class="fa-solid fa-arrow-up-right-from-square"></i></div>
+                        </div>
+                    </a>
+                    <a href="./assets/certificates/cert-09.jpg" target="_blank" rel="noopener noreferrer" class="cert-card" title="Internship Certificate 09">
+                        <div class="cert-frame">
+                            <img src="./assets/certificates/cert-09.jpg" alt="Internship Certificate 09" loading="lazy">
+                            <div class="cert-label"><span>CERT_09</span><i class="fa-solid fa-arrow-up-right-from-square"></i></div>
+                        </div>
+                    </a>
+                    <a href="./assets/certificates/cert-10.jpg" target="_blank" rel="noopener noreferrer" class="cert-card" title="Internship Certificate 10">
+                        <div class="cert-frame">
+                            <img src="./assets/certificates/cert-10.jpg" alt="Internship Certificate 10" loading="lazy">
+                            <div class="cert-label"><span>CERT_10</span><i class="fa-solid fa-arrow-up-right-from-square"></i></div>
+                        </div>
+                    </a>
+                    <a href="./assets/certificates/cert-11.jpg" target="_blank" rel="noopener noreferrer" class="cert-card" title="Internship Certificate 11">
+                        <div class="cert-frame">
+                            <img src="./assets/certificates/cert-11.jpg" alt="Internship Certificate 11" loading="lazy">
+                            <div class="cert-label"><span>CERT_11</span><i class="fa-solid fa-arrow-up-right-from-square"></i></div>
+                        </div>
+                    </a>
+                    <a href="./assets/certificates/cert-12.jpg" target="_blank" rel="noopener noreferrer" class="cert-card" title="Internship Certificate 12">
+                        <div class="cert-frame">
+                            <img src="./assets/certificates/cert-12.jpg" alt="Internship Certificate 12" loading="lazy">
+                            <div class="cert-label"><span>CERT_12</span><i class="fa-solid fa-arrow-up-right-from-square"></i></div>
+                        </div>
+                    </a>
+                    <a href="./assets/certificates/cert-13.jpg" target="_blank" rel="noopener noreferrer" class="cert-card" title="Internship Certificate 13">
+                        <div class="cert-frame">
+                            <img src="./assets/certificates/cert-13.jpg" alt="Internship Certificate 13" loading="lazy">
+                            <div class="cert-label"><span>CERT_13</span><i class="fa-solid fa-arrow-up-right-from-square"></i></div>
+                        </div>
+                    </a>
+                    <a href="./assets/certificates/cert-14.jpg" target="_blank" rel="noopener noreferrer" class="cert-card" title="Internship Certificate 14">
+                        <div class="cert-frame">
+                            <img src="./assets/certificates/cert-14.jpg" alt="Internship Certificate 14" loading="lazy">
+                            <div class="cert-label"><span>CERT_14</span><i class="fa-solid fa-arrow-up-right-from-square"></i></div>
+                        </div>
+                    </a>
+                    <a href="./assets/certificates/cert-15.jpg" target="_blank" rel="noopener noreferrer" class="cert-card" title="Internship Certificate 15">
+                        <div class="cert-frame">
+                            <img src="./assets/certificates/cert-15.jpg" alt="Internship Certificate 15" loading="lazy">
+                            <div class="cert-label"><span>CERT_15</span><i class="fa-solid fa-arrow-up-right-from-square"></i></div>
+                        </div>
+                    </a>
+                    <a href="./assets/certificates/cert-16.jpg" target="_blank" rel="noopener noreferrer" class="cert-card" title="Internship Certificate 16">
+                        <div class="cert-frame">
+                            <img src="./assets/certificates/cert-16.jpg" alt="Internship Certificate 16" loading="lazy">
+                            <div class="cert-label"><span>CERT_16</span><i class="fa-solid fa-arrow-up-right-from-square"></i></div>
+                        </div>
+                    </a>
+                    <a href="./assets/certificates/cert-01.jpg" target="_blank" rel="noopener noreferrer" class="cert-card" aria-hidden="true" tabindex="-1">
+                        <div class="cert-frame">
+                            <img src="./assets/certificates/cert-01.jpg" alt="" loading="lazy">
+                            <div class="cert-label"><span>CERT_01</span><i class="fa-solid fa-arrow-up-right-from-square"></i></div>
+                        </div>
+                    </a>
+                    <a href="./assets/certificates/cert-02.jpg" target="_blank" rel="noopener noreferrer" class="cert-card" aria-hidden="true" tabindex="-1">
+                        <div class="cert-frame">
+                            <img src="./assets/certificates/cert-02.jpg" alt="" loading="lazy">
+                            <div class="cert-label"><span>CERT_02</span><i class="fa-solid fa-arrow-up-right-from-square"></i></div>
+                        </div>
+                    </a>
+                    <a href="./assets/certificates/cert-03.jpg" target="_blank" rel="noopener noreferrer" class="cert-card" aria-hidden="true" tabindex="-1">
+                        <div class="cert-frame">
+                            <img src="./assets/certificates/cert-03.jpg" alt="" loading="lazy">
+                            <div class="cert-label"><span>CERT_03</span><i class="fa-solid fa-arrow-up-right-from-square"></i></div>
+                        </div>
+                    </a>
+                    <a href="./assets/certificates/cert-04.jpg" target="_blank" rel="noopener noreferrer" class="cert-card" aria-hidden="true" tabindex="-1">
+                        <div class="cert-frame">
+                            <img src="./assets/certificates/cert-04.jpg" alt="" loading="lazy">
+                            <div class="cert-label"><span>CERT_04</span><i class="fa-solid fa-arrow-up-right-from-square"></i></div>
+                        </div>
+                    </a>
+                    <a href="./assets/certificates/cert-05.jpg" target="_blank" rel="noopener noreferrer" class="cert-card" aria-hidden="true" tabindex="-1">
+                        <div class="cert-frame">
+                            <img src="./assets/certificates/cert-05.jpg" alt="" loading="lazy">
+                            <div class="cert-label"><span>CERT_05</span><i class="fa-solid fa-arrow-up-right-from-square"></i></div>
+                        </div>
+                    </a>
+                    <a href="./assets/certificates/cert-06.jpg" target="_blank" rel="noopener noreferrer" class="cert-card" aria-hidden="true" tabindex="-1">
+                        <div class="cert-frame">
+                            <img src="./assets/certificates/cert-06.jpg" alt="" loading="lazy">
+                            <div class="cert-label"><span>CERT_06</span><i class="fa-solid fa-arrow-up-right-from-square"></i></div>
+                        </div>
+                    </a>
+                    <a href="./assets/certificates/cert-07.jpg" target="_blank" rel="noopener noreferrer" class="cert-card" aria-hidden="true" tabindex="-1">
+                        <div class="cert-frame">
+                            <img src="./assets/certificates/cert-07.jpg" alt="" loading="lazy">
+                            <div class="cert-label"><span>CERT_07</span><i class="fa-solid fa-arrow-up-right-from-square"></i></div>
+                        </div>
+                    </a>
+                    <a href="./assets/certificates/cert-08.jpg" target="_blank" rel="noopener noreferrer" class="cert-card" aria-hidden="true" tabindex="-1">
+                        <div class="cert-frame">
+                            <img src="./assets/certificates/cert-08.jpg" alt="" loading="lazy">
+                            <div class="cert-label"><span>CERT_08</span><i class="fa-solid fa-arrow-up-right-from-square"></i></div>
+                        </div>
+                    </a>
+                    <a href="./assets/certificates/cert-09.jpg" target="_blank" rel="noopener noreferrer" class="cert-card" aria-hidden="true" tabindex="-1">
+                        <div class="cert-frame">
+                            <img src="./assets/certificates/cert-09.jpg" alt="" loading="lazy">
+                            <div class="cert-label"><span>CERT_09</span><i class="fa-solid fa-arrow-up-right-from-square"></i></div>
+                        </div>
+                    </a>
+                    <a href="./assets/certificates/cert-10.jpg" target="_blank" rel="noopener noreferrer" class="cert-card" aria-hidden="true" tabindex="-1">
+                        <div class="cert-frame">
+                            <img src="./assets/certificates/cert-10.jpg" alt="" loading="lazy">
+                            <div class="cert-label"><span>CERT_10</span><i class="fa-solid fa-arrow-up-right-from-square"></i></div>
+                        </div>
+                    </a>
+                    <a href="./assets/certificates/cert-11.jpg" target="_blank" rel="noopener noreferrer" class="cert-card" aria-hidden="true" tabindex="-1">
+                        <div class="cert-frame">
+                            <img src="./assets/certificates/cert-11.jpg" alt="" loading="lazy">
+                            <div class="cert-label"><span>CERT_11</span><i class="fa-solid fa-arrow-up-right-from-square"></i></div>
+                        </div>
+                    </a>
+                    <a href="./assets/certificates/cert-12.jpg" target="_blank" rel="noopener noreferrer" class="cert-card" aria-hidden="true" tabindex="-1">
+                        <div class="cert-frame">
+                            <img src="./assets/certificates/cert-12.jpg" alt="" loading="lazy">
+                            <div class="cert-label"><span>CERT_12</span><i class="fa-solid fa-arrow-up-right-from-square"></i></div>
+                        </div>
+                    </a>
+                    <a href="./assets/certificates/cert-13.jpg" target="_blank" rel="noopener noreferrer" class="cert-card" aria-hidden="true" tabindex="-1">
+                        <div class="cert-frame">
+                            <img src="./assets/certificates/cert-13.jpg" alt="" loading="lazy">
+                            <div class="cert-label"><span>CERT_13</span><i class="fa-solid fa-arrow-up-right-from-square"></i></div>
+                        </div>
+                    </a>
+                    <a href="./assets/certificates/cert-14.jpg" target="_blank" rel="noopener noreferrer" class="cert-card" aria-hidden="true" tabindex="-1">
+                        <div class="cert-frame">
+                            <img src="./assets/certificates/cert-14.jpg" alt="" loading="lazy">
+                            <div class="cert-label"><span>CERT_14</span><i class="fa-solid fa-arrow-up-right-from-square"></i></div>
+                        </div>
+                    </a>
+                    <a href="./assets/certificates/cert-15.jpg" target="_blank" rel="noopener noreferrer" class="cert-card" aria-hidden="true" tabindex="-1">
+                        <div class="cert-frame">
+                            <img src="./assets/certificates/cert-15.jpg" alt="" loading="lazy">
+                            <div class="cert-label"><span>CERT_15</span><i class="fa-solid fa-arrow-up-right-from-square"></i></div>
+                        </div>
+                    </a>
+                    <a href="./assets/certificates/cert-16.jpg" target="_blank" rel="noopener noreferrer" class="cert-card" aria-hidden="true" tabindex="-1">
+                        <div class="cert-frame">
+                            <img src="./assets/certificates/cert-16.jpg" alt="" loading="lazy">
+                            <div class="cert-label"><span>CERT_16</span><i class="fa-solid fa-arrow-up-right-from-square"></i></div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <section id="education" class="space-y-8">
+            <div class="reveal-element">
+                <div class="text-xs uppercase tracking-widest font-mono text-neutral-500"></div>
+                <h2 class="text-3xl font-bold text-white text-center">Academic Qualifications</h2>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-12 gap-6 items-stretch">
+                <div class="md:col-span-4 bg-cardBg border border-cardBorder rounded-2xl overflow-hidden project-slider h-full min-h-[220px] relative">
+                    <div class="absolute inset-0 z-10 bg-gradient-to-t from-black/80 via-black/10 to-transparent pointer-events-none"></div>
+                    
+                    <div class="slide-item absolute inset-0 opacity-100 transition-opacity duration-1000 ease-in-out">
+                        <img src="https://assets.odishabytes.com/wp-content/uploads/2025/06/Centurion-University-768x512.jpg" class="w-full h-full object-cover" alt="Campus Life Frame 1">
+                    </div>
+                    <div class="slide-item absolute inset-0 opacity-0 transition-opacity duration-1000 ease-in-out">
+                        <img src="https://content3.jdmagicbox.com/comp/bhubaneshwar/67/0674p674std20067/catalogue/royal-college-of-science-and-technology-rasulgarh-bhubaneshwar-colleges-ENuuF9TEg3.jpg" class="w-full h-full object-cover" alt="Graduation Frame 2">
+                    </div>
+                    <div class="slide-item absolute inset-0 opacity-0 transition-opacity duration-1000 ease-in-out">
+                        <img src="https://jatni.com/wp-content/uploads/bfi_thumb/Saraswati-Shisu-Vidya-Mandir-4-qm4tvhhc8q30twttezb3ij1aovrildyogrhvnwyjcw.jpg" class="w-full h-full object-cover" alt="Lab Infrastructure Frame 3">
+                    </div>
+                    <div class="slide-item absolute inset-0 opacity-0 transition-opacity duration-1000 ease-in-out">
+                        <img src="./assets/WhatsApp Image 2026-06-01 at 3.32.00 PM.jpeg" class="w-full h-full object-cover" alt="Lab Infrastructure Frame 4">
+                    </div>
+                    
+                    <div class="absolute bottom-4 left-4 z-20 font-mono text-[10px] text-neutral-400 tracking-wider flex items-center gap-1.5">
+                        <i class="fa-solid fa-camera text-accentGreen"></i> CAMPUS MOMENTS
+                    </div>
+                </div>
+
+                <div class="md:col-span-8 flex flex-col sm:flex-row gap-4 h-full">
+                    <div class="bg-cardBg border border-cardBorder p-5 rounded-2xl flex-1 flex flex-col justify-between hover:border-neutral-800 transition-colors edu-card">
+                        <div class="space-y-3">
+                            <div class="w-10 h-10 rounded-xl bg-neutral-900 border border-cardBorder flex items-center justify-center text-neutral-400 shrink-0">
+                                <i class="fa-solid fa-graduation-cap text-base"></i>
+                            </div>
+                            <div>
+                                <h3 class="text-sm font-bold text-white leading-snug">B.Tech in ECE</h3>
+                                <p class="text-xs text-neutral-400 mt-0.5">Centurion University of Technology and Management, Bhubaneswar</p>
+                            </div>
+                        </div>
+                        <div class="border-t border-cardBorder/60 pt-3 mt-4 flex items-center justify-between">
+                            <span class="text-[10px] font-mono bg-neutral-900 border border-cardBorder px-2 py-0.5 rounded text-neutral-300">2023 - 2027</span>
+                            <span class="text-xs font-bold text-accentGreen">CGPA 8.5</span>
+                        </div>
+                    </div>
+
+                    <div class="bg-cardBg border border-cardBorder p-5 rounded-2xl flex-1 flex flex-col justify-between hover:border-neutral-800 transition-colors edu-card">
+                        <div class="space-y-3">
+                            <div class="w-10 h-10 rounded-xl bg-neutral-900 border border-cardBorder flex items-center justify-center text-neutral-400 shrink-0">
+                                <i class="fa-solid fa-graduation-cap text-base"></i>
+                            </div>
+                            <div>
+                                <h3 class="text-sm font-bold text-white leading-snug">Secondary Education</h3>
+                                <p class="text-xs text-neutral-400 mt-0.5">Royal College of Science and Technology, Bhubaneswar</p>
+                            </div>
+                        </div>
+                        <div class="border-t border-cardBorder/60 pt-3 mt-4 flex items-center justify-between">
+                            <span class="text-[10px] font-mono bg-neutral-900 border border-cardBorder px-2 py-0.5 rounded text-neutral-300">2021 - 2023</span>
+                            <span class="text-xs font-bold text-accentGreen">70%</span>
+                        </div>
+                    </div>
+
+                    <div class="bg-cardBg border border-cardBorder p-5 rounded-2xl flex-1 flex flex-col justify-between hover:border-neutral-800 transition-colors edu-card">
+                        <div class="space-y-3">
+                            <div class="w-10 h-10 rounded-xl bg-neutral-900 border border-cardBorder flex items-center justify-center text-neutral-400 shrink-0">
+                                <i class="fa-solid fa-graduation-cap text-base"></i>
+                            </div>
+                            <div>
+                                <h3 class="text-sm font-bold text-white leading-snug">Matriculation</h3>
+                                <p class="text-xs text-neutral-400 mt-0.5">Saraswati Shishu Vidya Mandir,khordha</p>
+                            </div>
+                        </div>
+                        <div class="border-t border-cardBorder/60 pt-3 mt-4 flex items-center justify-between">
+                            <span class="text-[10px] font-mono bg-neutral-900 border border-cardBorder px-2 py-0.5 rounded text-neutral-300">2021</span>
+                            <span class="text-xs font-bold text-accentGreen"> 70%</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+<section id="experience" class="space-y-8"></section>
+            <div class="reveal-element">
+                <h2 class="text-3xl font-bold text-white text-center">Professional Timeline</h2>
+            </div>
+            
+            <div class="flex flex-wrap md:grid md:grid-cols-12 gap-6 items-stretch">
+                <!-- Row 1: Original Left-Side Cards Group -->
+                <div class="w-full md:col-span-8 flex flex-col sm:flex-row gap-4 h-full">
+                    <div class="bg-cardBg border border-emerald-950/60 p-5 rounded-2xl flex-1 flex flex-col justify-between hover:border-emerald-800 transition-colors exp-card">
+                        <div class="space-y-3">
+                            <div class="flex items-center justify-between">
+                                <div class="w-10 h-10 rounded-xl bg-neutral-900 border border-cardBorder flex items-center justify-center text-accentGreen shrink-0">
+                                    <i class="fa-solid fa-file-signature text-base"></i>
+                                </div>
+                                <span class="text-[9px] font-mono font-semibold bg-emerald-950/50 border border-emerald-900 px-2 py-0.5 rounded text-accentGreen uppercase tracking-wider">Internship</span>
+                            </div>
+                            <div>
+                                <h3 class="text-sm font-bold text-white leading-snug">Software & Hardware Architecture</h3>
+                                <p class="text-xs text-neutral-400 mt-1">Verified Experience 10+ Certificate Granted </p>
+                            </div>
+                        </div>
+                        <div class="border-t border-cardBorder/60 pt-3 mt-4 flex items-center justify-between">
+                            <span class="text-[10px] text-neutral-500 font-mono">Embedded & Cloud Systems</span>
+                            <a href="./certificate.pdf" download="Biswajit_Pattanaik_Certificate.pdf" class="text-[10px] text-accentGreen font-semibold hover:underline flex items-center gap-1">
+                                <i class="fa-solid fa-download text-[9px]"></i> Download
+                            </a>
+                        </div>
+                    </div>
+                    
+                    <div class="bg-cardBg border border-cardBorder p-5 rounded-2xl flex-1 flex flex-col justify-between hover:border-neutral-800 transition-colors exp-card">
+                        <div class="space-y-3">
+                            <div class="flex items-center justify-between">
+                                <div class="w-10 h-10 rounded-xl bg-neutral-900 border border-cardBorder flex items-center justify-center text-neutral-400 shrink-0">
+                                    <i class="fa-solid fa-trophy text-base"></i>
+                                </div>
+                                <span class="text-[9px] font-mono bg-neutral-900 border border-cardBorder px-2 py-0.5 rounded text-neutral-400">2025</span>
+                            </div>
+                            <div>
+                                <h3 class="text-sm font-bold text-white leading-snug">Tech Spark 2.0 Winner IEEE</h3>
+                                <p class="text-xs text-neutral-400 mt-1">3rd Place | College Level | Team Lead of 6 members</p>
+                            </div>
+                        </div>
+                        <div class="border-t border-cardBorder/60 pt-3 mt-4 flex gap-1.5">
+                            <span class="text-[9px] bg-neutral-950 border border-cardBorder px-2 py-0.5 rounded text-neutral-500">Leadership</span>
+                            <span class="text-[9px] bg-neutral-950 border border-cardBorder px-2 py-0.5 rounded text-neutral-500">Product</span>
+                        </div>
+                    </div>
+
+                    <div class="bg-cardBg border border-cardBorder p-5 rounded-2xl flex-1 flex flex-col justify-between hover:border-neutral-800 transition-colors exp-card">
+                        <div class="space-y-3">
+                            <div class="flex items-center justify-between">
+                                <div class="w-10 h-10 rounded-xl bg-neutral-900 border border-cardBorder flex items-center justify-center text-neutral-400 shrink-0">
+                                    <i class="fa-solid fa-bolt text-base"></i>
+                                </div>
+                                <span class="text-[9px] font-mono bg-neutral-900 border border-cardBorder px-2 py-0.5 rounded text-amber-500 uppercase font-bold"></span>
+                            </div>
+                            <div>
+                                <h3 class="text-sm font-bold text-white leading-snug">LeetCode Knights</h3>
+                                <p class="text-xs text-neutral-400 mt-1">200+ problems solved with a focus on C++ and complex algorithms</p>
+                            </div>
+                        </div>
+                        <div class="border-t border-cardBorder/60 pt-3 mt-4 flex items-center justify-between">
+                            <div class="flex gap-1.5">
+                                <span class="text-[9px] bg-neutral-950 border border-cardBorder px-2 py-0.5 rounded text-neutral-500">C++</span>
+                                <span class="text-[9px] bg-neutral-950 border border-cardBorder px-2 py-0.5 rounded text-neutral-500">DSA</span>
+                            </div>
+                            <a href="https://leetcode.com/u/ueiwy9Px19/" target="_blank" rel="noopener noreferrer" class="text-[10px] text-accentGreen font-semibold hover:underline flex items-center gap-1">
+                                <i class="fa-solid fa-arrow-up-right text-[9px]"></i> Profile
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Row 1: Original Right-Side Image/Slider Card -->
+                <div class="w-full md:col-span-4 bg-cardBg border border-cardBorder rounded-2xl overflow-hidden project-slider h-full min-h-[220px] relative">
+                    <div class="absolute inset-0 z-10 bg-gradient-to-t from-black/80 via-black/10 to-transparent pointer-events-none"></div>
+                    
+                    <div class="slide-item absolute inset-0 opacity-100 transition-opacity duration-1000 ease-in-out">
+                        <img src="https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&q=80&w=400" class="w-full h-full object-cover" alt="Hardware Architecture Frame 1">
+                    </div>
+                    <div class="slide-item absolute inset-0 opacity-0 transition-opacity duration-1000 ease-in-out">
+                        <img src="https://images.unsplash.com/photo-1605810230434-7631ac76ec81?auto=format&fit=crop&q=80&w=400" class="w-full h-full object-cover" alt="Cloud Network Frame 2">
+                    </div>
+                    <div class="slide-item absolute inset-0 opacity-0 transition-opacity duration-1000 ease-in-out">
+                        <img src="https://images.unsplash.com/photo-1504384308090-c894fdcc538d?auto=format&fit=crop&q=80&w=400" class="w-full h-full object-cover" alt="System Development Frame 3">
+                    </div>
+                    
+                    <div class="absolute bottom-4 left-4 z-20 font-mono text-[10px] text-neutral-400 tracking-wider flex items-center gap-1.5">
+                        <i class="fa-solid fa-microchip text-accentGreen"></i> SYSTEM LOGISTICS
+                    </div>
+                </div>
+
+                <!-- Row 2: NEW Added Option 1 (Zetheta Fullstack Intern) -->
+                <div class="w-full md:col-span-6 bg-cardBg border border-cardBorder p-5 rounded-2xl flex flex-col justify-between hover:border-neutral-800 transition-colors exp-card">
+                    <div class="space-y-3">
+                        <div class="flex items-center justify-between">
+                            <div class="w-10 h-10 rounded-xl bg-neutral-900 border border-cardBorder flex items-center justify-center text-blue-400 shrink-0">
+                                <i class="fa-solid fa-laptop-code text-base"></i>
+                            </div>
+                            <span class="text-[9px] font-mono bg-blue-950/40 border border-blue-900/60 px-2 py-0.5 rounded text-blue-400 font-bold uppercase tracking-wider">2026</span>
+                        </div>
+                        <div>
+                            <h3 class="text-sm font-bold text-white leading-snug">Fullstack Intern</h3>
+                            <p class="text-neutral-200 text-xs font-semibold mt-0.5">Zetheta Algorithms Private Limited</p>
+                            <p class="text-xs text-neutral-400 mt-1">Designing architectures and scaling full-stack applications with dynamic UI patterns.</p>
+                        </div>
+                    </div>
+                    <div class="border-t border-cardBorder/60 pt-3 mt-4 flex gap-1.5">
+                        <span class="text-[9px] bg-neutral-950 border border-cardBorder px-2 py-0.5 rounded text-neutral-500">Fullstack</span>
+                        <span class="text-[9px] bg-neutral-950 border border-cardBorder px-2 py-0.5 rounded text-neutral-500">MERN</span>
+                    </div>
+                </div>
+
+                <!-- Row 2: NEW Added Option 2 (CTTC Bhubaneswar Intern) -->
+                <div class="w-full md:col-span-6 bg-cardBg border border-cardBorder p-5 rounded-2xl flex flex-col justify-between hover:border-neutral-800 transition-colors exp-card">
+                    <div class="space-y-3">
+                        <div class="flex items-center justify-between">
+                            <div class="w-10 h-10 rounded-xl bg-neutral-900 border border-cardBorder flex items-center justify-center text-purple-400 shrink-0">
+                                <i class="fa-solid fa-gears text-base"></i>
+                            </div>
+                            <span class="text-[9px] font-mono bg-purple-950/40 border border-purple-900/60 px-2 py-0.5 rounded text-purple-400 font-bold uppercase tracking-wider">2024 - 2025</span>
+                        </div>
+                        <div>
+                            <h3 class="text-sm font-bold text-white leading-snug">C-Programming & PLC Automation Intern</h3>
+                            <p class="text-neutral-200 text-xs font-semibold mt-0.5">CTTC Bhubaneswar</p>
+                            <p class="text-xs text-neutral-400 mt-1">Engineered firmware layers and compiled logic scripts bridging industrial controllers with automation hardware pipelines.</p>
+                        </div>
+                    </div>
+                    <div class="border-t border-cardBorder/60 pt-3 mt-4 flex gap-1.5">
+                        <span class="text-[9px] bg-neutral-950 border border-cardBorder px-2 py-0.5 rounded text-neutral-500">PLC Programming</span>
+                        <span class="text-[9px] bg-neutral-950 border border-cardBorder px-2 py-0.5 rounded text-neutral-500">Embedded C</span>
+                    </div>
+                </div>
+
+            <!-- Row 3: NPTEL Certification Card -->
+<div class="w-full md:col-span-6 bg-cardBg border border-cardBorder p-5 rounded-2xl flex flex-col justify-between hover:border-neutral-800 transition-colors exp-card">
+    <div class="space-y-3">
+        <div class="flex items-center justify-between">
+            <div class="w-10 h-10 rounded-xl bg-neutral-900 border border-cardBorder flex items-center justify-center text-[#FF9F43] shrink-0">
+                <i class="fa-solid fa-certificate text-base"></i>
+            </div>
+            <span class="text-[9px] font-mono bg-amber-950/40 border border-amber-900/60 px-2 py-0.5 rounded text-[#FF9F43] font-bold uppercase tracking-wider">2025</span>
+        </div>
+        <div>
+            <h3 class="text-sm font-bold text-white leading-snug">Introduction to Industrial IoT</h3>
+            <p class="text-neutral-200 text-xs font-semibold mt-0.5">NPTEL | IIT Kharagpur</p>
+            <p class="text-xs text-neutral-400 mt-1">Successfully completed rigorous academic evaluation with a consolidated score of <strong>66%</strong>, securing Elite certification credentials.</p>
+        </div>
+    </div>
+    <div class="border-t border-cardBorder/60 pt-3 mt-4 flex items-center justify-between">
+        <div class="flex gap-1.5">
+            <span class="text-[9px] bg-neutral-950 border border-cardBorder px-2 py-0.5 rounded text-neutral-500">IIoT</span>
+            <span class="text-[9px] bg-neutral-950 border border-cardBorder px-2 py-0.5 rounded text-neutral-500">Industry 4.0</span>
+        </div>
+        <span class="text-[10px] text-neutral-500 font-mono">Score: 66%</span>
+    </div>
+</div>
+
+<!-- Row 3: NEW Added Option 3 (Indian Railways Intern) -->
+<div class="w-full md:col-span-6 bg-cardBg border border-cardBorder p-5 rounded-2xl flex flex-col justify-between hover:border-neutral-800 transition-colors exp-card">
+    <div class="space-y-3">
+        <div class="flex items-center justify-between">
+            <div class="w-10 h-10 rounded-xl bg-neutral-900 border border-cardBorder flex items-center justify-center text-[#0052CC] shrink-0">
+                <i class="fa-solid fa-train-subway text-base"></i>
+            </div>
+            <span class="text-[9px] font-mono bg-blue-950/40 border border-blue-900/60 px-2 py-0.5 rounded text-[#3385FF] font-bold uppercase tracking-wider">2026</span>
+        </div>
+        <div>
+            <h3 class="text-sm font-bold text-white leading-snug">Signal & Telecommunication Intern</h3>
+            <p class="text-neutral-200 text-xs font-semibold mt-0.5">Indian Railways</p>
+            <p class="text-xs text-neutral-400 mt-1">Studied interlocking logic frameworks, track circuits, and electronic communication networks optimized for mission-critical transit switching.</p>
+        </div>
+    </div>
+    <div class="border-t border-cardBorder/60 pt-3 mt-4 flex gap-1.5">
+        <span class="text-[9px] bg-neutral-950 border border-cardBorder px-2 py-0.5 rounded text-neutral-500">Signaling Systems</span>
+        <span class="text-[9px] bg-neutral-950 border border-cardBorder px-2 py-0.5 rounded text-neutral-500">Telecom Networks</span>
+    </div>
+</div>
+            </div>
+        </section>
+
+
+        <section id="experience" class="space-y-8">
+            <div class="reveal-element">
+                <h2 class="text-3xl font-bold text-white text-center">Contact</h2>
+            </div>
+        <section id="contact" class="grid grid-cols-1 md:grid-cols-12 gap-12 pt-8 bg-black text-white p-8 rounded-3xl relative">
+            <div class="md:col-span-5 space-y-6 reveal-element">
+                <div class="text-xs uppercase tracking-widest font-mono text-neutral-500">CONTACT</div>
+                <h2 class="text-4xl md:text-5xl font-extrabold text-white leading-tight">Let's Build Something Together.</h2>
+                <p class="text-neutral-400 text-sm leading-relaxed">
+                    I'm currently open to internship opportunities, freelance collaborations, and exciting projects. If you have an idea or just want to say hi, my inbox is always open.
+                </p>
+                <div class="inline-flex items-center gap-2 bg-neutral-900 border border-neutral-800 px-3 py-1.5 rounded-full text-xs text-neutral-300">
+                    <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span> Available for work
+                </div>
+                
+                <div class="flex items-center gap-4 pt-4 text-neutral-400">
+                    <button onclick="navigator.clipboard.writeText('pattanaikbiswajit07@gmail.com'); alert('Email copied!');" 
+                            title="Copy Email"
+                            class="w-10 h-10 rounded-xl bg-neutral-900 border border-neutral-800 flex items-center justify-center hover:text-white hover:border-neutral-700 transition-all">
+                        <i class="fa-regular fa-envelope text-lg"></i>
+                    </button>
+                    <a href="https://github.com/Biswajitpa" target="_blank" rel="noopener noreferrer" 
+                       title="Visit GitHub"
+                       class="w-10 h-10 rounded-xl bg-neutral-900 border border-neutral-800 flex items-center justify-center hover:text-white hover:border-neutral-700 transition-all">
+                        <i class="fa-brands fa-github text-lg"></i>
+                    </a>
+                    <a href="https://www.linkedin.com/in/biswajit-pattanaik-3586b82b3" target="_blank" rel="noopener noreferrer" 
+                       title="Visit LinkedIn"
+                       class="w-10 h-10 rounded-xl bg-neutral-900 border border-neutral-800 flex items-center justify-center hover:text-white hover:border-neutral-700 transition-all">
+                        <i class="fa-brands fa-linkedin-in text-lg"></i>
+                    </a>
+                    <a href="https://leetcode.com/u/ueiwy9Px19/" target="_blank" rel="noopener noreferrer" 
+                       title="Visit LeetCode"
+                       class="w-10 h-10 rounded-xl bg-neutral-900 border border-neutral-800 flex items-center justify-center hover:text-white hover:border-neutral-700 transition-all">
+                        <i class="fa-solid fa-code text-lg"></i>
+                    </a>
+                </div>
+            </div>
+
+            <div class="md:col-span-7 bg-neutral-900/40 border border-neutral-800 p-8 rounded-2xl reveal-element relative overflow-hidden transition-all duration-500 min-h-[420px] flex flex-col justify-center backdrop-blur-sm">
+                
+                <form id="portfolioContactForm" action="https://api.web3forms.com/submit" method="POST" data-netlify="false" class="space-y-4 transition-all duration-500 opacity-100 scale-100">
+                    <input type="hidden" name="from_name" value="Portfolio Contact Form">
+                    <input type="hidden" name="subject" value="🚀 New Portfolio Message!">
+
+                    <div>
+                        <input type="text" id="formName" name="name" placeholder="Your Name" required
+                            class="w-full bg-neutral-950 border border-neutral-800 rounded-xl px-4 py-3.5 text-sm text-white placeholder-neutral-500 focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 transition-all">
+                    </div>
+                    <div>
+                        <input type="email" name="email" placeholder="Email Address" required
+                            class="w-full bg-neutral-950 border border-neutral-800 rounded-xl px-4 py-3.5 text-sm text-white placeholder-neutral-500 focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 transition-all">
+                    </div>
+                    <div>
+                        <textarea name="message" placeholder="Your Message" rows="5" required
+                            class="w-full bg-neutral-950 border border-neutral-800 rounded-xl px-4 py-3.5 text-sm text-white placeholder-neutral-500 focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 transition-all resize-none"></textarea>
+                    </div>
+                    
+                    <button type="submit" id="submitBtn"
+                        class="w-full bg-white text-black font-bold text-xs uppercase tracking-widest py-4 rounded-xl hover:bg-neutral-200 active:scale-[0.99] transition-all flex items-center justify-center gap-2 shadow-lg shadow-white/5">
+                        <span id="btnText">Send Message</span> 
+                        <i id="btnIcon" class="fa-solid fa-paper-plane text-[10px]"></i>
+                    </button>
+                </form>
+
+                <div id="successState" class="hidden absolute inset-0 flex flex-col items-center justify-center text-center p-6 space-y-6 opacity-0 scale-90 transition-all duration-700 ease-out pointer-events-none">
+                    <div class="relative w-20 h-20 bg-emerald-500/10 border border-emerald-500/30 rounded-full flex items-center justify-center">
+                        <div class="absolute inset-0 rounded-full bg-emerald-500/20 animate-ping opacity-75 duration-1000"></div>
+                        <i class="fa-solid fa-check text-emerald-400 text-3xl transition-transform duration-500 scale-0" id="successCheck"></i>
+                    </div>
+                    
+                    <div class="space-y-3">
+                        <h3 class="text-3xl font-extrabold text-white tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-white to-neutral-400">
+                            Message Dispatched!
+                        </h3>
+                        <p id="typingTarget" class="text-neutral-400 text-sm max-w-xs mx-auto leading-relaxed min-h-[40px] font-mono"></p>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <script src="app.js"></script>
+    </main>
+<footer class="relative border-t border-cardBorder mt-20 bg-darkBg overflow-hidden">
+    <!-- Subtle background ambient glow -->
+    <div class="absolute top-0 left-1/2 -translate-x-1/2 w-96 h-24 bg-gradient-to-r from-emerald-500/10 via-cyan-500/10 to-blue-500/10 blur-2xl pointer-events-none"></div>
+
+    <div class="relative max-w-5xl mx-auto px-4 py-8 flex flex-col md:flex-row items-center justify-between text-xs text-neutral-500 gap-6">
+        
+        <!-- Copyright Section -->
+        <div class="hover:text-neutral-400 transition-colors duration-300">&copy; 2026 [BISWAJIT.site]. All rights reserved.</div>
+        
+        <!-- Premium Animated & Colored Developer Zone -->
+        <div class="group relative flex items-center gap-3 px-4 py-2 rounded-2xl bg-neutral-900/40 border border-neutral-800/60 backdrop-blur-sm transition-all duration-500 hover:border-emerald-500/30 hover:bg-neutral-900/80 cursor-default">
+            
+            <!-- Animated Gradient Border Highlight on Hover -->
+            <div class="absolute inset-0 rounded-2xl bg-gradient-to-r from-emerald-500/20 via-cyan-500/20 to-blue-500/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500 blur-[2px] -z-10"></div>
+            
+            <!-- Live Pulse Beacon -->
+            <div class="relative flex h-2 w-2">
+                <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                <span class="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+            </div>
+            
+            <!-- Tech-styled Text with Hover Gradient Color Shift -->
+            <span class="font-medium tracking-wide transition-all duration-300 group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-r group-hover:from-emerald-400 group-hover:via-cyan-400 group-hover:to-blue-400">
+                Developed By Biswajit Pattanaik
+            </span>
+            
+            <!-- Brand-Colored & Pop-Animated Social Icons -->
+            <div class="flex gap-2">
+                <!-- GitHub Icon (Brand color shift + tilt effect) -->
+                <a href="https://github.com/Biswajitpa" target="_blank" rel="noopener noreferrer" 
+                   title="Visit GitHub"
+                   class="w-9 h-9 rounded-xl bg-neutral-950 border border-neutral-800 flex items-center justify-center text-neutral-400 hover:text-white hover:bg-[#24292e] hover:border-[#404448] hover:scale-115 hover:-translate-y-1 hover:rotate-3 transition-all duration-300 shadow-md hover:shadow-black/50">
+                    <i class="fa-brands fa-github text-base"></i>
+                </a>
+                
+                <!-- LinkedIn Icon (Brand color shift + tilt effect) -->
+                <a href="https://www.linkedin.com/in/biswajit-pattanaik-3586b82b3" target="_blank" rel="noopener noreferrer" 
+                   title="Visit LinkedIn"
+                   class="w-9 h-9 rounded-xl bg-neutral-950 border border-neutral-800 flex items-center justify-center text-neutral-400 hover:text-white hover:bg-[#0077b5] hover:border-[#008fe2] hover:scale-115 hover:-translate-y-1 hover:-rotate-3 transition-all duration-300 shadow-md hover:shadow-black/50">
+                    <i class="fa-brands fa-linkedin-in text-base"></i>
+                </a>
+
+                <!-- LeetCode Icon (Brand color shift + tilt effect) -->
+                <a href="https://leetcode.com/u/ueiwy9Px19/" target="_blank" rel="noopener noreferrer" 
+                   title="Visit LeetCode"
+                   class="w-9 h-9 rounded-xl bg-neutral-950 border border-neutral-800 flex items-center justify-center text-neutral-400 hover:text-white hover:bg-[#FFA116] hover:border-[#e08e00] hover:scale-115 hover:-translate-y-1 hover:rotate-3 transition-all duration-300 shadow-md hover:shadow-black/50">
+                    <i class="fa-solid fa-code text-base"></i>
+                </a>
+            </div>
+        </div>
+        
+        <!-- Navigation Links with Underline Animations -->
+        <div class="flex space-x-6">
+            <a href="#home" class="relative py-1 hover:text-white transition-colors duration-300 after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-0 after:h-[1px] after:bg-emerald-400 after:transition-all after:duration-300 hover:after:w-full">Home</a>
+            <a href="#about" class="relative py-1 hover:text-white transition-colors duration-300 after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-0 after:h-[1px] after:bg-cyan-400 after:transition-all after:duration-300 hover:after:w-full">About</a>
+            <a href="#projects" class="relative py-1 hover:text-white transition-colors duration-300 after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-0 after:h-[1px] after:bg-blue-400 after:transition-all after:duration-300 hover:after:w-full">Projects</a>
+            <a href="#contact" class="relative py-1 hover:text-white transition-colors duration-300 after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-0 after:h-[1px] after:bg-purple-400 after:transition-all after:duration-300 hover:after:w-full">Contact</a>
+        </div>
+    </div>
+</footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+
+    <script>
+        gsap.registerPlugin(ScrollTrigger);
+
+        // 1. RUNTIME ENGINE LOADING MANAGER & ENTRY LIFECYCLE
+        function initPortfolioAnimations() {
+            const tl = gsap.timeline();
+            tl.to("#hero-text", { opacity: 1, y: 0, duration: 0.8, ease: "power3.out" })
+              .to("#hero-img", { opacity: 1, x: 0, duration: 0.8, ease: "power3.out" }, "-=0.6");
+              
+            initAutomatedProjectSliders();
+        }
+
+        // Preloader progress + exit is now driven entirely by the interactive
+        // loader script above, which calls initPortfolioAnimations() itself
+        // once the boot sequence completes.
+        window.addEventListener('DOMContentLoaded', () => {
+            if (!document.getElementById('preloader')) {
+                // Failsafe: if the preloader was already removed/skipped, still animate hero in.
+                initPortfolioAnimations();
+            }
+        });
+
+        // 2. PROJECT MULTI-IMAGE AUTO SLIDER LOGIC
+        function initAutomatedProjectSliders() {
+            const sliders = document.querySelectorAll('.project-slider');
+            
+            sliders.forEach((slider) => {
+                const slides = slider.querySelectorAll('.slide-item');
+                let currentSlideIndex = 0;
+                const totalSlides = slides.length;
+                
+                if(totalSlides > 1) {
+                    setInterval(() => {
+                        slides[currentSlideIndex].classList.remove('opacity-100');
+                        slides[currentSlideIndex].classList.add('opacity-0');
+                        
+                        currentSlideIndex = (currentSlideIndex + 1) % totalSlides;
+                        
+                        slides[currentSlideIndex].classList.remove('opacity-0');
+                        slides[currentSlideIndex].classList.add('opacity-100');
+                    }, 3500); // Main cycle rotation interval
+                }
+            });
+        }
+
+        // 3. Standard Blocks Reveal On Scroll
+        document.querySelectorAll('.reveal-element').forEach((element) => {
+            gsap.fromTo(element, 
+                { opacity: 0, y: 40 },
+                { 
+                    opacity: 1, 
+                    y: 0, 
+                    duration: 0.8, 
+                    ease: "power2.out",
+                    scrollTrigger: {
+                        trigger: element,
+                        start: "top 85%",
+                        toggleActions: "play none none none"
+                    }
+                }
+            );
+        });
+
+        // 4. Bento Stats Grid - Staggered Slide Up
+        gsap.fromTo(".bento-stat", 
+            { opacity: 0, y: 30, scale: 0.95 },
+            { 
+                opacity: 1, 
+                y: 0, 
+                scale: 1,
+                duration: 0.6, 
+                stagger: 0.15,
+                ease: "power2.out",
+                scrollTrigger: {
+                    trigger: ".bento-stat",
+                    start: "top 85%"
+                }
+            }
+        );
+
+        // 5. Project Cards - Left to Right Staggered Reveal
+        gsap.fromTo(".project-card", 
+            { opacity: 0, y: 50 },
+            { 
+                opacity: 1, 
+                y: 0, 
+                duration: 0.7, 
+                stagger: 0.2, 
+                ease: "power3.out",
+                scrollTrigger: {
+                    trigger: ".project-card",
+                    start: "top 80%"
+                }
+            }
+        );
+
+        // 6. Education Cards Reveal Matrix Loop
+        gsap.fromTo(".edu-card", 
+            { opacity: 0, y: 100, scale: 0.95 },
+            { 
+                opacity: 1, 
+                y: 0, 
+                scale: 1,
+                duration: 0.4, 
+                stagger: 0.05,
+                ease: "expo.out",
+                scrollTrigger: {
+                    trigger: "#education",
+                    start: "top 85%"
+                }
+            }
+        );
+
+        // 7. Experience Cards Stagger Loop
+        gsap.fromTo(".exp-card", 
+            { opacity: 0, y: 30, scale: 0.97 },
+            { 
+                opacity: 1, 
+                y: 0, 
+                scale: 1,
+                duration: 0.6, 
+                stagger: 0.12,
+                ease: "power2.out",
+                scrollTrigger: {
+                    trigger: "#experience",
+                    start: "top 85%"
+                }
+            }
+        );
+
+        // Theme Switching Toggle Engine Logic
+        const themeToggleBtn = document.getElementById('theme-toggle');
+        const themeIcon = document.getElementById('theme-icon');
+
+        const savedTheme = localStorage.getItem('portfolio-theme');
+        if (savedTheme === 'light') {
+            document.body.classList.add('light-theme');
+            themeIcon.classList.remove('fa-regular', 'fa-moon');
+            themeIcon.classList.add('fa-solid', 'fa-sun');
+        }
+
+        themeToggleBtn.addEventListener('click', () => {
+            document.body.classList.toggle('light-theme');
+            if (document.body.classList.contains('light-theme')) {
+                themeIcon.classList.remove('fa-regular', 'fa-moon');
+                themeIcon.classList.add('fa-solid', 'fa-sun');
+                localStorage.setItem('portfolio-theme', 'light');
+            } else {
+                themeIcon.classList.remove('fa-solid', 'fa-sun');
+                themeIcon.classList.add('fa-regular', 'fa-moon');
+                localStorage.setItem('portfolio-theme', 'dark');
+            }
+        });
+
+        // Dynamic Nav Link Highlighting Logic
+        const sections = document.querySelectorAll('section');
+        const navLinks = document.querySelectorAll('nav a');
+
+        window.addEventListener('scroll', () => {
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                if (pageYOffset >= sectionTop - 120) {
+                    current = section.getAttribute('id');
+                }
+            });
+
+            navLinks.forEach(link => {
+                link.classList.remove('text-white', 'bg-neutral-800');
+                link.classList.add('text-neutral-400');
+                if (link.getAttribute('href') === `#${current}`) {
+                    link.classList.remove('text-neutral-400');
+                    link.classList.add('text-white', 'bg-neutral-800');
+                }
+            });
+        });
+    </script>
+</body>
+</html>

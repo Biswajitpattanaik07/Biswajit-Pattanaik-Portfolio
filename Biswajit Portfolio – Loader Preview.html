@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Biswajit Pattanaik | Loader Preview</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#05070a;--fg:#f3f4f6;--mut:#9ca3af;box-sizing:border-box;color-scheme:dark;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+html,body{height:100%;margin:0}
+body{background:var(--bg);color:var(--fg);font-family:Inter,system-ui,sans-serif;display:grid;place-items:center;text-align:center}
+h1{font-size:clamp(2.2rem,8vw,5rem);font-weight:800;margin:0;background:linear-gradient(90deg,#34d399,#22d3ee,#818cf8);-webkit-background-clip:text;background-clip:text;color:transparent}
+p{color:var(--mut);margin:.8rem 0 1.6rem}
+button{background:#fff;color:#000;border:0;border-radius:99px;padding:12px 26px;font:600 13px Inter,sans-serif;cursor:pointer}
+#bw-progress{display:none}
+</style></head>
+<body>
+<main><h1>Biswajit Pattanaik</h1><p>Full-Stack &amp; Embedded Engineer</p><button onclick="location.reload()">Replay loader</button></main>
+<script>
+(function(){
+var st=document.createElement('style');st.textContent="\n#bw-loader{position:fixed;inset:0;z-index:9999;background:#05070a;overflow:hidden;cursor:pointer;font-family:'Inter',sans-serif;transition:opacity .7s ease .15s,transform .9s cubic-bezier(.7,0,.2,1)}\n#bw-loader.done{opacity:0;transform:scale(1.35);pointer-events:none}\n#bwCv{position:absolute;inset:0;width:100%;height:100%}\n.bw-vig{position:absolute;inset:0;background:radial-gradient(ellipse at center,transparent 40%,#05070a 100%);pointer-events:none}\n.bw-ui{position:absolute;left:0;right:0;bottom:0;padding:0 clamp(18px,4vw,48px) clamp(18px,4vh,40px);display:flex;align-items:flex-end;justify-content:space-between;gap:16px;pointer-events:none}\n#bwPct{font-weight:800;font-size:clamp(3.2rem,12vw,8rem);line-height:.85;letter-spacing:-.05em;font-variant-numeric:tabular-nums;\n background:linear-gradient(180deg,#fff,#22d3ee 70%,#6366f1);-webkit-background-clip:text;background-clip:text;color:transparent}\n#bwPct small{font-size:.35em;letter-spacing:0}\n.bw-side{text-align:right;color:#9ca3af;font:500 12px/1.7 monospace;max-width:46vw}\n#bwRole{color:#34d399;font-size:13px;transition:opacity .2s}\n#bwSkip{pointer-events:auto;margin-top:8px;background:transparent;color:#9ca3af;border:1px solid #2a2f36;border-radius:99px;padding:6px 14px;font:11px monospace;letter-spacing:.15em;cursor:pointer;opacity:0;transition:.3s}\n#bwSkip.show{opacity:1}#bwSkip:hover{color:#05070a;background:#34d399;border-color:#34d399}\n.bw-line{position:absolute;left:0;bottom:0;height:3px;width:var(--p,0%);background:linear-gradient(90deg,#34d399,#22d3ee,#818cf8);box-shadow:0 0 18px #22d3ee}\n.bw-top{position:absolute;top:clamp(16px,3vh,30px);left:clamp(18px,4vw,48px);right:clamp(18px,4vw,48px);display:flex;justify-content:space-between;color:#4b5563;font:11px monospace;letter-spacing:.2em;pointer-events:none}\n";document.head.appendChild(st);
+document.body.insertAdjacentHTML('afterbegin',"<div id=\"bw-loader\" role=\"status\" aria-label=\"Loading portfolio\">\n  <canvas id=\"bwCv\"></canvas><div class=\"bw-vig\"></div>\n  <div class=\"bw-top\"><span>PORTFOLIO / 2026</span><span>MOVE YOUR MOUSE \u00b7 TAP TO BOOST</span></div>\n  <div class=\"bw-ui\">\n    <div id=\"bwPct\">0<small>%</small></div>\n    <div class=\"bw-side\"><div id=\"bwRole\">assembling pixels</div><div>Bhubaneswar, IN</div><button id=\"bwSkip\" type=\"button\">SKIP</button></div>\n  </div>\n  <div class=\"bw-line\"></div>\n</div>\n\n<div id=\"bw-progress\"></div>");
+
+(function(){
+  var L=document.getElementById('bw-loader'),cv=document.getElementById('bwCv'),ctx=cv.getContext('2d'),
+      pctEl=document.getElementById('bwPct'),roleEl=document.getElementById('bwRole'),skip=document.getElementById('bwSkip');
+  var W,H,dpr=Math.min(2,devicePixelRatio||1),P=[],p=0,done=false,burst=false,mx=-999,my=-999,lastR=-1;
+  var roles=['assembling pixels','compiling Full-Stack','flashing Embedded firmware','training AI / ML','shipping DevOps','ready.'];
+  document.body.style.overflow='hidden';
+
+  function build(){
+    W=innerWidth;H=innerHeight;cv.width=W*dpr;cv.height=H*dpr;ctx.setTransform(dpr,0,0,dpr,0,0);
+    var o=document.createElement('canvas');o.width=W;o.height=H;var c=o.getContext('2d');
+    var fs=Math.min(W*(W<600?.2:.15),200);
+    c.font='800 '+fs+'px Inter,Arial,sans-serif';c.textAlign='center';c.textBaseline='middle';c.fillStyle='#fff';
+    c.fillText('BISWAJIT',W/2,H*.44);
+    var gap=W<600?4:Math.max(4,Math.round(fs/38)),d=c.getImageData(0,0,W,H).data;P=[];
+    for(var y=0;y<H;y+=gap)for(var x=0;x<W;x+=gap)if(d[(y*W+x)*4+3]>128){
+      P.push({tx:x,ty:y,x:Math.random()*W,y:Math.random()*H,vx:(Math.random()-.5)*2,vy:(Math.random()-.5)*2,
+        d:Math.random()*.85,h:150+x/W*130,s:1.6+Math.random()*1.4});
+    }
+  }
+
+  function frame(){
+    if(!L.isConnected)return;
+    ctx.fillStyle='rgba(5,7,10,'+(burst?.12:.28)+')';ctx.fillRect(0,0,W,H);
+    var k=.035+p/100*.07;
+    for(var i=0;i<P.length;i++){var a=P[i];
+      if(burst){a.x+=a.vx;a.y+=a.vy;a.vx*=1.06;a.vy*=1.06}
+      else if(p/100>=a.d){
+        a.x+=(a.tx-a.x)*k;a.y+=(a.ty-a.y)*k;
+        var dx=a.x-mx,dy=a.y-my,r=dx*dx+dy*dy;
+        if(r<9000){var f=(1-r/9000)*7,m=Math.sqrt(r)||1;a.x+=dx/m*f;a.y+=dy/m*f}
+      }else{ /* swirl around the centre until it is this particle's turn */
+        var cx=a.x-W/2,cy=a.y-H*.44;a.x+=a.vx-cy*.0018;a.y+=a.vy+cx*.0018;
+        if(a.x<0||a.x>W)a.vx*=-1;if(a.y<0||a.y>H)a.vy*=-1;
+      }
+      ctx.fillStyle='hsl('+a.h+',90%,'+(p/100>=a.d?65:45)+'%)';
+      ctx.fillRect(a.x,a.y,a.s,a.s);
+    }
+    requestAnimationFrame(frame);
+  }
+
+  function set(v){
+    p=Math.min(100,v);L.style.setProperty('--p',p+'%');
+    pctEl.firstChild.nodeValue=Math.floor(p);
+    var r=Math.min(roles.length-1,Math.floor(p/100*(roles.length-1))+(p>=100?1:0));
+    if(r!==lastR){lastR=r;roleEl.style.opacity=0;setTimeout(function(){roleEl.textContent=roles[r];roleEl.style.opacity=1},150)}
+    if(p>=100&&!done)finish();
+  }
+  function finish(){
+    done=true;clearInterval(t);
+    setTimeout(function(){
+      burst=true;
+      P.forEach(function(a){var ang=Math.atan2(a.y-H*.44,a.x-W/2),sp=1+Math.random()*3;a.vx=Math.cos(ang)*sp;a.vy=Math.sin(ang)*sp});
+      setTimeout(function(){L.classList.add('done')},350);
+      setTimeout(function(){L.remove();document.body.style.overflow='';
+        if(typeof initPortfolioAnimations==='function')initPortfolioAnimations();},1300);
+    },500);
+  }
+
+  var t=setInterval(function(){if(!done)set(p+(p<85?.8+Math.random()*.9:.45))},45);
+  L.addEventListener('pointermove',function(e){mx=e.clientX;my=e.clientY});
+  L.addEventListener('pointerleave',function(){mx=my=-999});
+  L.addEventListener('pointerdown',function(e){mx=e.clientX;my=e.clientY;if(!done)set(p+6+Math.random()*5)});
+  addEventListener('keydown',function(e){if(e.code==='Space'&&!done)set(p+8)});
+  skip.addEventListener('click',function(e){e.stopPropagation();set(100)});
+  setTimeout(function(){skip.classList.add('show')},1500);
+  setTimeout(function(){if(!done)set(100)},9000);
+  addEventListener('resize',function(){if(!done)build()});
+
+  (document.fonts&&document.fonts.load?document.fonts.load('800 100px Inter'):Promise.resolve()).catch(function(){}).then(function(){build();requestAnimationFrame(frame)});
+})();
+
+
+addEventListener('scroll',function(){var h=document.documentElement;
+ document.getElementById('bw-progress').style.width=(h.scrollTop/(h.scrollHeight-h.clientHeight)*100)+'%'},{passive:true});
+
+})();
+
+</script></body></html>

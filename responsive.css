@@ -1,0 +1,141 @@
+/* =====================================================================
+   responsive.css — built specifically for Biswajit's portfolio (index.html)
+   Put it next to index.html (it is already linked in <head>).
+
+   Tailwind's CDN injects its CSS AFTER this file, so the rules below use
+   ID / attribute selectors (higher specificity) and !important where needed.
+   ===================================================================== */
+
+/* ---------- 0. Base (all devices) ---------- */
+html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
+
+/* Stops sideways scrolling WITHOUT breaking the sticky navbar */
+main { overflow-x: clip; }
+
+/* Anchor links (#about, #projects…) stop below the sticky header */
+section[id] { scroll-margin-top: 5rem; }
+
+h1, h2, h3, h4, p { overflow-wrap: break-word; }
+
+/* Theme + menu buttons: comfortable tap size */
+#theme-toggle {
+  display: inline-flex; align-items: center; justify-content: center;
+  min-width: 44px; min-height: 44px;
+}
+#mobile-menu-toggle { min-width: 44px; min-height: 44px; align-items: center; justify-content: center; }
+
+/* Hero photo: never wider than its column (w-80 overflowed on small screens) */
+#hero-img > div { width: 100%; max-width: 20rem; height: auto; aspect-ratio: 5 / 6; }
+
+/* Marquees: slider rows must never push the page wider */
+.project-marquee-wrap, .cert-marquee-wrap { max-width: 100%; }
+
+/* Project marquee: remove double spacing (gap + margin) so the loop is seamless */
+.project-marquee-track { gap: 0 !important; }
+.project-marquee-track .project-card { width: 20rem !important; margin-right: 1.5rem !important; }
+
+/* Experience / education chips & footers wrap instead of overflowing */
+.exp-card .flex, .edu-card .flex { flex-wrap: wrap; row-gap: .375rem; }
+
+/* ---------- 1. Large screens (≥1280px) ---------- */
+@media (min-width: 1280px) {
+  main.max-w-5xl { max-width: 72rem; }          /* matches header width */
+}
+
+/* ---------- 2. Laptops & tablets (≤1023px) ---------- */
+@media (max-width: 1023px) {
+
+  /* About: text on top, stat cards below (5/12 column was too narrow) */
+  #about > [class*="md:grid-cols-12"] { grid-template-columns: 1fr !important; }
+  #about > [class*="md:grid-cols-12"] > [class*="md:col-span-"] { grid-column: 1 / -1 !important; }
+
+  /* Education & Experience: image/slider card goes full width, no cramped 8/4 split */
+  #education [class*="md:grid-cols-12"] > [class*="md:col-span-8"],
+  #education [class*="md:grid-cols-12"] > [class*="md:col-span-4"],
+  #experience [class*="md:grid-cols-12"] > [class*="md:col-span-8"],
+  #experience [class*="md:grid-cols-12"] > [class*="md:col-span-4"] { grid-column: 1 / -1 !important; }
+  #education .project-slider, #experience .project-slider { min-height: 15rem; }
+
+  /* Contact: stack the text and the form */
+  #contact { grid-template-columns: 1fr !important; gap: 2rem !important; }
+  #contact > [class*="md:col-span-"] { grid-column: 1 / -1 !important; }
+  #contact h2 { font-size: clamp(2rem, 5vw, 3rem) !important; }
+
+  /* Footer: stack (3 items did not fit in one row) */
+  footer > div { flex-direction: column !important; text-align: center; }
+  footer .group { flex-wrap: wrap; justify-content: center; max-width: 100%; }
+  footer .space-x-6 { flex-wrap: wrap; justify-content: center; row-gap: .25rem; }
+}
+
+/* ---------- 3. Tablets only (768–1023px) ---------- */
+@media (min-width: 768px) and (max-width: 1023px) {
+  main.space-y-32 > :not([hidden]) ~ :not([hidden]) { margin-top: 6rem !important; }
+  #home h1 { font-size: 3.5rem !important; }
+  #about [class*="md:grid-cols-3"] { grid-template-columns: repeat(2, minmax(0, 1fr)) !important; }
+}
+
+/* ---------- 4. Stat cards: numbers scale so they never overflow ---------- */
+#about [class*="md:col-span-5"] > .bento-stat { padding: 1rem; }
+#about [class*="md:col-span-5"] > .bento-stat > div:first-child {
+  font-size: clamp(1.4rem, 2.6vw + .4rem, 2.25rem) !important;
+}
+
+/* ---------- 5. Phones (≤767px) ---------- */
+@media (max-width: 767px) {
+
+  main { padding-top: 2rem !important; padding-bottom: 2rem !important; }
+  main.space-y-32 > :not([hidden]) ~ :not([hidden]) { margin-top: 4.5rem !important; }
+
+  /* Header */
+  header > div.max-w-6xl { gap: .5rem; }
+  header a[href="#contact"].bg-white { padding: .55rem .85rem !important; font-size: 10px !important; }
+  #mobile-menu { max-height: calc(100vh - 4rem); max-height: calc(100dvh - 4rem); overflow-y: auto; }
+
+  /* Hero */
+  #home { text-align: center; padding-top: .5rem !important; }
+  #home h1 { font-size: clamp(2.25rem, 10vw, 3rem) !important; }
+  #hero-text > .flex { justify-content: center; }
+  #hero-text p { margin-left: auto; margin-right: auto; }
+  #hero-text .inline-flex { text-align: left; border-radius: 1rem; padding: .5rem .875rem; line-height: 1.45; }
+  #hero-text .inline-flex > span:first-child { flex-shrink: 0; }
+  #hero-img > div { max-width: min(100%, 17rem); }
+
+  /* Headings */
+  main h2.text-3xl { font-size: 1.75rem; line-height: 1.25; }
+
+  /* Contact */
+  #contact { padding: 1.25rem !important; border-radius: 1.5rem !important; }
+  #contact > div:last-child { padding: 1.25rem !important; }
+
+  /* Forms: 16px stops iOS from zooming when a field is tapped */
+  input, textarea, select { font-size: 16px !important; }
+
+  /* Project marquee cards fit small screens */
+  .project-marquee-track .project-card { width: min(17.5rem, 82vw) !important; margin-right: 1rem !important; }
+}
+
+/* ---------- 6. Very small phones (≤389px) ---------- */
+@media (max-width: 389px) {
+  header a[href="#contact"].bg-white { display: none !important; }  /* "Contact" is in the menu */
+  .cert-card { width: 140px; }
+  .cert-card img { height: 95px; }
+}
+
+/* ---------- 7. Touch devices ---------- */
+@media (hover: none) {
+  #hero-img > div { filter: none !important; }   /* colour photo (hover never happens on touch) */
+}
+@media (pointer: coarse) {
+  footer a { display: inline-flex; align-items: center; min-height: 44px; }
+}
+
+/* ---------- 8. Landscape phones ---------- */
+@media (max-height: 500px) and (orientation: landscape) {
+  main.space-y-32 > :not([hidden]) ~ :not([hidden]) { margin-top: 3rem !important; }
+}
+
+/* ---------- 9. Reduced motion ---------- */
+@media (prefers-reduced-motion: reduce) {
+  .cert-marquee-track { animation: none !important; }
+  .cert-marquee-wrap { overflow-x: auto; }
+}

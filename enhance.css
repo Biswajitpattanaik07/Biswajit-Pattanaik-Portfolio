@@ -1,0 +1,91 @@
+/* enhance.css — link AFTER your other stylesheets:  <link rel="stylesheet" href="enhance.css"> */
+:root{--g1:#34d399;--g2:#22d3ee;--g3:#818cf8}
+body{background-image:
+ radial-gradient(60rem 40rem at 85% -10%,rgba(34,211,238,.10),transparent 60%),
+ radial-gradient(50rem 36rem at -10% 30%,rgba(52,211,153,.08),transparent 60%),
+ radial-gradient(46rem 34rem at 100% 80%,rgba(129,140,248,.09),transparent 60%);
+ background-attachment:fixed}
+body.light-theme{background-image:none}
+
+/* gradient headings */
+#home h1 span{background:linear-gradient(90deg,var(--g1),var(--g2),var(--g3));-webkit-background-clip:text;background-clip:text;color:transparent!important;background-size:200% auto;animation:bwShift 6s linear infinite}
+section h2.text-3xl,section h2.md\:text-4xl{background:linear-gradient(90deg,#fff,#9ca3af);-webkit-background-clip:text;background-clip:text;color:transparent!important}
+body.light-theme section h2{background:none;color:#111827!important}
+@keyframes bwShift{to{background-position:200% center}}
+
+/* glowing gradient-border cards */
+.bg-cardBg{position:relative;transition:transform .35s,box-shadow .35s,border-color .35s}
+.bg-cardBg:hover{transform:translateY(-4px);border-color:rgba(34,211,238,.35)!important;box-shadow:0 18px 40px -18px rgba(34,211,238,.35),0 0 0 1px rgba(52,211,153,.12)}
+.project-marquee-track .project-card:hover{transform:translateY(-6px) scale(1.02)}
+
+/* profile photo: animated ring */
+#hero-img>div{position:relative;border-radius:1.5rem;box-shadow:0 0 0 1px rgba(255,255,255,.06),0 30px 60px -20px rgba(34,211,238,.35)}
+#hero-img>div::after{content:"";position:absolute;inset:-2px;border-radius:inherit;padding:2px;pointer-events:none;
+ background:conic-gradient(from var(--a,0deg),var(--g1),var(--g2),var(--g3),var(--g1));
+ -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude;animation:bwRing 6s linear infinite}
+@property --a{syntax:'<angle>';inherits:false;initial-value:0deg}
+@keyframes bwRing{to{--a:360deg}}
+
+/* tech chips */
+.bento-stat span.rounded-lg{transition:transform .25s,border-color .25s,background .25s}
+.bento-stat span.rounded-lg:hover{transform:translateY(-2px);border-color:rgba(52,211,153,.5);background:rgba(52,211,153,.08)}
+
+/* contact panel */
+#contact{background:linear-gradient(160deg,#05070a,#0b1117)!important;border:1px solid rgba(255,255,255,.06)}
+::selection{background:rgba(34,211,238,.35);color:#fff}
+#bw-progress{position:fixed;top:0;left:0;height:3px;width:0;z-index:60;background:linear-gradient(90deg,var(--g1),var(--g2),var(--g3))}
+@media (prefers-reduced-motion:reduce){*{animation-duration:.01s!important;transition-duration:.01s!important}}
+
+/* ---- extra motion ---- */
+@keyframes bwBlink{50%{opacity:0}}
+@keyframes bwBob{50%{transform:translateY(-8px)}}
+#hero-img>div{animation:bwBob 5s ease-in-out infinite}
+#home .animate-pulse{animation-duration:1.4s}
+/* sheen sweep across cards on hover */
+.bg-cardBg::before{content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;opacity:0;
+ background:linear-gradient(110deg,transparent 35%,rgba(255,255,255,.07) 50%,transparent 65%);transform:translateX(-100%)}
+.bg-cardBg:hover::before{opacity:1;transform:translateX(100%);transition:transform .9s ease,opacity .2s}
+/* section icons wobble */
+.bg-cardBg i.fa-solid:hover{animation:bwWiggle .5s}
+@keyframes bwWiggle{25%{transform:rotate(-12deg) scale(1.15)}75%{transform:rotate(12deg) scale(1.15)}}
+/* nav links glow */
+.nav-link:hover{text-shadow:0 0 12px rgba(34,211,238,.6)}
+/* floating chips */
+.bento-stat span.rounded-lg{animation:bwBob 6s ease-in-out infinite}
+.bento-stat span.rounded-lg:nth-child(2n){animation-delay:-2s}
+.bento-stat span.rounded-lg:nth-child(3n){animation-delay:-4s}
+
+/* ---- v3: louder visuals ---- */
+.bw-aurora{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden}
+.bw-aurora i{position:absolute;border-radius:50%;filter:blur(90px);opacity:.28;animation:bwDrift 18s ease-in-out infinite alternate}
+.bw-aurora i:nth-child(1){width:46vw;height:46vw;background:#10b981;left:-10vw;top:-10vw}
+.bw-aurora i:nth-child(2){width:40vw;height:40vw;background:#6366f1;right:-8vw;top:25vh;animation-duration:22s}
+.bw-aurora i:nth-child(3){width:36vw;height:36vw;background:#06b6d4;left:25vw;bottom:-14vw;animation-duration:26s}
+@keyframes bwDrift{to{transform:translate(8vw,6vh) scale(1.25)}}
+body.light-theme .bw-aurora{opacity:.35}
+main,header,footer{position:relative;z-index:2}
+
+/* giant skill ticker */
+.bw-ticker{position:relative;z-index:2;overflow:hidden;margin:-4rem 0;padding:1.2rem 0;border-block:1px solid rgba(255,255,255,.08);
+ background:rgba(255,255,255,.02);transform:rotate(-1.6deg);backdrop-filter:blur(4px)}
+.bw-ticker div{display:flex;width:max-content;animation:bwTick 28s linear infinite}
+.bw-ticker:hover div{animation-duration:90s}
+.bw-ticker span{font-weight:800;font-size:clamp(2rem,6vw,4.5rem);letter-spacing:-.02em;padding:0 1.4rem;white-space:nowrap;
+ color:transparent;-webkit-text-stroke:1.2px rgba(255,255,255,.35);transition:.3s}
+.bw-ticker span:nth-child(3n+1){background:linear-gradient(90deg,#34d399,#22d3ee);-webkit-background-clip:text;background-clip:text;-webkit-text-stroke:0}
+.bw-ticker span:hover{-webkit-text-stroke:0;background:linear-gradient(90deg,#34d399,#22d3ee,#818cf8);-webkit-background-clip:text;background-clip:text}
+@keyframes bwTick{to{transform:translateX(-50%)}}
+
+/* hero name: letters pop in */
+.bw-ch{display:inline-block;opacity:0;transform:translateY(40px) rotate(6deg);animation:bwPop .7s cubic-bezier(.2,1.3,.3,1) forwards;animation-delay:calc(var(--i)*45ms + .2s)}
+@keyframes bwPop{to{opacity:1;transform:none}}
+.bw-ch:hover{transform:translateY(-8px) scale(1.15);color:#22d3ee;transition:.2s}
+
+/* neon button pulse */
+a[href="#projects"].rounded-full,a[download].rounded-full{box-shadow:0 0 0 0 rgba(52,211,153,.5);animation:bwPulse 2.4s infinite}
+@keyframes bwPulse{70%{box-shadow:0 0 0 14px rgba(52,211,153,0)}100%{box-shadow:0 0 0 0 rgba(52,211,153,0)}}
+
+/* section headings get an animated underline */
+section h2.text-3xl{position:relative;display:inline-block}
+section h2.text-center::after,.text-center>h2::after{content:"";display:block;height:3px;width:60%;margin:.6rem auto 0;border-radius:3px;background:linear-gradient(90deg,#34d399,#22d3ee,#818cf8);animation:bwGrow 1.2s ease both}
+@keyframes bwGrow{from{width:0}}
