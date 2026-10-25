@@ -158,7 +158,7 @@
   #boot .nf{display:flex;gap:26px;align-items:flex-start;margin:6px 0;flex-wrap:wrap}
   #boot .nf pre{margin:0;color:#ffd34d;font:inherit;line-height:1.25}
   #boot .nf .i{line-height:1.5}#boot .nf b{color:var(--a)}#boot .nf .pal i{display:inline-block;width:14px;height:14px;margin-right:3px}
-  #bootSkip{position:absolute;right:18px;bottom:max(12px,env(safe-area-inset-bottom));color:#5d7a8c;font-size:11px}
+  #boot .wfoot{flex:none;padding:6px 14px max(6px,env(safe-area-inset-bottom));text-align:right;color:#5d7a8c;font-size:11px;background:#14161d;border-top:1px solid rgba(255,255,255,.06)}
   @media(max-width:640px){#boot{font-size:11px;padding:0}#boot .win{height:100%;border-radius:0}#boot .nf pre{display:none}}
 
   /* hold the loader's power-on animation until stage 2 starts */
@@ -199,7 +199,7 @@
   @media(max-height:480px) and (orientation:landscape){
     #boot{padding:0}
     #boot .win{width:100%;height:100%;border-radius:0;border:0}
-    #boot .tabs,#boot .nf pre,#bootSkip{display:none}
+    #boot .tabs,#boot .nf pre,#boot .wfoot{display:none}
     #boot .wbar{padding:5px 12px}
   }
   @media(hover:none),(pointer:coarse){#bootSkip{font-size:12px}}
@@ -216,6 +216,13 @@
   @media(max-width:480px){#welcome small{letter-spacing:.25em}#welcome .sub{letter-spacing:.08em}}
   @media(max-height:420px){#welcome small{margin-bottom:6px}#welcome h2{font-size:clamp(28px,14vh,60px)}#welcome .nm{margin-top:6px}}
   @media(min-width:1600px){#welcome h2{font-size:clamp(86px,6vw,140px)}}
+
+  /* ===== Mobile layer ===== */
+  html,body{overscroll-behavior:none}
+  #boot,#preloader,#welcome{touch-action:manipulation;-webkit-tap-highlight-color:transparent;-webkit-user-select:none;user-select:none}
+  @media(max-width:1000px){.hud{padding-bottom:max(20px,env(safe-area-inset-bottom))}}
+  @media(max-width:1000px),(pointer:coarse){#preloader::before{display:none}}   /* drop the heavy film-grain layer on phones */
+  @media(max-height:520px) and (orientation:landscape){.core{width:min(300px,38vh)}.hud{padding-bottom:max(10px,env(safe-area-inset-bottom))}}
 </style>
 </head>
 <body>
@@ -226,8 +233,8 @@
     <div class="wbar"><i class="d r"></i><i class="d y"></i><i class="d g"></i><span class="t">biswajit@portfolio: ~</span></div>
     <div class="tabs"><span class="on">bash</span><span>ros2</span><span>+</span></div>
     <div class="wbody"><div id="bootLog"></div></div>
+    <div class="wfoot"><span id="bootSkip">click / press any key to skip</span></div>
   </div>
-  <span id="bootSkip">click / press any key to skip</span>
 </div>
 
 <!-- Stage 3: welcome -->
@@ -309,7 +316,7 @@
 
   /* ---------- Neural network ---------- */
   function build(){
-    var d=Math.min(devicePixelRatio||1,2); W=innerWidth; H=innerHeight;
+    var d=Math.min(devicePixelRatio||1,innerWidth<1000?1.5:2); W=innerWidth; H=innerHeight;
     cv.width=W*d; cv.height=H*d; ctx.setTransform(d,0,0,d,0,0);
     var L=W<640?[3,4,4,2]:[4,6,7,6,3], layers=[]; nodes=[]; edges=[];
     L.forEach(function(c,li){var arr=[];
@@ -351,9 +358,11 @@
 
   /* ---------- Responsive layout helper ---------- */
   var term=document.querySelector('.term');
+  var rightRow=document.querySelector('.right');
   function layout(){
-    var r=term.getBoundingClientRect(), stacked=W<1000;
-    return {stacked:stacked, floor:stacked?Math.max(r.top-10,H*.35):H-6, termR:r.right};
+    var r=term.getBoundingClientRect(), rt=rightRow.getBoundingClientRect(), stacked=W<1000, top=r.top;
+    if(rt.bottom<=r.top+4)top=Math.min(top,rt.top);   // status row sits above the terminal on phones
+    return {stacked:stacked, floor:stacked?Math.max(top-10,H*.35):H-6, termR:r.right};
   }
 
   /* ---------- Industrial robot arm: pick & place with IK ---------- */
