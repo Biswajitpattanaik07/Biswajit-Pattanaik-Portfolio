@@ -18,7 +18,10 @@
     chips: ['Who is Biswajit?', 'Skills & tech stack', 'Show me his projects', 'Education', 'How can I contact him?'],
     cv: 'cv.pdf',
     github: 'https://github.com/Biswajitpa',
-    avatar: ''   // put your photo path here, e.g. 'assets/me.jpg' (leave empty to use the built-in human logo)
+    phone: '8658846620',
+    avatar: '',      // Biswajit's photo for the header / chat button, e.g. 'assets/me.jpg' (empty = built-in human logo)
+    botAvatar: '',   // optional image for the AI bot's chat profile (empty = built-in robot icon)
+    userAvatar: ''   // optional image for the visitor's chat profile (empty = built-in person icon)
   };
   var user = window.BW_CHAT || {};
   for (var k in user) if (Object.prototype.hasOwnProperty.call(user, k)) CFG[k] = user[k];
@@ -109,7 +112,7 @@
     { id: 'why', k: ['why', 'special', 'unique', 'different', 'best', 'strong', 'should i hire', 'advantage'],
       a: 'What stands out: he **builds complete, practical projects** across AI, full-stack and IoT, and cares about how systems work internally, not only how to use them. See his projects for proof.' },
     { id: 'contact', k: ['contact', 'email', 'mail', 'reach', 'linkedin', 'connect', 'message', 'social', 'get in touch', 'talk', 'phone', 'call', 'number'],
-      a: 'You can reach Biswajit here:\n- **Email:** ' + EMAIL + '\n- **LinkedIn:** ' + LI + '\n- **GitHub:** ' + G },
+      a: 'You can reach Biswajit here:\n- **Phone:** ' + CFG.phone + '\n- **Email:** ' + EMAIL + '\n- **LinkedIn:** ' + LI + '\n- **GitHub:** ' + G },
     { id: 'cv', k: ['cv', 'resume', 'r\u00e9sum\u00e9', 'download'], a: 'You can download his CV here: ' + CFG.cv },
     { id: 'gh', k: ['github', 'git', 'repo', 'repository', 'repositories', 'source', 'code'], a: 'His GitHub: ' + G },
     { id: 'loc', k: ['where', 'location', 'city', 'based', 'live', 'lives', 'odisha', 'bhubaneswar', 'india', 'place'], a: 'Biswajit is based in **Odisha, India** (studying in Bhubaneswar).' },
@@ -202,10 +205,16 @@
     '.bwcX:hover{background:rgba(255,255,255,.07);color:#fff}.bwcX:focus-visible{outline:2px solid var(--a)}',
     '.bwcX svg{width:20px;height:20px;stroke:currentColor;stroke-width:2;fill:none;stroke-linecap:round}',
     '#bwcMsgs{flex:1;min-height:0;overflow-y:auto;overscroll-behavior:contain;-webkit-overflow-scrolling:touch;padding:14px;display:flex;flex-direction:column;gap:10px;scroll-behavior:smooth}',
-    '.bwcM{max-width:86%;padding:10px 13px;border-radius:16px;font-size:14.5px;line-height:1.5;overflow-wrap:anywhere;animation:bwcIn .25s ease both}',
+    '.bwcR{display:flex;align-items:flex-end;gap:8px;max-width:92%;animation:bwcIn .25s ease both}',
+    '.bwcR.bot{align-self:flex-start}.bwcR.me{align-self:flex-end;flex-direction:row-reverse}',
+    '.bwcAvt{flex:none;width:30px;height:30px;border-radius:50%;display:grid;place-items:center;overflow:hidden}',
+    '.bwcAvt svg{width:18px;height:18px}.bwcAvt img{width:100%;height:100%;object-fit:cover;display:block}',
+    '.bwcAvt.bot{background:linear-gradient(135deg,var(--b),var(--a));color:#04100a}',
+    '.bwcAvt.me{background:#1d2a3a;color:#9fb3c8;border:1px solid var(--line)}',
+    '.bwcM{min-width:0;padding:10px 13px;border-radius:16px;font-size:14.5px;line-height:1.5;overflow-wrap:anywhere}',
     '@keyframes bwcIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}',
-    '.bwcM.bot{align-self:flex-start;background:#121b26;border:1px solid var(--line);border-bottom-left-radius:5px}',
-    '.bwcM.me{align-self:flex-end;background:linear-gradient(135deg,var(--b),#0a8f9c);color:#fff;border-bottom-right-radius:5px;white-space:pre-wrap}',
+    '.bwcM.bot{background:#121b26;border:1px solid var(--line);border-bottom-left-radius:5px}',
+    '.bwcM.me{background:linear-gradient(135deg,var(--b),#0a8f9c);color:#fff;border-bottom-right-radius:5px;white-space:pre-wrap}',
     '.bwcM a{color:#5ec8ff;text-decoration:underline;text-underline-offset:2px}.bwcM b{color:#fff}',
     '.bwcM code{background:rgba(255,255,255,.09);padding:1px 5px;border-radius:5px;font-size:.9em}',
     '.bwcM ul{margin:.3em 0;padding-left:1.2em}.bwcM p{margin:0}.bwcM p+p,.bwcM p+ul,.bwcM ul+p{margin-top:.5em}',
@@ -225,7 +234,7 @@
     '@media(max-width:520px){',
     '  #bwcPanel{right:0;left:0;top:0;bottom:auto;width:100%;height:100vh;height:100dvh;border-radius:0;border:0;transform:translateY(24px)}',
     '  #bwcTip{display:none}',
-    '  .bwcM{font-size:15px;max-width:90%}',
+    '  .bwcM{font-size:15px}',
     '}',
     '@media(max-height:430px) and (orientation:landscape){#bwcPanel{width:min(420px,60vw);right:0;left:auto}.bwcFoot{display:none}#bwcChips{display:none}}',
     '@media(prefers-reduced-motion:reduce){#bwcFab::after,.bwcTyp i{animation:none}#bwcPanel,#bwcFab,.bwcM{transition:none;animation:none}}',
@@ -294,11 +303,30 @@
     return out.join('');
   }
   function scrollDown() { msgs.scrollTop = msgs.scrollHeight; }
+  var SVG_OPEN = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">';
+  var ICON_BOT = SVG_OPEN + '<rect x="4" y="8" width="16" height="12" rx="3"/><path d="M12 8V4M9 13h.01M15 13h.01M9.5 16.5h5"/><circle cx="12" cy="3.5" r="1"/></svg>';
+  var ICON_USER = SVG_OPEN + '<circle cx="12" cy="8" r="4"/><path d="M4 21c0-4.4 3.6-7 8-7s8 2.6 8 7"/></svg>';
+  function avtHTML(cls) {
+    var src = cls === 'me' ? CFG.userAvatar : CFG.botAvatar;
+    if (src) return '<img src="' + String(src).replace(/"/g, '') + '" alt="">';
+    return cls === 'me' ? ICON_USER : ICON_BOT;
+  }
+  function row(cls, bubble) {                      // avatar + message bubble
+    var r = document.createElement('div');
+    r.className = 'bwcR ' + cls;
+    var a = document.createElement('span');
+    a.className = 'bwcAvt ' + cls;
+    a.setAttribute('aria-hidden', 'true');
+    a.innerHTML = avtHTML(cls);
+    r.appendChild(a); r.appendChild(bubble);
+    return r;
+  }
   function add(role, text, save) {
+    var cls = role === 'user' ? 'me' : 'bot';
     var d = document.createElement('div');
-    d.className = 'bwcM ' + (role === 'user' ? 'me' : 'bot');
+    d.className = 'bwcM ' + cls;
     if (role === 'user') d.textContent = text; else d.innerHTML = fmt(text);
-    msgs.appendChild(d);
+    msgs.appendChild(row(cls, d));
     scrollDown();
     if (save !== false) { history.push({ role: role, content: text }); persist(); }
     return d;
@@ -357,8 +385,9 @@
     if (busy) return; busy = true; sync();
     chips.style.display = 'none';
     add('user', text);
-    var typing = document.createElement('div');
-    typing.className = 'bwcM bot bwcTyp'; typing.innerHTML = '<i></i><i></i><i></i>';
+    var tb = document.createElement('div');
+    tb.className = 'bwcM bot bwcTyp'; tb.innerHTML = '<i></i><i></i><i></i>';
+    var typing = row('bot', tb);
     msgs.appendChild(typing); scrollDown();
 
     var ctl = window.AbortController ? new AbortController() : null;
