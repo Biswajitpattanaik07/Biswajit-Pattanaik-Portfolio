@@ -23,29 +23,127 @@
   var user = window.BW_CHAT || {};
   for (var k in user) if (Object.prototype.hasOwnProperty.call(user, k)) CFG[k] = user[k];
 
-  /* ---------- offline fallback (used when /api/chat is unreachable) ---------- */
+  /* ---------- smart offline answers (used whenever /api/chat is unreachable) ---------- */
+  var G = CFG.github;
   var KB = [
-    { r: /^\s*(hi|hello|hey|namaste|hii+)\b/i, a: 'Hello! \ud83d\udc4b Ask me about Biswajit\u2019s projects, skills, education or how to contact him.' },
-    { r: /contact|email|mail|hire|reach|connect|linkedin|phone|number/i, a: 'The quickest way is the contact section of this page. You can also find him on GitHub: ' + CFG.github },
-    { r: /\bcv\b|resume|r\u00e9sum\u00e9/i, a: 'You can download his CV here: ' + CFG.cv },
-    { r: /github|repo|source code/i, a: 'His GitHub: ' + CFG.github },
-    { r: /educat|degree|college|universit|cgpa|b\.?tech|study|graduat|cutm/i, a: '**B.Tech (final year)** at **Centurion University of Technology and Management (CUTM)**, Bhubaneswar, Odisha. CGPA is approximately **8.20**.' },
-    { r: /resumegenie|resume genie|career assist/i, a: '**ResumeGenie AI** is a Generative AI career assistant: resume analysis and audit, ATS-style matching score, AI cover letters and career coaching. Built with Python, Streamlit and Groq-hosted Llama models.' },
-    { r: /rail|track|fault|crack/i, a: '**Bharatiya Rail Track Fault Detection AI** classifies railway track defects (cracks, rust, breaks) from images using a CNN with EfficientNetB3, converted to TensorFlow Lite for lighter deployment. He reports about **91.56% accuracy** (self-reported experimental result).' },
-    { r: /multicart|cartsphere|e-?commerce|marketplace|vendor/i, a: '**MultiCart / CartSphere** is a multi-vendor e-commerce platform with customers, vendors and admins, approval workflows, carts, payments and dashboards. Stack: Next.js, TypeScript, Tailwind, MongoDB, Razorpay and Cloudinary.' },
-    { r: /vingo|food|delivery/i, a: '**Vingo** is a food delivery platform for customers, shop owners and delivery partners with real-time order updates. Stack: React, Vite, Node.js, Express, MongoDB, Socket.IO, Tailwind and Razorpay.' },
-    { r: /agri|farm|crop/i, a: '**AgriVision AI** applies AI to agriculture (image analysis and decision support). It is a project direction he is exploring; detailed results are not documented yet.' },
-    { r: /black ?box|vehicle|ieee|tech ?spark|award|won|win/i, a: '**AI Vehicle Black Box** combines IoT, embedded systems and AI for vehicle safety. He reports winning with it at **IEEE Tech Spark 2.0**.' },
-    { r: /network|packet tracer|cisco/i, a: '**Intelligent Network Monitoring** is a campus network design and monitoring project built in Cisco Packet Tracer.' },
-    { r: /project|work|built|portfolio|made/i, a: 'Main projects:\n- **ResumeGenie AI** (Generative AI career tool)\n- **Rail Track Fault Detection AI** (computer vision)\n- **MultiCart** (multi-vendor e-commerce)\n- **Vingo** (food delivery, real-time)\n- **AI Vehicle Black Box** (IoT + AI)\n- **Intelligent Network Monitoring**\nAsk about any of them for details.' },
-    { r: /skill|tech|stack|language|tool|know|python|react|java|c\+\+|iot|esp32|embedded/i, a: '**Languages:** C++, Java, Python, JavaScript, TypeScript\n**Web:** React, Next.js, Node.js, Express, MongoDB, Tailwind\n**AI/ML:** TensorFlow, CNNs, computer vision, LLMs, RAG, LangChain\n**IoT:** ESP32, Arduino, STM32, MQTT\n**Other:** networking, AWS basics, system design' },
-    { r: /goal|career|future|looking|intern|job|opportunit|available/i, a: 'Biswajit wants to grow as a **software / AI engineer**, building where software meets intelligent systems. He is open to internships and entry-level opportunities.' },
-    { r: /where|location|city|based|live/i, a: 'Biswajit is based in Bhubaneswar, Odisha, India.' },
-    { r: /who|about|intro|tell me|what does|do he|does he/i, a: 'Biswajit Pattanaik is a final-year B.Tech student and aspiring **software / AI engineer** who learns by building: full-stack web apps, Generative AI tools, computer-vision models and IoT systems.' }
+    { id: 'greet', k: ['hi', 'hii', 'hey', 'heyy', 'hello', 'hlo', 'hola', 'namaste', 'yo', 'good morning', 'good evening'],
+      a: 'Hello! \ud83d\udc4b I can tell you about Biswajit\u2019s **projects, skills, education, achievements, goals** or how to **contact** him. What would you like to know?' },
+    { id: 'how', k: ['how are you', 'how r u', 'whats up', 'sup'], a: 'I\u2019m doing great, thanks for asking! \ud83d\ude0a Ask me anything about Biswajit\u2019s work.' },
+    { id: 'thanks', k: ['thanks', 'thank you', 'thx', 'tysm', 'great', 'awesome', 'nice', 'cool', 'ok thanks'], a: 'You\u2019re welcome! Anything else you\u2019d like to know about Biswajit?' },
+    { id: 'bye', k: ['bye', 'goodbye', 'see you', 'cya'], a: 'Bye! Thanks for visiting Biswajit\u2019s portfolio. \ud83d\udc4b' },
+    { id: 'bot', k: ['who are you', 'who r u', 'who are u', 'are you ai', 'are you a bot', 'are you human', 'chatgpt', 'claude', 'your name', 'bot'],
+      a: 'I\u2019m the AI assistant on Biswajit\u2019s portfolio. I answer questions about his projects, skills and background.' },
+    { id: 'help', k: ['help', 'what can you do', 'options', 'menu', 'topics', 'what can i ask'],
+      a: 'You can ask me about:\n- **Projects** (ResumeGenie, Rail Track AI, MultiCart, Vingo, Vehicle Black Box\u2026)\n- **Skills** & tech stack\n- **Education** & CGPA\n- **Achievements**\n- **Career goals** & availability\n- **Contact**, CV & GitHub' },
+    { id: 'about', k: ['who is biswajit', 'who is he', 'about', 'introduce', 'intro', 'himself', 'summary', 'profile', 'biswajit', 'overview', 'describe'],
+      a: 'Biswajit Pattanaik is a final-year **B.Tech student** and aspiring **software / AI engineer**. He learns by building: full-stack web apps, Generative AI tools, computer-vision models and IoT systems.',
+      m: 'He is studying at **CUTM, Bhubaneswar** (CGPA about 8.20). His interests: **full-stack web, AI/ML & Generative AI, IoT/embedded, networking and system design**. He wants to understand how systems work inside, and build useful products. Ask about his projects or skills for details.' },
+    { id: 'name', k: ['name', 'called', 'pattanaik', 'pattanayak', 'full name'], a: 'His name is **Biswajit Pattanaik** (also spelled Pattanayak).' },
+    { id: 'edu', k: ['education', 'educational', 'degree', 'college', 'university', 'cgpa', 'btech', 'b.tech', 'study', 'studying', 'graduation', 'graduate', 'cutm', 'centurion', 'marks', 'academic', 'academics', 'qualification', 'year', 'student'],
+      a: '**B.Tech (final year)** at **Centurion University of Technology and Management (CUTM)**, Bhubaneswar, Odisha. CGPA is approximately **8.20**.',
+      m: 'Academic interests: computer science, software engineering, AI/ML, embedded systems and networking. He prefers learning concepts by applying them in real projects.' },
+    { id: 'skills', k: ['skills', 'skill', 'tech', 'technology', 'technologies', 'stack', 'languages', 'language', 'tools', 'expertise', 'good at', 'programming', 'know', 'proficient', 'strengths', 'python', 'java', 'cpp', 'c++', 'dsa', 'algorithms', 'oop'],
+      a: '**Languages:** C++, Java, Python, JavaScript, TypeScript\n**Web:** React, Next.js, Node.js, Express, Tailwind, REST APIs, Socket.IO\n**Databases:** MongoDB, PostgreSQL, MySQL, Redis, Firebase\n**AI/ML:** TensorFlow, CNNs, computer vision, LLMs, RAG, LangChain\n**IoT:** ESP32, Arduino, STM32, Raspberry Pi, MQTT\n**Other:** networking, AWS basics, system design',
+      m: 'More detail: **GenAI** tools he lists include RAG pipelines, OpenAI, Gemini, OpenRouter, Ollama, LangChain and prompt engineering. **Hardware & DevOps:** embedded systems, IoT/IIoT, robotics, PCB design, sensors. **System design:** distributed systems, microservices, caching (Redis), load balancing, message queues, API gateways, scalability. **Tools:** Git, Postman, Azure. He has used or explored these at different levels. Ask about a specific one.' },
+    { id: 'web', k: ['web', 'frontend', 'front-end', 'backend', 'back-end', 'fullstack', 'full-stack', 'react', 'next', 'nextjs', 'node', 'express', 'javascript', 'typescript', 'tailwind', 'html', 'css', 'website'],
+      a: 'Web stack: **React, Next.js, Node.js, Express.js, TypeScript, Tailwind CSS, Vite**, REST APIs and **Socket.IO** for real-time features. Projects built with it: **MultiCart** and **Vingo**.' },
+    { id: 'ai', k: ['ai', 'ml', 'machine', 'learning', 'artificial', 'genai', 'llm', 'rag', 'langchain', 'tensorflow', 'cnn', 'deep', 'neural', 'vision', 'computer vision', 'model', 'groq', 'prompt'],
+      a: 'AI/ML: **TensorFlow, CNNs (EfficientNet), computer vision, TensorFlow Lite**. Generative AI: **LLM APIs (Groq/Llama), prompt engineering, LangChain, RAG**. Projects: **ResumeGenie AI** and **Rail Track Fault Detection AI**.' },
+    { id: 'iot', k: ['iot', 'embedded', 'esp32', 'arduino', 'stm32', 'raspberry', 'sensor', 'sensors', 'hardware', 'robotics', 'mqtt', 'microcontroller', 'microcontrollers', 'pcb'],
+      a: 'IoT & embedded: **ESP32, Arduino, STM32, Raspberry Pi**, sensors (IR, PIR, DHT11, soil moisture), UART/I2C/SPI, **MQTT**, PWM and relays. Related project: **AI Vehicle Black Box**.' },
+    { id: 'db', k: ['database', 'databases', 'mongodb', 'mongo', 'sql', 'mysql', 'postgres', 'postgresql', 'redis', 'firebase', 'db'],
+      a: 'Databases: **MongoDB, PostgreSQL, MySQL, Redis, Firebase** and SQL. He also uses Cloudinary for media storage.' },
+    { id: 'sd', k: ['system design', 'architecture', 'scalability', 'load balancing', 'caching', 'microservices', 'distributed', 'queue', 'queues', 'sharding', 'gateway'],
+      a: 'System design topics he studies: **load balancing, caching (Redis), database sharding/replication, message queues, rate limiting, microservices, API gateways, distributed systems and scalability**.' },
+    { id: 'net', k: ['networking', 'network', 'cisco', 'packet tracer', 'cloud', 'aws', 'azure', 'kubernetes', 'devops', 'dns', 'routing'],
+      a: 'Networking & cloud: **Cisco Packet Tracer, IP addressing/subnetting, DNS, routing**, plus **AWS (S3, VPC), Kubernetes/EKS and Azure** concepts. Project: **Intelligent Network Monitoring**.' },
+    { id: 'projects', k: ['projects', 'project', 'built', 'build', 'made', 'work', 'works', 'portfolio', 'apps', 'developed', 'created', 'applications'],
+      a: 'Main projects:\n- **ResumeGenie AI** (Generative AI career tool)\n- **Rail Track Fault Detection AI** (computer vision)\n- **MultiCart** (multi-vendor e-commerce)\n- **Vingo** (food delivery, real-time)\n- **AI Vehicle Black Box** (IoT + AI)\n- **Intelligent Network Monitoring**\n- **AgriVision AI** (in progress)\nAsk about any one for details.',
+      m: 'Tell me a project name for details, for example: **ResumeGenie**, **Rail Track**, **MultiCart**, **Vingo**, **Black Box**, **Network Monitoring** or **AgriVision**.' },
+    { id: 'rg', k: ['resumegenie', 'resume genie', 'resume analyzer', 'ats', 'cover letter', 'career assistant', 'career coach'],
+      a: '**ResumeGenie AI** is a Generative AI career assistant. It analyses and audits resumes, estimates an ATS-style matching score, writes AI cover letters and gives career coaching. Built with **Python, Streamlit and Groq-hosted Llama models**.',
+      m: 'It has a dashboard that brings the tools together. It shows his experience with LLM API integration, structuring multiple AI features and presenting AI output in a clean UI.' },
+    { id: 'rail', k: ['rail', 'railway', 'track', 'tracks', 'fault', 'defect', 'crack', 'efficientnet', 'bharatiya'],
+      a: '**Bharatiya Rail Track Fault Detection AI** classifies railway track defects (cracks, rust, breaks) from images using a **CNN with EfficientNetB3**, with a **Streamlit** app. He reports about **91.56% accuracy** and an F1-score of 0.9155 (self-reported experimental results).',
+      m: 'Dataset: about **3,439 training, 983 validation and 481 test images**. A key challenge was model size, so he converted the large H5 model to **TensorFlow Lite** to make deployment practical.' },
+    { id: 'mc', k: ['multicart', 'cartsphere', 'ecommerce', 'e-commerce', 'marketplace', 'vendor', 'shopping', 'multi-vendor'],
+      a: '**MultiCart / CartSphere** is a multi-vendor e-commerce platform with customers, vendors and admins. Features: vendor and product approval, carts and orders, payments and admin dashboards. Stack: **Next.js, TypeScript, Tailwind, MongoDB, Razorpay, Cloudinary**.' },
+    { id: 'vingo', k: ['vingo', 'food', 'delivery', 'restaurant', 'zomato', 'swiggy'],
+      a: '**Vingo** is a food delivery platform with three roles: customers, shop owners and delivery partners. It has order tracking and real-time updates. Stack: **React, Vite, Node.js, Express, MongoDB, Socket.IO, Tailwind, Razorpay**.' },
+    { id: 'agri', k: ['agrivision', 'agri', 'agriculture', 'farm', 'farming', 'crop', 'smart agriculture'],
+      a: '**AgriVision AI** applies AI to agriculture (image analysis and decision support). It is a project direction he is exploring, and detailed results are not documented yet.' },
+    { id: 'bb', k: ['black box', 'blackbox', 'vehicle', 'car', 'accident', 'tech spark', 'techspark'],
+      a: '**AI Vehicle Black Box** combines sensors, embedded hardware and AI for vehicle safety. He reports winning with it at **IEEE Tech Spark 2.0**.' },
+    { id: 'nm', k: ['network monitoring', 'intelligent network', 'campus network', 'monitoring'],
+      a: '**Intelligent Network Monitoring** is a university-campus network design and monitoring project built in **Cisco Packet Tracer** (academic blocks, admin/ERP, hostels, data-center servers, Wi-Fi access points).' },
+    { id: 'ach', k: ['achievement', 'achievements', 'award', 'awards', 'won', 'win', 'winner', 'ieee', 'competition', 'hackathon', 'certificate', 'certifications', 'certification', 'accomplishment', 'recognition'],
+      a: 'He reports **winning with the AI Vehicle Black Box at IEEE Tech Spark 2.0**. No other certificates or awards are listed here, so please check his CV for the full list.' },
+    { id: 'exp', k: ['experience', 'experienced', 'intern', 'internship', 'employed', 'company', 'job experience', 'worked'],
+      a: 'Biswajit is a final-year student. He has hands-on **project experience** (AI, full-stack and IoT) and a competition win, and he is looking for his first **internship / entry-level role**. See his CV for any further details.' },
+    { id: 'goal', k: ['goal', 'goals', 'career', 'future', 'looking', 'hire', 'hiring', 'available', 'availability', 'opportunity', 'opportunities', 'recruit', 'recruiter', 'role', 'job', 'open to', 'plan', 'plans', 'ambition'],
+      a: 'Biswajit wants to grow as a **software / AI engineer**, building where software meets intelligent systems. He is **open to internships and entry-level opportunities**.',
+      m: 'Focus areas: stronger DSA and system design, deeper full-stack and AI skills, a solid portfolio and real industry experience.' },
+    { id: 'why', k: ['why', 'special', 'unique', 'different', 'best', 'strong', 'should i hire', 'advantage'],
+      a: 'What stands out: he **builds complete, practical projects** across AI, full-stack and IoT, and cares about how systems work internally, not only how to use them. See his projects for proof.' },
+    { id: 'contact', k: ['contact', 'email', 'mail', 'phone', 'call', 'reach', 'linkedin', 'connect', 'message', 'number', 'whatsapp', 'social', 'get in touch', 'talk'],
+      a: 'The quickest way is the **Contact** section of this page. You can also reach him through GitHub: ' + G },
+    { id: 'cv', k: ['cv', 'resume', 'r\u00e9sum\u00e9', 'download'], a: 'You can download his CV here: ' + CFG.cv },
+    { id: 'gh', k: ['github', 'git', 'repo', 'repository', 'repositories', 'source', 'code'], a: 'His GitHub: ' + G },
+    { id: 'loc', k: ['where', 'location', 'city', 'based', 'live', 'lives', 'odisha', 'bhubaneswar', 'india', 'place'], a: 'Biswajit is based in **Bhubaneswar, Odisha, India**.' },
+    { id: 'personal', k: ['age', 'old', 'birthday', 'married', 'hobby', 'hobbies', 'family', 'girlfriend', 'salary', 'religion'],
+      a: 'I only have his professional details here. Ask me about his projects, skills, education or goals!' }
   ];
+  (function () {                                   // specific topics win ties over broad ones
+    var broad = { about: 1, edu: 1, skills: 1, projects: 1, goal: 1, why: 1, exp: 1 };
+    KB = KB.filter(function (e) { return !broad[e.id]; }).concat(KB.filter(function (e) { return broad[e.id]; }));
+  })();
+  var byId = {}; KB.forEach(function (e) { byId[e.id] = e; });
+  var STOP = 'his her he him she the a an of about me tell give show please pls plz some on and can you i want to know need is are what whats wat r u do does did how who which any there this that it in for with'.split(' ');
+  var VAGUE = 'details detail more explain elaborate continue info information further'.split(' ');
+  var lastId = '';
+
+  function norm(s) { return s.toLowerCase().replace(/[^a-z0-9+#.\-\s]/g, ' ').replace(/\.+(\s|$)/g, ' ').replace(/\s+/g, ' ').trim(); }
+  function lev(a, b) {
+    var m = a.length, n = b.length, i, j, d = [];
+    for (i = 0; i <= m; i++) { d[i] = [i]; }
+    for (j = 1; j <= n; j++) d[0][j] = j;
+    for (i = 1; i <= m; i++) for (j = 1; j <= n; j++)
+      d[i][j] = Math.min(d[i - 1][j] + 1, d[i][j - 1] + 1, d[i - 1][j - 1] + (a[i - 1] === b[j - 1] ? 0 : 1));
+    return d[m][n];
+  }
+  function tokScore(t, k) {                      // typo-tolerant word match
+    if (t === k) return 2;
+    if (k.length >= 4 && t.length >= 4) {
+      var sh = Math.min(t.length, k.length), lg = Math.max(t.length, k.length);
+      if ((t.indexOf(k) === 0 || k.indexOf(t) === 0) && (sh >= 5 || sh / lg >= 0.7)) return 2;
+      if (lev(t, k) <= (k.length > 6 ? 2 : 1)) return 1.5;
+    }
+    return 0;
+  }
   function offlineReply(q) {
-    for (var i = 0; i < KB.length; i++) if (KB[i].r.test(q)) return KB[i].a;
-    return 'I\u2019m in offline mode right now, so I can only answer basics. Try asking about his skills, projects, CV or contact details.';
+    var n = norm(q), toks = n.split(' ').filter(Boolean), best = null, bs = 0;
+    var core = toks.filter(function (t) { return STOP.indexOf(t) < 0; });
+    // vague follow-up such as "details" / "tell me more"
+    var hasVague = toks.some(function (t) { return VAGUE.indexOf(t) >= 0; });
+    if (hasVague && core.every(function (t) { return VAGUE.indexOf(t) >= 0; })) {
+      var le = byId[lastId];
+      if (le && le.m) return le.m;
+      return byId.projects.m;
+    }
+    KB.forEach(function (e) {
+      var s = 0;
+      e.k.forEach(function (k) {
+        if (k.indexOf(' ') >= 0) { if (n.indexOf(k) >= 0) s += 3; }
+        else core.forEach(function (t) { s += tokScore(t, k); });
+      });
+      if (s > bs) { bs = s; best = e; }
+    });
+    if (best) {
+      var again = best.id === lastId && best.m;  // asked the same thing twice: give the extra detail
+      lastId = best.id;
+      return again ? best.m : best.a;
+    }
+    return 'I may not have that detail, but I can help with Biswajit\u2019s **projects, skills, education, achievements, goals** and **contact** info. Which one would you like?';
   }
 
   /* ---------- styles ---------- */
@@ -249,6 +347,7 @@
       .then(function (j) { if (!j.reply) throw new Error('empty'); return j.reply; })
       .catch(function (err) {
         var msg = String(err && err.message || '');
+        try { console.warn('[chatbot] /api/chat failed, using offline answers:', msg); } catch (e) {}
         if (/Too many/i.test(msg)) return msg;           // show rate-limit text as is
         return offlineReply(text);                       // anything else: graceful offline answer
       })
