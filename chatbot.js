@@ -42,32 +42,42 @@
     { id: 'edu', k: ['education', 'educational', 'degree', 'college', 'university', 'cgpa', 'btech', 'b.tech', 'study', 'studying', 'graduation', 'graduate', 'cutm', 'centurion', 'marks', 'academic', 'academics', 'qualification', 'year', 'student'],
       a: '**B.Tech (final year)** at **Centurion University of Technology and Management (CUTM)**, Bhubaneswar, Odisha. CGPA is approximately **8.20**.',
       m: 'Academic interests: computer science, software engineering, AI/ML, embedded systems and networking. He prefers learning concepts by applying them in real projects.' },
-    { id: 'skills', k: ['skills', 'skill', 'tech', 'technology', 'technologies', 'stack', 'languages', 'language', 'tools', 'expertise', 'good at', 'programming', 'know', 'proficient', 'strengths', 'python', 'java', 'cpp', 'c++', 'dsa', 'algorithms', 'oop'],
+    { id: 'skills', k: ['skills', 'skill', 'tech', 'technology', 'technologies', 'stack', 'languages', 'language', 'tools', 'expertise', 'good at', 'programming', 'know', 'proficient', 'strengths', 'python', 'cpp', 'c++'],
       a: '**Languages:** C++, Java, Python, JavaScript, TypeScript\n**Web:** React, Next.js, Node.js, Express, Tailwind, REST APIs, Socket.IO\n**Databases:** MongoDB, PostgreSQL, MySQL, Redis, Firebase\n**AI/ML:** TensorFlow, CNNs, computer vision, LLMs, RAG, LangChain\n**IoT:** ESP32, Arduino, STM32, Raspberry Pi, MQTT\n**Other:** networking, AWS basics, system design',
       m: 'More detail: **GenAI** tools he lists include RAG pipelines, OpenAI, Gemini, OpenRouter, Ollama, LangChain and prompt engineering. **Hardware & DevOps:** embedded systems, IoT/IIoT, robotics, PCB design, sensors. **System design:** distributed systems, microservices, caching (Redis), load balancing, message queues, API gateways, scalability. **Tools:** Git, Postman, Azure. He has used or explored these at different levels. Ask about a specific one.' },
     { id: 'web', k: ['web', 'frontend', 'front-end', 'backend', 'back-end', 'fullstack', 'full-stack', 'react', 'next', 'nextjs', 'node', 'express', 'javascript', 'typescript', 'tailwind', 'html', 'css', 'website'],
       a: 'Web stack: **React, Next.js, Node.js, Express.js, TypeScript, Tailwind CSS, Vite**, REST APIs and **Socket.IO** for real-time features. Projects built with it: **MultiCart** and **Vingo**.' },
-    { id: 'ai', k: ['ai', 'ml', 'machine', 'learning', 'artificial', 'genai', 'llm', 'rag', 'langchain', 'tensorflow', 'cnn', 'deep', 'neural', 'vision', 'computer vision', 'model', 'groq', 'prompt'],
-      a: 'AI/ML: **TensorFlow, CNNs (EfficientNet), computer vision, TensorFlow Lite**. Generative AI: **LLM APIs (Groq/Llama), prompt engineering, LangChain, RAG**. Projects: **ResumeGenie AI** and **Rail Track Fault Detection AI**.' },
+    { id: 'ai', k: ['ai', 'ml', 'machine', 'learning', 'artificial', 'genai', 'llm', 'rag', 'langchain', 'tensorflow', 'cnn', 'deep', 'neural', 'vision', 'computer vision', 'model', 'groq', 'prompt', 'svm', 'support vector', 'classification', 'overfitting', 'precision', 'recall', 'embedding', 'embeddings', 'vector'],
+      a: 'AI/ML: **TensorFlow, CNNs (EfficientNet), SVM, computer vision, TensorFlow Lite**, model evaluation (precision, recall, F1). Generative AI: **LLM APIs (Groq/Llama), prompt engineering, LangChain, RAG** (chunking, embeddings, vector search). Projects: **ResumeGenie AI** and **Rail Track Fault Detection AI**.' },
     { id: 'iot', k: ['iot', 'embedded', 'esp32', 'arduino', 'stm32', 'raspberry', 'sensor', 'sensors', 'hardware', 'robotics', 'mqtt', 'microcontroller', 'microcontrollers', 'pcb'],
-      a: 'IoT & embedded: **ESP32, Arduino, STM32, Raspberry Pi**, sensors (IR, PIR, DHT11, soil moisture), UART/I2C/SPI, **MQTT**, PWM and relays. Related project: **AI Vehicle Black Box**.' },
+      a: 'IoT & embedded: **ESP32, Arduino, STM32, Raspberry Pi**, sensors (IR, PIR, DHT11, soil moisture), UART/I2C/SPI, **MQTT**, PWM and relays. Related project: **AI Vehicle Black Box**. He has also explored **ESP32 Wi-Fi CSI** presence detection.' },
+    { id: 'dsa', k: ['dsa', 'algorithm', 'algorithms', 'leetcode', 'coding', 'data structures', 'competitive', 'problem solving'],
+      a: 'He practises **DSA in C++**: arrays, strings, hash maps, two pointers, sliding window, linked lists, stacks/queues, trees, graphs (DFS/BFS) and dynamic programming, with time and space complexity analysis.' },
+    { id: 'java', k: ['java', 'spring', 'springboot', 'maven', 'jpa', 'oop', 'hibernate'],
+      a: '**Java:** OOP, collections, exception handling and backend development, including **Spring Boot, Maven, dependency injection (IoC) and JPA/ORM** (learning level).' },
+    { id: 'auth', k: ['auth', 'authentication', 'login', 'jwt', 'firebase', 'oauth', 'google login', 'security', 'cookie', 'cookies'],
+      a: 'Authentication: **JWT and cookie-based sessions, Firebase / Google login**, password hashing and role-based access. Used in projects like **ExamNotes AI**, **MultiCart** and **Vingo**.' },
+    { id: 'examnotes', k: ['examnotes', 'exam notes', 'notes', 'exam', 'educational'],
+      a: '**ExamNotes AI** is an educational AI web app with a **React + Vite** frontend, a **Node/Express** backend and **Firebase / Google authentication** with cookie-based JWT sessions.' },
+    { id: 'csi', k: ['csi', 'wifi', 'wi-fi', 'presence', 'channel state', 'human detection', 'motion detection'],
+      a: 'He has explored an **ESP32 Wi-Fi CSI human-presence detection** idea: using Wi-Fi channel measurements to detect movement indoors on a low-cost student budget. It is an explored project direction, and it needs careful calibration and testing to be reliable.' },
     { id: 'db', k: ['database', 'databases', 'mongodb', 'mongo', 'sql', 'mysql', 'postgres', 'postgresql', 'redis', 'firebase', 'db'],
       a: 'Databases: **MongoDB, PostgreSQL, MySQL, Redis, Firebase** and SQL. He also uses Cloudinary for media storage.' },
-    { id: 'sd', k: ['system design', 'architecture', 'scalability', 'load balancing', 'caching', 'microservices', 'distributed', 'queue', 'queues', 'sharding', 'gateway'],
-      a: 'System design topics he studies: **load balancing, caching (Redis), database sharding/replication, message queues, rate limiting, microservices, API gateways, distributed systems and scalability**.' },
+    { id: 'sd', k: ['system design', 'architecture', 'scalability', 'load balancing', 'caching', 'microservices', 'distributed', 'queue', 'queues', 'sharding', 'gateway', 'rate limiting', 'rate limit', 'ratelimit', 'message queue', 'replication', 'fixed window', 'leaky bucket'],
+      a: 'System design topics he studies: **load balancing, caching (Redis), database sharding/replication, message queues, rate limiting (fixed window, sliding window log, leaky bucket), microservices, API gateways, distributed systems and scalability**.' },
     { id: 'net', k: ['networking', 'network', 'cisco', 'packet tracer', 'cloud', 'aws', 'azure', 'kubernetes', 'devops', 'dns', 'routing'],
       a: 'Networking & cloud: **Cisco Packet Tracer, IP addressing/subnetting, DNS, routing**, plus **AWS (S3, VPC), Kubernetes/EKS and Azure** concepts. Project: **Intelligent Network Monitoring**.' },
     { id: 'projects', k: ['projects', 'project', 'built', 'build', 'made', 'work', 'works', 'portfolio', 'apps', 'developed', 'created', 'applications'],
-      a: 'Main projects:\n- **ResumeGenie AI** (Generative AI career tool)\n- **Rail Track Fault Detection AI** (computer vision)\n- **MultiCart** (multi-vendor e-commerce)\n- **Vingo** (food delivery, real-time)\n- **AI Vehicle Black Box** (IoT + AI)\n- **Intelligent Network Monitoring**\n- **AgriVision AI** (in progress)\nAsk about any one for details.',
-      m: 'Tell me a project name for details, for example: **ResumeGenie**, **Rail Track**, **MultiCart**, **Vingo**, **Black Box**, **Network Monitoring** or **AgriVision**.' },
+      a: 'Main projects:\n- **ResumeGenie AI** (Generative AI career tool)\n- **Rail Track Fault Detection AI** (computer vision)\n- **MultiCart** (multi-vendor e-commerce)\n- **Vingo** (food delivery, real-time)\n- **ExamNotes AI** (educational AI app)\n- **AI Vehicle Black Box** (IoT + AI)\n- **Intelligent Network Monitoring**\n- **AgriVision AI** (in progress)\nAsk about any one for details.',
+      m: 'Tell me a project name for details, for example: **ResumeGenie**, **Rail Track**, **MultiCart**, **Vingo**, **ExamNotes**, **Black Box**, **Network Monitoring** or **AgriVision**.' },
     { id: 'rg', k: ['resumegenie', 'resume genie', 'resume analyzer', 'ats', 'cover letter', 'career assistant', 'career coach'],
       a: '**ResumeGenie AI** is a Generative AI career assistant. It analyses and audits resumes, estimates an ATS-style matching score, writes AI cover letters and gives career coaching. Built with **Python, Streamlit and Groq-hosted Llama models**.',
       m: 'It has a dashboard that brings the tools together. It shows his experience with LLM API integration, structuring multiple AI features and presenting AI output in a clean UI.' },
     { id: 'rail', k: ['rail', 'railway', 'track', 'tracks', 'fault', 'defect', 'crack', 'efficientnet', 'bharatiya'],
       a: '**Bharatiya Rail Track Fault Detection AI** classifies railway track defects (cracks, rust, breaks) from images using a **CNN with EfficientNetB3**, with a **Streamlit** app. He reports about **91.56% accuracy** and an F1-score of 0.9155 (self-reported experimental results).',
-      m: 'Dataset: about **3,439 training, 983 validation and 481 test images**. A key challenge was model size, so he converted the large H5 model to **TensorFlow Lite** to make deployment practical.' },
+      m: 'Dataset: about **3,439 training, 983 validation and 481 test images**. A key challenge was model size, so he converted the large H5 model to **TensorFlow Lite**. Enhancements he has considered: a dashboard, PDF report, admin login and an AI chatbot. It is a learning project, not certified for real railway safety use.' },
     { id: 'mc', k: ['multicart', 'cartsphere', 'ecommerce', 'e-commerce', 'marketplace', 'vendor', 'shopping', 'multi-vendor'],
-      a: '**MultiCart / CartSphere** is a multi-vendor e-commerce platform with customers, vendors and admins. Features: vendor and product approval, carts and orders, payments and admin dashboards. Stack: **Next.js, TypeScript, Tailwind, MongoDB, Razorpay, Cloudinary**.' },
+      a: '**MultiCart / CartSphere** is a multi-vendor e-commerce platform with customers, vendors and admins. Features: vendor and product approval, GST info, carts and orders, cash-on-delivery and return-policy settings, payments, analytics and admin dashboards. Stack: **Next.js, TypeScript, Tailwind, MongoDB, Razorpay, Cloudinary**.' },
     { id: 'vingo', k: ['vingo', 'food', 'delivery', 'restaurant', 'zomato', 'swiggy'],
       a: '**Vingo** is a food delivery platform with three roles: customers, shop owners and delivery partners. It has order tracking and real-time updates. Stack: **React, Vite, Node.js, Express, MongoDB, Socket.IO, Tailwind, Razorpay**.' },
     { id: 'agri', k: ['agrivision', 'agri', 'agriculture', 'farm', 'farming', 'crop', 'smart agriculture'],
@@ -81,7 +91,7 @@
     { id: 'exp', k: ['experience', 'experienced', 'intern', 'internship', 'employed', 'company', 'job experience', 'worked'],
       a: 'Biswajit is a final-year student. He has hands-on **project experience** (AI, full-stack and IoT) and a competition win, and he is looking for his first **internship / entry-level role**. See his CV for any further details.' },
     { id: 'goal', k: ['goal', 'goals', 'career', 'future', 'looking', 'hire', 'hiring', 'available', 'availability', 'opportunity', 'opportunities', 'recruit', 'recruiter', 'role', 'job', 'open to', 'plan', 'plans', 'ambition'],
-      a: 'Biswajit wants to grow as a **software / AI engineer**, building where software meets intelligent systems. He is **open to internships and entry-level opportunities**.',
+      a: 'Biswajit wants to grow as a **software / AI engineer**, building where software meets intelligent systems. His main interests are **software engineering, AI/ML and Generative AI**, and he also explores IoT / embedded roles. He is **open to internships and entry-level opportunities**.',
       m: 'Focus areas: stronger DSA and system design, deeper full-stack and AI skills, a solid portfolio and real industry experience.' },
     { id: 'why', k: ['why', 'special', 'unique', 'different', 'best', 'strong', 'should i hire', 'advantage'],
       a: 'What stands out: he **builds complete, practical projects** across AI, full-stack and IoT, and cares about how systems work internally, not only how to use them. See his projects for proof.' },
@@ -90,7 +100,7 @@
     { id: 'cv', k: ['cv', 'resume', 'r\u00e9sum\u00e9', 'download'], a: 'You can download his CV here: ' + CFG.cv },
     { id: 'gh', k: ['github', 'git', 'repo', 'repository', 'repositories', 'source', 'code'], a: 'His GitHub: ' + G },
     { id: 'loc', k: ['where', 'location', 'city', 'based', 'live', 'lives', 'odisha', 'bhubaneswar', 'india', 'place'], a: 'Biswajit is based in **Bhubaneswar, Odisha, India**.' },
-    { id: 'personal', k: ['age', 'old', 'birthday', 'married', 'hobby', 'hobbies', 'family', 'girlfriend', 'salary', 'religion'],
+    { id: 'personal', k: ['age', 'old', 'birthday', 'married', 'hobby', 'hobbies', 'family', 'girlfriend', 'salary', 'religion', 'backlog', 'attendance', 'marks', 'erp', 'csm', 'weighbridge', 'interview', 'interviews'],
       a: 'I only have his professional details here. Ask me about his projects, skills, education or goals!' }
   ];
   (function () {                                   // specific topics win ties over broad ones
@@ -132,9 +142,12 @@
     }
     KB.forEach(function (e) {
       var s = 0;
-      e.k.forEach(function (k) {
-        if (k.indexOf(' ') >= 0) { if (n.indexOf(k) >= 0) s += 3; }
-        else core.forEach(function (t) { s += tokScore(t, k); });
+      e.k.forEach(function (k) { if (k.indexOf(' ') >= 0 && n.indexOf(k) >= 0) s += 3; });
+      core.forEach(function (t) {
+        if (VAGUE.indexOf(t) >= 0) return;
+        var top = 0;
+        e.k.forEach(function (k) { if (k.indexOf(' ') < 0) top = Math.max(top, tokScore(t, k)); });
+        s += top;
       });
       if (s > bs) { bs = s; best = e; }
     });
