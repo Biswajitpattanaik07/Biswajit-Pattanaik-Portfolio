@@ -100,7 +100,7 @@
       a: '**AI-Assisted Campus Network Monitoring** models a university campus in **Cisco Packet Tracer** (academic blocks, admin/exam systems, hostels, data-centre servers, Wi-Fi access points). AI anomaly detection is planned work.' },
     { id: 'intern', k: ['internship', 'intern', 'east coast railway', 'ecor', 'signal', 'telecommunication', 'telecom', 'railways'],
       a: 'Biswajit interned at **East Coast Railway (Signal & Telecommunication Department)** in **June\u2013July 2026** (about one month), learning about railway signalling, communication networks, data transmission and technical troubleshooting. Ask him directly for specifics of his tasks.' },
-    { id: 'cert', k: ['certificate', 'certifications', 'certification', 'courses taken', 'training', 'ibm', 'nptel', 'simplilearn', 'cttc', 'forage', 'deloitte', 'powerbi', 'power bi'],
+    { id: 'cert', k: ['certificate', 'certifications', 'certification', 'courses', 'course', 'courses taken', 'training', 'ibm', 'nptel', 'simplilearn', 'cttc', 'forage', 'deloitte', 'powerbi', 'power bi'],
       a: 'Learning history includes **IBM SkillsBuild (AI), GenAI Studio with Google Cloud, AWS Cloud Practitioner Essentials, Simplilearn SkillUp (DSA, Full-Stack, DevOps on AWS), NPTEL Intro to IoT (IIT Kharagpur), CTTC Bhubaneswar (C and PLC), Deloitte Data Analytics (Forage)** and more. Check his CV for the exact certificates.' },
     { id: 'ach', k: ['achievement', 'achievements', 'award', 'awards', 'won', 'win', 'winner', 'ieee', 'competition', 'hackathon', 'accomplishment', 'recognition'],
       a: 'He reports winning with the **AI Vehicle Black Box at IEEE Tech Spark 2.0**. Please check his CV for the full list of achievements.' },
@@ -113,9 +113,11 @@
       a: 'What stands out: he **builds complete, practical projects** across AI, full-stack and IoT, and cares about how systems work internally, not only how to use them. See his projects for proof.' },
     { id: 'contact', k: ['contact', 'email', 'mail', 'reach', 'linkedin', 'connect', 'message', 'social', 'get in touch', 'talk', 'phone', 'call', 'number'],
       a: 'You can reach Biswajit here:\n- **Phone:** ' + CFG.phone + '\n- **Email:** ' + EMAIL + '\n- **LinkedIn:** ' + LI + '\n- **GitHub:** ' + G },
-    { id: 'cv', k: ['cv', 'resume', 'r\u00e9sum\u00e9', 'download'], a: 'You can download his CV here: ' + CFG.cv },
+    { id: 'cv', k: ['cv', 'resume', 'r\u00e9sum\u00e9', 'download'], a: 'You can download his CV here: ' + CFG.cv + ' (also linked on the portfolio).' },
     { id: 'gh', k: ['github', 'git', 'repo', 'repository', 'repositories', 'source', 'code'], a: 'His GitHub: ' + G },
     { id: 'loc', k: ['where', 'location', 'city', 'based', 'live', 'lives', 'odisha', 'bhubaneswar', 'india', 'place'], a: 'Biswajit is based in **Odisha, India** (studying in Bhubaneswar).' },
+    { id: 'best', k: ['best project', 'favourite', 'favorite', 'strongest', 'top project', 'proud', 'most complex', 'flagship'],
+      a: 'His most complete full-stack work is **RYDEX** (ride-hailing: auth, booking, maps, payments). His strongest AI work is **Rail Track Fault Detection AI** (EfficientNetB3 + Grad-CAM + TFLite) and **ResumeGenie AI** (LLM-based career tool).' },
     { id: 'personal', k: ['age', 'old', 'birthday', 'married', 'hobby', 'hobbies', 'family', 'girlfriend', 'salary', 'religion', 'backlog', 'attendance', 'interview', 'interviews'],
       a: 'I only have his professional details here. Ask me about his projects, skills, education or goals!' }
   ];
@@ -128,7 +130,7 @@
   var VAGUE = 'details detail more explain elaborate continue info information further'.split(' ');
   var lastId = '';
 
-  function norm(s) { return s.toLowerCase().replace(/[^a-z0-9+#.\-\s]/g, ' ').replace(/\.+(\s|$)/g, ' ').replace(/\s+/g, ' ').trim(); }
+  function norm(s) { return s.toLowerCase().replace(/(.)\1{2,}/g, '$1').replace(/[^a-z0-9+#.\-\s]/g, ' ').replace(/\.+(\s|$)/g, ' ').replace(/\s+/g, ' ').trim(); }
   function lev(a, b) {
     var m = a.length, n = b.length, i, j, d = [];
     for (i = 0; i <= m; i++) { d[i] = [i]; }
@@ -146,27 +148,28 @@
     }
     return 0;
   }
-  function offlineReply(q) {
-    var n = norm(q), toks = n.split(' ').filter(Boolean), best = null, bs = 0;
-    var core = toks.filter(function (t) { return STOP.indexOf(t) < 0; });
-    // vague follow-up such as "details" / "tell me more"
-    var hasVague = toks.some(function (t) { return VAGUE.indexOf(t) >= 0; });
-    if (hasVague && core.every(function (t) { return VAGUE.indexOf(t) >= 0; })) {
-      var le = byId[lastId];
-      if (le && le.m) return le.m;
-      return byId.projects.m;
-    }
+  function bestEntry(q) {                        // best matching knowledge-base entry (or null)
+    var n = norm(q), best = null, bs = 0;
+    var core = n.split(' ').filter(function (t) { return t && STOP.indexOf(t) < 0 && VAGUE.indexOf(t) < 0; });
     KB.forEach(function (e) {
       var s = 0;
       e.k.forEach(function (k) { if (k.indexOf(' ') >= 0 && n.indexOf(k) >= 0) s += 3; });
       core.forEach(function (t) {
-        if (VAGUE.indexOf(t) >= 0) return;
         var top = 0;
         e.k.forEach(function (k) { if (k.indexOf(' ') < 0) top = Math.max(top, tokScore(t, k)); });
         s += top;
       });
       if (s > bs) { bs = s; best = e; }
     });
+    return best;
+  }
+  function offlineReply(q) {
+    var toks = norm(q).split(' ').filter(Boolean);
+    var core = toks.filter(function (t) { return STOP.indexOf(t) < 0; });
+    var vague = toks.some(function (t) { return VAGUE.indexOf(t) >= 0; }) &&
+                core.every(function (t) { return VAGUE.indexOf(t) >= 0; });
+    if (vague) { var le = byId[lastId]; return (le && le.m) || byId.projects.m; }   // "details" / "tell me more"
+    var best = bestEntry(q);
     if (best) {
       var again = best.id === lastId && best.m;  // asked the same thing twice: give the extra detail
       lastId = best.id;
@@ -177,7 +180,8 @@
 
   /* ---------- styles ---------- */
   var css = [
-    '#bwc,#bwc *{box-sizing:border-box}',
+    '#bwc,#bwc *{box-sizing:border-box;letter-spacing:normal;word-spacing:normal;text-transform:none;text-shadow:none;font-style:normal}',
+    '#bwc,#bwc *{font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}',
     '#bwc{text-align:left;--a:#00f260;--b:#0575e6;--bg:#070b11;--fg:#e6edf3;--mut:#7d8a98;--line:rgba(255,255,255,.09);position:fixed;z-index:9000;right:0;bottom:0;font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;color:var(--fg)}',
     '#bwc button{font:inherit;color:inherit}',
     '#bwcFab{position:fixed;right:max(18px,env(safe-area-inset-right));bottom:max(18px,env(safe-area-inset-bottom));width:58px;height:58px;border-radius:50%;border:0;cursor:pointer;display:grid;place-items:center;',
@@ -217,7 +221,7 @@
     '.bwcM.me{background:linear-gradient(135deg,var(--b),#0a8f9c);color:#fff;border-bottom-right-radius:5px;white-space:pre-wrap}',
     '.bwcM a{color:#5ec8ff;text-decoration:underline;text-underline-offset:2px}.bwcM b{color:#fff}',
     '.bwcM code{background:rgba(255,255,255,.09);padding:1px 5px;border-radius:5px;font-size:.9em}',
-    '.bwcM ul{margin:.3em 0;padding-left:1.2em}.bwcM p{margin:0}.bwcM p+p,.bwcM p+ul,.bwcM ul+p{margin-top:.5em}',
+    '.bwcM ul,.bwcM ol{margin:.3em 0;padding-left:1.2em}.bwcM p{margin:0}.bwcM p+p,.bwcM p+ul,.bwcM ul+p,.bwcM p+ol,.bwcM ol+p{margin-top:.5em}',
     '.bwcTyp{display:flex;gap:4px;padding:13px 15px}.bwcTyp i{width:7px;height:7px;border-radius:50%;background:var(--mut);animation:bwcDot 1.2s infinite}',
     '.bwcTyp i:nth-child(2){animation-delay:.15s}.bwcTyp i:nth-child(3){animation-delay:.3s}',
     '@keyframes bwcDot{0%,60%,100%{transform:none;opacity:.4}30%{transform:translateY(-4px);opacity:1}}',
@@ -288,18 +292,26 @@
 
   /* ---------- helpers ---------- */
   function esc(s) { return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;'); }
-  function fmt(text) {
+  function fmt(text) {                             // tiny safe markdown: bold, code, links, bullet and numbered lists
     var h = esc(text);
     h = h.replace(/`([^`]+)`/g, '<code>$1</code>')
          .replace(/\*\*([^*]+)\*\*/g, '<b>$1</b>')
          .replace(/(https?:\/\/[^\s<)]+[^\s<).,;!?])/g, '<a href="$1" target="_blank" rel="noopener noreferrer">$1</a>');
-    var out = [], list = false;
+    var out = [], list = null;
     h.split('\n').forEach(function (line) {
-      var m = line.match(/^\s*[-*\u2022]\s+(.*)/);
-      if (m) { if (!list) { out.push('<ul>'); list = true; } out.push('<li>' + m[1] + '</li>'); }
-      else { if (list) { out.push('</ul>'); list = false; } if (line.trim()) out.push('<p>' + line + '</p>'); }
+      var m = line.match(/^\s*(?:[-*\u2022]|\d+[.)])\s+(.*)/);
+      var tag = /^\s*\d+[.)]\s/.test(line) ? 'ol' : 'ul';
+      if (m) {
+        if (list && list !== tag) { out.push('</' + list + '>'); list = null; }
+        if (!list) { out.push('<' + tag + '>'); list = tag; }
+        out.push('<li>' + m[1] + '</li>');
+      } else {
+        if (list) { out.push('</' + list + '>'); list = null; }
+        line = line.replace(/^\s*#{1,6}\s+/, '');
+        if (line.trim()) out.push('<p>' + line + '</p>');
+      }
     });
-    if (list) out.push('</ul>');
+    if (list) out.push('</' + list + '>');
     return out.join('');
   }
   function scrollDown() { msgs.scrollTop = msgs.scrollHeight; }
@@ -391,16 +403,20 @@
     msgs.appendChild(typing); scrollDown();
 
     var ctl = window.AbortController ? new AbortController() : null;
-    var timer = setTimeout(function () { if (ctl) ctl.abort(); }, 25000);
+    var timer = setTimeout(function () { if (ctl) ctl.abort(); }, 30000);
     fetch(CFG.api, {
       method: 'POST', headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ messages: history.slice(-10) }), signal: ctl ? ctl.signal : undefined
     })
       .then(function (r) { return r.json().then(function (j) { if (!r.ok) throw new Error(j && j.error || 'http ' + r.status); return j; }); })
-      .then(function (j) { if (!j.reply) throw new Error('empty'); return j.reply; })
+      .then(function (j) {
+        if (!j.reply) throw new Error('empty');
+        var te = bestEntry(text); if (te) lastId = te.id;   // remember topic so "more" works after online answers too
+        return j.reply;
+      })
       .catch(function (err) {
         var msg = String(err && err.message || '');
-        try { console.warn('[chatbot] /api/chat failed, using offline answers:', msg); } catch (e) {}
+        window.__bwLastError = msg; try { console.warn('[chatbot] /api/chat failed, using offline answers:', msg); } catch (e) {}
         if (/Too many/i.test(msg)) return msg;           // show rate-limit text as is
         return offlineReply(text);                       // anything else: graceful offline answer
       })
